@@ -1,4 +1,5 @@
 import SpriteKit
+import ChameleonFramework
 
 class WorldCanvasNode: SKShapeNode {
     let lineInterval : CGFloat = 64.0
@@ -22,7 +23,7 @@ class WorldCanvasNode: SKShapeNode {
         }
 
         self.path = path
-        self.strokeColor = UIColor.blueColor()
+        self.strokeColor = UIColor.flatGreenColor()
         self.fillColor = UIColor.whiteColor()
     }
 }
