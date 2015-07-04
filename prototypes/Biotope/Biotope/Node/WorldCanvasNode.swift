@@ -1,4 +1,5 @@
 import SpriteKit
+import CoreGraphics
 import ChameleonFramework
 
 class WorldCanvasNode: SKShapeNode {
@@ -23,7 +24,7 @@ class WorldCanvasNode: SKShapeNode {
         }
 
         self.path = path
-        self.strokeColor = UIColor.flatGreenColor()
+        self.strokeColor = UIColor.flatGrayColor()
         self.fillColor = UIColor.whiteColor()
     }
 }

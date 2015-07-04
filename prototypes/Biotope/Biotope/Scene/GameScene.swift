@@ -12,7 +12,9 @@ class GameScene: SKScene {
     }
 
     func setUpWorld() {
-        worldNode.setUp(CGSizeMake(2048.0, 2048.0))
+        let world = World()
+
+        worldNode.setUp(world)
         self.addChild(worldNode);
     }
 }

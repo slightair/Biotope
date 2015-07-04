@@ -16,6 +16,9 @@
 		57DACE9D1B4789D30006322E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57DACE9B1B4789D30006322E /* LaunchScreen.storyboard */; };
 		57DACEA81B4791E30006322E /* WorldCanvasNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DACEA71B4791E30006322E /* WorldCanvasNode.swift */; };
 		57DACEAA1B479D6F0006322E /* WorldNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DACEA91B479D6F0006322E /* WorldNode.swift */; };
+		57DACEAD1B47D1260006322E /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DACEAC1B47D1260006322E /* World.swift */; };
+		57DACEAF1B47D13D0006322E /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DACEAE1B47D13D0006322E /* Room.swift */; };
+		57DACEB21B47D9F60006322E /* RoomNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DACEB11B47D9F60006322E /* RoomNode.swift */; };
 		959CC1FCC47F0CB224E3B27C /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE3845477F0C33A8C6A6CB /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -32,6 +35,9 @@
 		57DACE9E1B4789D30006322E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		57DACEA71B4791E30006322E /* WorldCanvasNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldCanvasNode.swift; sourceTree = "<group>"; };
 		57DACEA91B479D6F0006322E /* WorldNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldNode.swift; sourceTree = "<group>"; };
+		57DACEAC1B47D1260006322E /* World.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
+		57DACEAE1B47D13D0006322E /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
+		57DACEB11B47D9F60006322E /* RoomNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomNode.swift; sourceTree = "<group>"; };
 		E64C03D8EC9D7D28C3948C9C /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		FE52CD833B544825B0EEB7D4 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -78,10 +84,11 @@
 		57DACE8D1B4789D30006322E /* Biotope */ = {
 			isa = PBXGroup;
 			children = (
+				57DACEB01B47D3A50006322E /* Scene */,
+				57DACEAB1B47D1080006322E /* Model */,
 				57DACEA41B47914B0006322E /* Node */,
 				57DACE8E1B4789D30006322E /* AppDelegate.swift */,
 				57DACE901B4789D30006322E /* GameScene.sks */,
-				57DACE921B4789D30006322E /* GameScene.swift */,
 				57DACE941B4789D30006322E /* GameViewController.swift */,
 				57DACE961B4789D30006322E /* Main.storyboard */,
 				57DACE991B4789D30006322E /* Assets.xcassets */,
@@ -96,8 +103,26 @@
 			children = (
 				57DACEA71B4791E30006322E /* WorldCanvasNode.swift */,
 				57DACEA91B479D6F0006322E /* WorldNode.swift */,
+				57DACEB11B47D9F60006322E /* RoomNode.swift */,
 			);
 			path = Node;
+			sourceTree = "<group>";
+		};
+		57DACEAB1B47D1080006322E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				57DACEAC1B47D1260006322E /* World.swift */,
+				57DACEAE1B47D13D0006322E /* Room.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		57DACEB01B47D3A50006322E /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				57DACE921B4789D30006322E /* GameScene.swift */,
+			);
+			path = Scene;
 			sourceTree = "<group>";
 		};
 		EF95A5DB4FF4AFF103F518A0 /* Frameworks */ = {
@@ -230,8 +255,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57DACEAD1B47D1260006322E /* World.swift in Sources */,
 				57DACE931B4789D30006322E /* GameScene.swift in Sources */,
+				57DACEAF1B47D13D0006322E /* Room.swift in Sources */,
 				57DACE951B4789D30006322E /* GameViewController.swift in Sources */,
+				57DACEB21B47D9F60006322E /* RoomNode.swift in Sources */,
 				57DACEA81B4791E30006322E /* WorldCanvasNode.swift in Sources */,
 				57DACE8F1B4789D30006322E /* AppDelegate.swift in Sources */,
 				57DACEAA1B479D6F0006322E /* WorldNode.swift in Sources */,
