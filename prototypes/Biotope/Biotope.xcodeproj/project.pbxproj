@@ -14,6 +14,8 @@
 		57DACE981B4789D30006322E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57DACE961B4789D30006322E /* Main.storyboard */; };
 		57DACE9A1B4789D30006322E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 57DACE991B4789D30006322E /* Assets.xcassets */; };
 		57DACE9D1B4789D30006322E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57DACE9B1B4789D30006322E /* LaunchScreen.storyboard */; };
+		57DACEA81B4791E30006322E /* WorldCanvasNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DACEA71B4791E30006322E /* WorldCanvasNode.swift */; };
+		57DACEAA1B479D6F0006322E /* WorldNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DACEA91B479D6F0006322E /* WorldNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		57DACE991B4789D30006322E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		57DACE9C1B4789D30006322E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		57DACE9E1B4789D30006322E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		57DACEA71B4791E30006322E /* WorldCanvasNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldCanvasNode.swift; sourceTree = "<group>"; };
+		57DACEA91B479D6F0006322E /* WorldNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +62,7 @@
 		57DACE8D1B4789D30006322E /* Biotope */ = {
 			isa = PBXGroup;
 			children = (
+				57DACEA41B47914B0006322E /* Node */,
 				57DACE8E1B4789D30006322E /* AppDelegate.swift */,
 				57DACE901B4789D30006322E /* GameScene.sks */,
 				57DACE921B4789D30006322E /* GameScene.swift */,
@@ -68,6 +73,15 @@
 				57DACE9E1B4789D30006322E /* Info.plist */,
 			);
 			path = Biotope;
+			sourceTree = "<group>";
+		};
+		57DACEA41B47914B0006322E /* Node */ = {
+			isa = PBXGroup;
+			children = (
+				57DACEA71B4791E30006322E /* WorldCanvasNode.swift */,
+				57DACEA91B479D6F0006322E /* WorldNode.swift */,
+			);
+			path = Node;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -143,7 +157,9 @@
 			files = (
 				57DACE931B4789D30006322E /* GameScene.swift in Sources */,
 				57DACE951B4789D30006322E /* GameViewController.swift in Sources */,
+				57DACEA81B4791E30006322E /* WorldCanvasNode.swift in Sources */,
 				57DACE8F1B4789D30006322E /* AppDelegate.swift in Sources */,
+				57DACEAA1B479D6F0006322E /* WorldNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
