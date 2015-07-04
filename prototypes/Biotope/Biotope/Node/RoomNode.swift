@@ -4,6 +4,7 @@ class RoomNode : SKShapeNode {
     var room : Room! {
         didSet {
             updatePath()
+            updateCreatures()
         }
     }
 
@@ -31,5 +32,16 @@ class RoomNode : SKShapeNode {
         self.lineWidth = 5
         self.strokeColor = roomStrokeColor()
         self.fillColor = roomFillColor()
+    }
+
+    func updateCreatures() {
+        let radius = CGFloat(room.size) / 2
+        for (index, creature) in room.creatures.enumerate() {
+            let creatureNode = CreatureNode()
+            creatureNode.creature = creature
+            let rad = M_PI / 16 * Double(index)
+            creatureNode.position = CGPointMake(radius + radius * CGFloat(cos(rad)), radius + radius * CGFloat(sin(rad)))
+            addChild(creatureNode)
+        }
     }
 }
