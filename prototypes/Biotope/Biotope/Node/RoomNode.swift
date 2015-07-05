@@ -55,8 +55,12 @@ class RoomNode : SKShapeNode {
         transform = CGAffineTransformTranslate(transform, -radius, -radius)
 
         let trackPath = CGPathCreateCopyByTransformingPath(self.path!, &transform)
-        let moveAction = SKAction.followPath(trackPath, asOffset: false, orientToPath: false, duration: 5.0)
+        let moveAction = SKAction.followPath(trackPath, asOffset: false, orientToPath: true, duration: 8.0)
+        let moveForeverAction = SKAction.repeatActionForever(moveAction)
+        let expandAction = SKAction.scaleTo(1.1, duration: 0.5)
+        let reduceAction = SKAction.scaleTo(0.9, duration: 0.5)
+        let expandAndReduceForeverAction = SKAction.repeatActionForever(SKAction.sequence([expandAction, reduceAction]))
 
-        return SKAction.repeatActionForever(moveAction)
+        return SKAction.group([moveForeverAction, expandAndReduceForeverAction])
     }
 }
