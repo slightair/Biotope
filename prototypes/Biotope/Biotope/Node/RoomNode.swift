@@ -35,13 +35,28 @@ class RoomNode : SKShapeNode {
     }
 
     func updateCreatures() {
-        let radius = CGFloat(room.size) / 2
         for (index, creature) in room.creatures.enumerate() {
             let creatureNode = CreatureNode()
             creatureNode.creature = creature
-            let rad = M_PI / 16 * Double(index)
-            creatureNode.position = CGPointMake(radius + radius * CGFloat(cos(rad)), radius + radius * CGFloat(sin(rad)))
+
+            let creatureAction = createCreatureAction(index)
+            creatureNode.runAction(creatureAction)
+
             addChild(creatureNode)
         }
+    }
+
+    func createCreatureAction(index : Int) -> SKAction {
+        let radius = CGFloat(room.size) / 2
+
+        var transform = CGAffineTransformIdentity
+        transform = CGAffineTransformTranslate(transform, radius, radius)
+        transform = CGAffineTransformRotate(transform, CGFloat(M_PI) / 16 * CGFloat(index))
+        transform = CGAffineTransformTranslate(transform, -radius, -radius)
+
+        let trackPath = CGPathCreateCopyByTransformingPath(self.path!, &transform)
+        let moveAction = SKAction.followPath(trackPath, asOffset: false, orientToPath: false, duration: 5.0)
+
+        return SKAction.repeatActionForever(moveAction)
     }
 }
