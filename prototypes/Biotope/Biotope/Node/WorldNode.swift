@@ -20,7 +20,15 @@ class WorldNode: SKNode {
             roomNode.position = CGPointMake(canvasSize.width / 2 + CGFloat(room.x) - CGFloat(room.size) / 2,
                                             canvasSize.height / 2 + CGFloat(room.y) - CGFloat(room.size) / 2)
 
-            canvasNode.addChild(roomNode);
+            canvasNode.addChild(roomNode)
+        }
+
+        for bridge in world.bridges {
+            let bridgeNode = BridgeNode()
+            bridgeNode.bridge = bridge
+            bridgeNode.position = CGPointMake(canvasSize.width / 2, canvasSize.height / 2)
+
+            canvasNode.addChild(bridgeNode)
         }
 
         addChild(canvasNode)

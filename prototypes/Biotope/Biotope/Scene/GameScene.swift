@@ -1,7 +1,7 @@
 import SpriteKit
 
 class GameScene: SKScene {
-    let worldNode = WorldNode();
+    let worldNode = WorldNode()
 
     override func didMoveToView(view: SKView) {
         setUpWorld()
@@ -15,6 +15,6 @@ class GameScene: SKScene {
         let world = World()
 
         worldNode.setUp(world)
-        self.addChild(worldNode);
+        self.addChild(worldNode)
     }
 }

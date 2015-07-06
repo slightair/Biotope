@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		57456EA61B4AB16600257EB4 /* Bridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57456EA51B4AB16600257EB4 /* Bridge.swift */; };
+		57456EA81B4AB37800257EB4 /* BridgeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57456EA71B4AB37800257EB4 /* BridgeNode.swift */; };
 		57DACE8F1B4789D30006322E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DACE8E1B4789D30006322E /* AppDelegate.swift */; };
 		57DACE911B4789D30006322E /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 57DACE901B4789D30006322E /* GameScene.sks */; };
 		57DACE931B4789D30006322E /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DACE921B4789D30006322E /* GameScene.swift */; };
@@ -26,6 +28,8 @@
 
 /* Begin PBXFileReference section */
 		10DE3845477F0C33A8C6A6CB /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		57456EA51B4AB16600257EB4 /* Bridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bridge.swift; sourceTree = "<group>"; };
+		57456EA71B4AB37800257EB4 /* BridgeNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BridgeNode.swift; sourceTree = "<group>"; };
 		57DACE8B1B4789D30006322E /* Biotope.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Biotope.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		57DACE8E1B4789D30006322E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		57DACE901B4789D30006322E /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -109,6 +113,7 @@
 				57DACEA91B479D6F0006322E /* WorldNode.swift */,
 				57DACEB11B47D9F60006322E /* RoomNode.swift */,
 				57DACEB51B47F2980006322E /* CreatureNode.swift */,
+				57456EA71B4AB37800257EB4 /* BridgeNode.swift */,
 			);
 			path = Node;
 			sourceTree = "<group>";
@@ -119,6 +124,7 @@
 				57DACEAC1B47D1260006322E /* World.swift */,
 				57DACEAE1B47D13D0006322E /* Room.swift */,
 				57DACEB31B47F1F60006322E /* Creature.swift */,
+				57456EA51B4AB16600257EB4 /* Bridge.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -262,6 +268,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				57DACEAD1B47D1260006322E /* World.swift in Sources */,
+				57456EA61B4AB16600257EB4 /* Bridge.swift in Sources */,
+				57456EA81B4AB37800257EB4 /* BridgeNode.swift in Sources */,
 				57DACE931B4789D30006322E /* GameScene.swift in Sources */,
 				57DACEB41B47F1F60006322E /* Creature.swift in Sources */,
 				57DACEAF1B47D13D0006322E /* Room.swift in Sources */,
