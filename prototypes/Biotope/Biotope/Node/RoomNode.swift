@@ -1,11 +1,17 @@
 import SpriteKit
 
 class RoomNode : SKShapeNode {
-    var room : Room! {
-        didSet {
-            updatePath()
-            updateCreatures()
-        }
+    let room : Room
+
+    required init(room: Room) {
+        self.room = room
+        super.init()
+
+        updatePath()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     func roomStrokeColor() -> UIColor {
@@ -32,38 +38,5 @@ class RoomNode : SKShapeNode {
         self.lineWidth = 5
         self.strokeColor = roomStrokeColor()
         self.fillColor = roomFillColor()
-    }
-
-    func updateCreatures() {
-        for (index, creature) in room.creatures.enumerate() {
-            let creatureNode = CreatureNode()
-            creatureNode.creature = creature
-
-            let creatureAction = createCreatureAction(index)
-            creatureNode.runAction(creatureAction)
-
-            addChild(creatureNode)
-        }
-    }
-
-    func createCreatureAction(index : Int) -> SKAction {
-        let radius = CGFloat(room.size) / 2
-
-        var transform = CGAffineTransformIdentity
-        transform = CGAffineTransformTranslate(transform, radius, radius)
-        transform = CGAffineTransformRotate(transform, CGFloat(M_PI) / 16 * CGFloat(index))
-        transform = CGAffineTransformTranslate(transform, -radius, -radius)
-
-        let trackPath = CGPathCreateCopyByTransformingPath(self.path!, &transform)
-        let moveAction = SKAction.followPath(trackPath, asOffset: false, orientToPath: false, duration: 8.0)
-        let moveForeverAction = SKAction.repeatActionForever(moveAction)
-
-        let expandAndReduceAction = SKAction.customActionWithDuration(2.0, actionBlock: { node, elapsedTime in
-            let theta = elapsedTime * 2 * CGFloat(M_PI) + CGFloat(M_PI_4) * CGFloat(index)
-            node.setScale(1.1 + sin(theta) * 0.3)
-        })
-        let expandAndReduceForeverAction = SKAction.repeatActionForever(expandAndReduceAction)
-
-        return SKAction.group([moveForeverAction, expandAndReduceForeverAction])
     }
 }

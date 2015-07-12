@@ -1,45 +1,75 @@
 import SpriteKit
+import CoreGraphics
+import ChameleonFramework
 
-class WorldNode: SKNode {
-    var canvasNode : WorldCanvasNode!
-    var world : World!
+class WorldNode: SKShapeNode {
+    let lineInterval: CGFloat = 64
+    let roomLayer = SKNode()
+    let bridgeLayer = SKNode()
+    let creatureLayer = SKNode()
 
     func setUp(world: World) {
-        userInteractionEnabled = true
+        setUpLayers()
+        setUpLines()
 
-        self.world = world
-
-        let canvasSize = CGSizeMake(CGFloat(world.width), CGFloat(world.height))
-        canvasNode = WorldCanvasNode(rectOfSize: canvasSize)
-        canvasNode.setUpLines()
-        canvasNode.position = CGPointMake(-canvasSize.width / 2, -canvasSize.height / 2)
-
-        for room in world.rooms {
-            let roomNode = RoomNode()
-            roomNode.room = room
-            roomNode.position = CGPointMake(canvasSize.width / 2 + CGFloat(room.x) - CGFloat(room.size) / 2,
-                                            canvasSize.height / 2 + CGFloat(room.y) - CGFloat(room.size) / 2)
-
-            canvasNode.addChild(roomNode)
-        }
-
-        for bridge in world.bridges {
-            let bridgeNode = BridgeNode()
-            bridgeNode.bridge = bridge
-            bridgeNode.position = CGPointMake(canvasSize.width / 2, canvasSize.height / 2)
-
-            canvasNode.addChild(bridgeNode)
-        }
-
-        addChild(canvasNode)
+        setUpRooms(world)
+        setUpBridges(world)
+        setUpCreatures(world)
     }
 
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        let touch = touches.first!
-        let location = touch.locationInNode(self)
-        let previousLocation = touch.previousLocationInNode(self)
+    func setUpLayers() {
+        addChild(self.roomLayer)
+        addChild(self.bridgeLayer)
+        addChild(self.creatureLayer)
+    }
 
-        canvasNode.position.x += location.x - previousLocation.x
-        canvasNode.position.y += location.y - previousLocation.y
+    func setUpLines() {
+        let path = CGPathCreateMutable()
+
+        CGPathAddRect(path, nil, frame)
+
+        let numHorizontalLines = Int(frame.height / lineInterval)
+        let numVerticalLines = Int(frame.width / lineInterval)
+
+        for x in -((numVerticalLines / 2) - 1)..<(numVerticalLines / 2) {
+            CGPathMoveToPoint(path, nil, lineInterval * CGFloat(x), CGRectGetMinY(frame))
+            CGPathAddLineToPoint(path, nil, lineInterval * CGFloat(x), CGRectGetMaxY(frame))
+        }
+
+        for y in -((numHorizontalLines / 2) - 1)..<(numHorizontalLines / 2) {
+            CGPathMoveToPoint(path, nil, CGRectGetMinX(frame), lineInterval * CGFloat(y))
+            CGPathAddLineToPoint(path, nil, CGRectGetMaxX(frame), lineInterval * CGFloat(y))
+        }
+
+        self.path = path
+        self.strokeColor = UIColor.flatGrayColor()
+        self.fillColor = UIColor.whiteColor()
+    }
+
+    func setUpRooms(world: World) {
+        for room in world.rooms {
+            let roomNode = RoomNode(room: room)
+            roomNode.position = CGPointMake(CGFloat(room.x) - CGFloat(room.size) / 2,
+                                            CGFloat(room.y) - CGFloat(room.size) / 2)
+
+            roomLayer.addChild(roomNode)
+        }
+    }
+
+    func setUpBridges(world: World) {
+        for bridge in world.bridges {
+            let bridgeNode = BridgeNode(bridge: bridge)
+
+            bridgeLayer.addChild(bridgeNode)
+        }
+    }
+
+    func setUpCreatures(world: World) {
+        for creature in world.creatures {
+            let creatureNode = CreatureNode(creature: creature)
+            creatureNode.position = CGPointMake(CGFloat(creature.x), CGFloat(creature.y))
+            
+            creatureLayer.addChild(creatureNode)
+        }
     }
 }

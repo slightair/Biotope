@@ -1,16 +1,17 @@
 import SpriteKit
 
 class CreatureNode : SKSpriteNode {
-    var creature : Creature! {
-        didSet {
-            updateTexture()
-        }
+    let creature : Creature
+
+    required init(creature: Creature) {
+        self.creature = creature
+
+        let texture = SKTexture(imageNamed: creature.imageName())
+        super.init(texture: texture, color: UIColor.whiteColor(), size: texture.size())
     }
 
-    func updateTexture() {
-        let texture = SKTexture(imageNamed: creature.imageName())
-        self.texture = texture
-        self.size = texture.size()
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 

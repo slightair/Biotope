@@ -1,10 +1,17 @@
 import SpriteKit
 
 class BridgeNode: SKShapeNode {
-    var bridge : Bridge! {
-        didSet {
-            updatePath()
-        }
+    let bridge: Bridge
+
+    required init(bridge: Bridge) {
+        self.bridge = bridge
+        super.init()
+
+        updatePath()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     func bridgeStrokeColor() -> UIColor {
