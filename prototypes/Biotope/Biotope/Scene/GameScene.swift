@@ -8,10 +8,11 @@ class GameScene: SKScene {
         userInteractionEnabled = true
 
         setUpWorld()
+        world.run()
     }
 
     override func update(currentTime: CFTimeInterval) {
-        /* Called before each frame is rendered */
+        GameScenePaceMaker.defaultPaceMaker.knock(currentTime)
     }
 
     func setUpWorld() {
