@@ -29,8 +29,8 @@ class BridgeNode: SKShapeNode {
 
     func updatePath() {
         let path = CGPathCreateMutable()
-        CGPathMoveToPoint(path, nil, CGFloat(bridge.startRoom.x), CGFloat(bridge.startRoom.y))
-        CGPathAddLineToPoint(path, nil, CGFloat(bridge.endRoom.x), CGFloat(bridge.endRoom.y))
+        CGPathMoveToPoint(path, nil, CGFloat(bridge.startRoom.position.x), CGFloat(bridge.startRoom.position.y))
+        CGPathAddLineToPoint(path, nil, CGFloat(bridge.endRoom.position.x), CGFloat(bridge.endRoom.position.y))
 
         self.path = path
         self.lineWidth = 20

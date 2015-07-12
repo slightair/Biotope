@@ -11,7 +11,7 @@ class World {
         width = 2048
         height = 2048
 
-        let room = Room(type: .Red, x: 0, y: 0, size: 512)
+        let room = Room(type: .Red, position: Position(x:0, y:0), size: 512)
 
         rooms = [room]
 
@@ -19,11 +19,11 @@ class World {
         ]
 
         creatures = [
-            Creature(location: room, x: 0, y: 0),
-            Creature(location: room, x: 0, y: 10),
-            Creature(location: room, x: 0, y: 20),
-            Creature(location: room, x: 0, y: 30),
-            Creature(location: room, x: 0, y: 40),
+            Creature(location: room, position: Position(x:0, y:0)),
+            Creature(location: room, position: Position(x:0, y:10)),
+            Creature(location: room, position: Position(x:0, y:20)),
+            Creature(location: room, position: Position(x:0, y:30)),
+            Creature(location: room, position: Position(x:0, y:40)),
         ]
     }
 

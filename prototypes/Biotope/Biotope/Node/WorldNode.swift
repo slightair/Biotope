@@ -49,8 +49,8 @@ class WorldNode: SKShapeNode {
     func setUpRooms(world: World) {
         for room in world.rooms {
             let roomNode = RoomNode(room: room)
-            roomNode.position = CGPointMake(CGFloat(room.x) - CGFloat(room.size) / 2,
-                                            CGFloat(room.y) - CGFloat(room.size) / 2)
+            roomNode.position = CGPointMake(CGFloat(room.position.x) - CGFloat(room.size) / 2,
+                                            CGFloat(room.position.y) - CGFloat(room.size) / 2)
 
             roomLayer.addChild(roomNode)
         }
@@ -67,7 +67,7 @@ class WorldNode: SKShapeNode {
     func setUpCreatures(world: World) {
         for creature in world.creatures {
             let creatureNode = CreatureNode(creature: creature)
-            creatureNode.position = CGPointMake(CGFloat(creature.x), CGFloat(creature.y))
+            creatureNode.position = creature.position.CGPointValue
             
             creatureLayer.addChild(creatureNode)
         }

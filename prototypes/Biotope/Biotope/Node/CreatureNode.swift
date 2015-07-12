@@ -11,8 +11,8 @@ class CreatureNode : SKSpriteNode {
         super.init(texture: texture, color: UIColor.whiteColor(), size: texture.size())
 
         creature.positionChanged
-            >- subscribeNext { x, y in
-                let action = SKAction.moveTo(CGPointMake(CGFloat(x), CGFloat(y)), duration: 0.2)
+            >- subscribeNext { position in
+                let action = SKAction.moveTo(position.CGPointValue, duration: 0.2)
                 self.runAction(action)
             }
     }

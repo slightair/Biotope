@@ -4,15 +4,10 @@ struct Bridge: Location {
     let startRoom: Room
     let endRoom: Room
 
-    var x: Double {
+    var position: Position {
         get {
-            return (startRoom.x + endRoom.x) / 2.0
-        }
-    }
-
-    var y: Double {
-        get {
-            return (startRoom.y + endRoom.y) / 2.0
+            return Position(x: (startRoom.position.x + endRoom.position.x) / 2.0,
+                            y: (startRoom.position.y + endRoom.position.y) / 2.0)
         }
     }
 }

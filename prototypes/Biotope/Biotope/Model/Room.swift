@@ -6,7 +6,6 @@ struct Room: Location {
     }
 
     let type: Type
-    let x: Double
-    let y: Double
+    let position: Position
     let size: Double
 }
