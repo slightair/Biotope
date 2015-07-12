@@ -3,3 +3,5 @@ platform :ios, '8.1'
 use_frameworks!
 
 pod 'ChameleonFramework'
+pod 'RxSwift'
+pod 'RxCocoa'

@@ -1,10 +1,17 @@
 PODS:
   - ChameleonFramework (1.2.0)
+  - RxCocoa (1.7):
+    - RxSwift
+  - RxSwift (1.7)
 
 DEPENDENCIES:
   - ChameleonFramework
+  - RxCocoa
+  - RxSwift
 
 SPEC CHECKSUMS:
   ChameleonFramework: 4d6bf87fcaee176f487176cdccc4229637ec97f0
+  RxCocoa: 2c7faa37d5ac8bd94825c0953a3778a8b0aa6384
+  RxSwift: 10544d9e14377965605f5c7aebffe590f7272ebe
 
 COCOAPODS: 0.37.2
