@@ -12,8 +12,18 @@ class CreatureNode : SKSpriteNode {
 
         creature.positionChanged
             >- subscribeNext { position in
-                let action = SKAction.moveTo(position.CGPointValue, duration: 0.2)
-                self.runAction(action)
+                self.removeAllActions()
+
+                let distanceX = self.position.x - CGFloat(position.x)
+                let distanceY = self.position.y - CGFloat(position.y)
+                let distance = sqrt(distanceX * distanceX + distanceY * distanceY)
+                let duration = NSTimeInterval(distance) / 30
+
+                let action = SKAction.moveTo(position.CGPointValue, duration: duration)
+                let completion = SKAction.runBlock {
+                    creature.isMoving = false
+                }
+                self.runAction(SKAction.sequence([action, completion]))
             }
     }
 

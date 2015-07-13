@@ -3,7 +3,14 @@ import RxSwift
 
 class Creature {
     var location: Location
-    var position: Position
+    var position: Position {
+        didSet {
+            sendNext(self.positionChanged, self.position)
+        }
+    }
+    var isMoving = false
+
+    let moveTiming = PublishSubject<CFTimeInterval>()
 
     let positionChanged = PublishSubject<Position>()
 
@@ -19,10 +26,17 @@ class Creature {
     func start() {
         GameScenePaceMaker.defaultPaceMaker.paceSubject
             >- subscribeNext { currentTime in
-                self.position.x += Double(random() % 10) * (random() % 2 == 0 ? -1 : 1)
-                self.position.y += Double(random() % 10) * (random() % 2 == 0 ? -1 : 1)
+                if self.isMoving {
+                    return
+                }
+                self.isMoving = true
 
-                sendNext(self.positionChanged, self.position)
+                switch self.location {
+                case let currentRoom as Room:
+                    self.position = currentRoom.randomPosition()
+                default:
+                    return
+                }
             }
     }
 }
