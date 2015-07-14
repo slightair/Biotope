@@ -6,8 +6,7 @@ struct Bridge: Location {
 
     var position: Position {
         get {
-            return Position(x: (startRoom.position.x + endRoom.position.x) / 2.0,
-                            y: (startRoom.position.y + endRoom.position.y) / 2.0)
+            return Position.centerOf(startRoom.position, endRoom.position)
         }
     }
 }
