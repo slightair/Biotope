@@ -25,8 +25,20 @@
 		57DACEB21B47D9F60006322E /* RoomNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DACEB11B47D9F60006322E /* RoomNode.swift */; };
 		57DACEB41B47F1F60006322E /* Creature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DACEB31B47F1F60006322E /* Creature.swift */; };
 		57DACEB61B47F2980006322E /* CreatureNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DACEB51B47F2980006322E /* CreatureNode.swift */; };
+		7F48BD131B55239B006C7E86 /* PositionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F48BD121B55239B006C7E86 /* PositionTest.swift */; };
+		7F48BD141B55252B006C7E86 /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5746EEDB1B5286C9003341C7 /* Position.swift */; };
 		959CC1FCC47F0CB224E3B27C /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10DE3845477F0C33A8C6A6CB /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7F48BD0C1B5522BA006C7E86 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 57DACE831B4789D30006322E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 57DACE8A1B4789D30006322E;
+			remoteInfo = Biotope;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		10DE3845477F0C33A8C6A6CB /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -50,6 +62,9 @@
 		57DACEB11B47D9F60006322E /* RoomNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomNode.swift; sourceTree = "<group>"; };
 		57DACEB31B47F1F60006322E /* Creature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Creature.swift; sourceTree = "<group>"; };
 		57DACEB51B47F2980006322E /* CreatureNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatureNode.swift; sourceTree = "<group>"; };
+		7F48BD061B5522BA006C7E86 /* Biotope Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Biotope Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F48BD091B5522BA006C7E86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7F48BD121B55239B006C7E86 /* PositionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PositionTest.swift; sourceTree = "<group>"; };
 		E64C03D8EC9D7D28C3948C9C /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		FE52CD833B544825B0EEB7D4 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -60,6 +75,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				959CC1FCC47F0CB224E3B27C /* Pods.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7F48BD031B5522BA006C7E86 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				57DACE8D1B4789D30006322E /* Biotope */,
+				7F48BD071B5522BA006C7E86 /* Biotope Tests */,
 				57DACE8C1B4789D30006322E /* Products */,
 				09D9810BCC743DF6D04A49D6 /* Pods */,
 				EF95A5DB4FF4AFF103F518A0 /* Frameworks */,
@@ -89,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				57DACE8B1B4789D30006322E /* Biotope.app */,
+				7F48BD061B5522BA006C7E86 /* Biotope Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -143,6 +167,31 @@
 			path = Scene;
 			sourceTree = "<group>";
 		};
+		7F48BD071B5522BA006C7E86 /* Biotope Tests */ = {
+			isa = PBXGroup;
+			children = (
+				7F48BD111B55231F006C7E86 /* Model */,
+				7F48BD081B5522BA006C7E86 /* Supporting Files */,
+			);
+			path = "Biotope Tests";
+			sourceTree = "<group>";
+		};
+		7F48BD081B5522BA006C7E86 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7F48BD091B5522BA006C7E86 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7F48BD111B55231F006C7E86 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7F48BD121B55239B006C7E86 /* PositionTest.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		EF95A5DB4FF4AFF103F518A0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -174,6 +223,24 @@
 			productReference = 57DACE8B1B4789D30006322E /* Biotope.app */;
 			productType = "com.apple.product-type.application";
 		};
+		7F48BD051B5522BA006C7E86 /* Biotope Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7F48BD101B5522BA006C7E86 /* Build configuration list for PBXNativeTarget "Biotope Tests" */;
+			buildPhases = (
+				7F48BD021B5522BA006C7E86 /* Sources */,
+				7F48BD031B5522BA006C7E86 /* Frameworks */,
+				7F48BD041B5522BA006C7E86 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7F48BD0D1B5522BA006C7E86 /* PBXTargetDependency */,
+			);
+			name = "Biotope Tests";
+			productName = "Biotope Tests";
+			productReference = 7F48BD061B5522BA006C7E86 /* Biotope Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -185,6 +252,10 @@
 				TargetAttributes = {
 					57DACE8A1B4789D30006322E = {
 						CreatedOnToolsVersion = 7.0;
+					};
+					7F48BD051B5522BA006C7E86 = {
+						CreatedOnToolsVersion = 6.4;
+						TestTargetID = 57DACE8A1B4789D30006322E;
 					};
 				};
 			};
@@ -202,6 +273,7 @@
 			projectRoot = "";
 			targets = (
 				57DACE8A1B4789D30006322E /* Biotope */,
+				7F48BD051B5522BA006C7E86 /* Biotope Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -215,6 +287,13 @@
 				57DACE911B4789D30006322E /* GameScene.sks in Resources */,
 				57DACE9A1B4789D30006322E /* Assets.xcassets in Resources */,
 				57DACE981B4789D30006322E /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7F48BD041B5522BA006C7E86 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,7 +369,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7F48BD021B5522BA006C7E86 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F48BD141B55252B006C7E86 /* Position.swift in Sources */,
+				7F48BD131B55239B006C7E86 /* PositionTest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7F48BD0D1B5522BA006C7E86 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 57DACE8A1B4789D30006322E /* Biotope */;
+			targetProxy = 7F48BD0C1B5522BA006C7E86 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		57DACE961B4789D30006322E /* Main.storyboard */ = {
@@ -413,6 +509,44 @@
 			};
 			name = Release;
 		};
+		7F48BD0E1B5522BA006C7E86 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "Biotope Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Biotope.app/Biotope";
+			};
+			name = Debug;
+		};
+		7F48BD0F1B5522BA006C7E86 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "Biotope Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Biotope.app/Biotope";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -433,6 +567,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		7F48BD101B5522BA006C7E86 /* Build configuration list for PBXNativeTarget "Biotope Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7F48BD0E1B5522BA006C7E86 /* Debug */,
+				7F48BD0F1B5522BA006C7E86 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
