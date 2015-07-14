@@ -1,4 +1,5 @@
 import SpriteKit
+import SwiftGraphics
 
 class RoomNode : SKShapeNode {
     let room : Room
@@ -33,7 +34,7 @@ class RoomNode : SKShapeNode {
 
     func updatePath() {
         let size = CGFloat(room.size)
-        self.path = CGPathCreateWithEllipseInRect(CGRectMake(0, 0, size, size), nil)
+        self.path = Circle(center: CGPoint(), radius: size / 2).cgpath
 
         self.lineWidth = 5
         self.strokeColor = roomStrokeColor()

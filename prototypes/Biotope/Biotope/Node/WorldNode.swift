@@ -1,6 +1,6 @@
 import SpriteKit
-import CoreGraphics
 import ChameleonFramework
+import SwiftGraphics
 
 class WorldNode: SKShapeNode {
     let lineInterval: CGFloat = 64
@@ -32,13 +32,15 @@ class WorldNode: SKShapeNode {
         let numVerticalLines = Int(frame.width / lineInterval)
 
         for x in -((numVerticalLines / 2) - 1)..<(numVerticalLines / 2) {
-            CGPathMoveToPoint(path, nil, lineInterval * CGFloat(x), CGRectGetMinY(frame))
-            CGPathAddLineToPoint(path, nil, lineInterval * CGFloat(x), CGRectGetMaxY(frame))
+            let xPos = lineInterval * CGFloat(x)
+            path.move(CGPoint(xPos, CGRectGetMinY(frame)))
+            path.addLine(CGPoint(xPos, CGRectGetMaxY(frame)))
         }
 
         for y in -((numHorizontalLines / 2) - 1)..<(numHorizontalLines / 2) {
-            CGPathMoveToPoint(path, nil, CGRectGetMinX(frame), lineInterval * CGFloat(y))
-            CGPathAddLineToPoint(path, nil, CGRectGetMaxX(frame), lineInterval * CGFloat(y))
+            let yPos = lineInterval * CGFloat(y)
+            path.move(CGPoint(CGRectGetMinX(frame), yPos))
+            path.addLine(CGPoint(CGRectGetMaxX(frame), yPos))
         }
 
         self.path = path
@@ -49,8 +51,7 @@ class WorldNode: SKShapeNode {
     func setUpRooms(world: World) {
         for room in world.rooms {
             let roomNode = RoomNode(room: room)
-            roomNode.position = CGPointMake(CGFloat(room.position.x) - CGFloat(room.size) / 2,
-                                            CGFloat(room.position.y) - CGFloat(room.size) / 2)
+            roomNode.position = room.position.CGPointValue
 
             roomLayer.addChild(roomNode)
         }

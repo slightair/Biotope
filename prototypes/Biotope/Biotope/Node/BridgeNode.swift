@@ -1,4 +1,5 @@
 import SpriteKit
+import SwiftGraphics
 
 class BridgeNode: SKShapeNode {
     let bridge: Bridge
@@ -29,8 +30,8 @@ class BridgeNode: SKShapeNode {
 
     func updatePath() {
         let path = CGPathCreateMutable()
-        CGPathMoveToPoint(path, nil, CGFloat(bridge.startRoom.position.x), CGFloat(bridge.startRoom.position.y))
-        CGPathAddLineToPoint(path, nil, CGFloat(bridge.endRoom.position.x), CGFloat(bridge.endRoom.position.y))
+        path.move(bridge.startRoom.position.CGPointValue)
+        path.addLine(bridge.endRoom.position.CGPointValue)
 
         self.path = path
         self.lineWidth = 20

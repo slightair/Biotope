@@ -1,5 +1,6 @@
 import SpriteKit
 import RxSwift
+import SwiftGraphics
 
 class CreatureNode : SKSpriteNode {
     let creature : Creature
@@ -14,9 +15,7 @@ class CreatureNode : SKSpriteNode {
             >- subscribeNext { position in
                 self.removeAllActions()
 
-                let distanceX = self.position.x - CGFloat(position.x)
-                let distanceY = self.position.y - CGFloat(position.y)
-                let distance = sqrt(distanceX * distanceX + distanceY * distanceY)
+                let distance = self.position.distanceTo(position.CGPointValue)
                 let duration = NSTimeInterval(distance) / 30
 
                 let action = SKAction.moveTo(position.CGPointValue, duration: duration)
