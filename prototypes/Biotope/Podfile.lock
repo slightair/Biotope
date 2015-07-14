@@ -3,15 +3,20 @@ PODS:
   - RxCocoa (1.7):
     - RxSwift
   - RxSwift (1.7)
+  - SwiftGraphics/Core (0.0.4)
+  - SwiftGraphics/iOS (0.0.4):
+    - SwiftGraphics/Core
 
 DEPENDENCIES:
   - ChameleonFramework
   - RxCocoa
   - RxSwift
+  - SwiftGraphics/iOS
 
 SPEC CHECKSUMS:
   ChameleonFramework: 4d6bf87fcaee176f487176cdccc4229637ec97f0
   RxCocoa: 2c7faa37d5ac8bd94825c0953a3778a8b0aa6384
   RxSwift: 10544d9e14377965605f5c7aebffe590f7272ebe
+  SwiftGraphics: e001d90c4a81a162a2d788c3c3cc003830942acf
 
 COCOAPODS: 0.37.2

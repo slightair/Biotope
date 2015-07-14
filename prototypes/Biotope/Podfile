@@ -5,3 +5,4 @@ use_frameworks!
 pod 'ChameleonFramework'
 pod 'RxSwift'
 pod 'RxCocoa'
+pod 'SwiftGraphics/iOS'
