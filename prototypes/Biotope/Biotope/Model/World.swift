@@ -32,7 +32,7 @@ class World {
 
     func run() {
         for creature in creatures {
-            creature.start()
+            creature.run()
         }
     }
 }

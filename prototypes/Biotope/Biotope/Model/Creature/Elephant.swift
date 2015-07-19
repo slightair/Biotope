@@ -6,7 +6,7 @@ class Elephant : Creature {
         return "elephant"
     }
 
-    override func start() {
+    override func run() {
         GameScenePaceMaker.defaultPaceMaker.paceSubject
             >- subscribeNext { currentTime in
                 if self.isMoving {

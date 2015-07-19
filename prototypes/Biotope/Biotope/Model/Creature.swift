@@ -21,7 +21,7 @@ class Creature {
         fatalError("imageName() has not been implemented")
     }
 
-    func start() {
-        fatalError("start() has not been implemented")
+    func run() {
+        fatalError("run() has not been implemented")
     }
 }

@@ -3,7 +3,7 @@ class Mushroom : Creature {
         return "mushroom"
     }
 
-    override func start() {
+    override func run() {
 
     }
 }
