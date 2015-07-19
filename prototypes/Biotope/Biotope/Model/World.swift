@@ -20,11 +20,11 @@ class World {
 
         var creatures: [Creature] = []
         for i in 1...3 {
-            creatures.append(Elephant(location: room, position: room.randomPosition()))
+            creatures.append(Elephant(room: room))
         }
 
         for i in 1...20 {
-            creatures.append(Mushroom(location: room, position: room.randomPosition()))
+            creatures.append(Mushroom(room: room))
         }
 
         self.creatures = creatures

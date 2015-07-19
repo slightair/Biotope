@@ -15,6 +15,7 @@
 		5746EEDC1B5286C9003341C7 /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5746EEDB1B5286C9003341C7 /* Position.swift */; };
 		57573D3A1B5B373E007DCDAE /* Mushroom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57573D391B5B373E007DCDAE /* Mushroom.swift */; };
 		57573D3C1B5B3747007DCDAE /* Elephant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57573D3B1B5B3747007DCDAE /* Elephant.swift */; };
+		57573D3E1B5B4135007DCDAE /* CreatureConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57573D3D1B5B4135007DCDAE /* CreatureConfiguration.swift */; };
 		57DACE8F1B4789D30006322E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DACE8E1B4789D30006322E /* AppDelegate.swift */; };
 		57DACE911B4789D30006322E /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 57DACE901B4789D30006322E /* GameScene.sks */; };
 		57DACE931B4789D30006322E /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DACE921B4789D30006322E /* GameScene.swift */; };
@@ -52,6 +53,7 @@
 		5746EEDB1B5286C9003341C7 /* Position.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
 		57573D391B5B373E007DCDAE /* Mushroom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mushroom.swift; sourceTree = "<group>"; };
 		57573D3B1B5B3747007DCDAE /* Elephant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Elephant.swift; sourceTree = "<group>"; };
+		57573D3D1B5B4135007DCDAE /* CreatureConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatureConfiguration.swift; sourceTree = "<group>"; };
 		57DACE8B1B4789D30006322E /* Biotope.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Biotope.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		57DACE8E1B4789D30006322E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		57DACE901B4789D30006322E /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 				57456EAB1B5105C200257EB4 /* Location.swift */,
 				5746EED91B526B32003341C7 /* GameScenePaceMaker.swift */,
 				5746EEDB1B5286C9003341C7 /* Position.swift */,
+				57573D3D1B5B4135007DCDAE /* CreatureConfiguration.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -381,6 +384,7 @@
 				57DACE951B4789D30006322E /* GameViewController.swift in Sources */,
 				57DACEB21B47D9F60006322E /* RoomNode.swift in Sources */,
 				57DACEB61B47F2980006322E /* CreatureNode.swift in Sources */,
+				57573D3E1B5B4135007DCDAE /* CreatureConfiguration.swift in Sources */,
 				57DACEA81B4791E30006322E /* WorldNode.swift in Sources */,
 				57DACE8F1B4789D30006322E /* AppDelegate.swift in Sources */,
 			);

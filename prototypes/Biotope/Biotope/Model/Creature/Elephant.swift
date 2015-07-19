@@ -2,6 +2,12 @@ import Foundation
 import RxSwift
 
 class Elephant : Creature {
+    convenience init(room: Room) {
+        let configuration = CreatureConfiguration(speed: 1, sight: 3)
+
+        self.init(room: room, configuration: configuration)
+    }
+
     override func imageName() -> String {
         return "elephant"
     }

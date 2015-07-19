@@ -2,6 +2,8 @@ import Foundation
 import RxSwift
 
 class Creature {
+    let configuration: CreatureConfiguration
+
     var location: Location
     var position: Position {
         didSet {
@@ -12,9 +14,16 @@ class Creature {
 
     let positionChanged = PublishSubject<Position>()
 
-    init(location: Location, position: Position) {
-        self.location = location
-        self.position = position
+    required init(room: Room, configuration: CreatureConfiguration) {
+        self.location = room
+        self.position = room.randomPosition()
+        self.configuration = configuration
+    }
+
+    convenience init(room: Room) {
+        let configuration = CreatureConfiguration(speed: 0, sight: 0)
+
+        self.init(room: room, configuration: configuration)
     }
 
     func imageName() -> String {

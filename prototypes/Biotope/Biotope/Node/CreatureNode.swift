@@ -16,7 +16,8 @@ class CreatureNode : SKSpriteNode {
                 self.removeAllActions()
 
                 let distance = self.position.distanceTo(position.CGPointValue)
-                let duration = NSTimeInterval(distance) / 30
+                let speed = creature.configuration.speed > 0 ? creature.configuration.speed : 1
+                let duration = NSTimeInterval(distance) / 10 / speed
 
                 let action = SKAction.moveTo(position.CGPointValue, duration: duration)
                 let completion = SKAction.runBlock {
