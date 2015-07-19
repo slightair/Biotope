@@ -11,20 +11,23 @@ class World {
         width = 2048
         height = 2048
 
-        let room = Room(type: .Red, position: Position(x: 0, y: 0), size: 512)
+        let room = Room(type: .Green, position: Position(x: 0, y: 0), size: 512)
 
         rooms = [room]
 
         bridges = [
         ]
 
-        creatures = [
-            Creature(location: room, position: Position(x: 0, y: 0)),
-            Creature(location: room, position: Position(x: 0, y: 10)),
-            Creature(location: room, position: Position(x: 0, y: 20)),
-            Creature(location: room, position: Position(x: 0, y: 30)),
-            Creature(location: room, position: Position(x: 0, y: 40)),
-        ]
+        var creatures: [Creature] = []
+        for i in 1...3 {
+            creatures.append(Elephant(location: room, position: room.randomPosition()))
+        }
+
+        for i in 1...20 {
+            creatures.append(Mushroom(location: room, position: room.randomPosition()))
+        }
+
+        self.creatures = creatures
     }
 
     func run() {

@@ -10,33 +10,18 @@ class Creature {
     }
     var isMoving = false
 
-    let moveTiming = PublishSubject<CFTimeInterval>()
-
     let positionChanged = PublishSubject<Position>()
 
-    required init(location: Location, position: Position) {
+    init(location: Location, position: Position) {
         self.location = location
         self.position = position
     }
 
     func imageName() -> String {
-        return "mushroom"
+        fatalError("imageName() has not been implemented")
     }
 
     func start() {
-        GameScenePaceMaker.defaultPaceMaker.paceSubject
-            >- subscribeNext { currentTime in
-                if self.isMoving {
-                    return
-                }
-                self.isMoving = true
-
-                switch self.location {
-                case let currentRoom as Room:
-                    self.position = currentRoom.randomPosition()
-                default:
-                    return
-                }
-            }
+        fatalError("start() has not been implemented")
     }
 }

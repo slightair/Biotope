@@ -18,13 +18,13 @@ class BridgeNode: SKShapeNode {
     func bridgeStrokeColor() -> UIColor {
         switch bridge.startRoom.type {
         case .Red:
-            return UIColor.flatRedColor()
+            return .flatRedColor()
         case .Green:
-            return UIColor.flatGreenColor()
+            return .flatGreenColor()
         case .Blue:
-            return UIColor.flatSkyBlueColor()
+            return .flatSkyBlueColor()
         case .Unknown:
-            return UIColor.flatSandColor()
+            return .flatSandColor()
         }
     }
 
