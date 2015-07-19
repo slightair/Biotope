@@ -1,9 +1,9 @@
 import Foundation
 import RxSwift
 
-class Elephant : Creature {
+class Elephant: Creature {
     convenience init(room: Room) {
-        let configuration = CreatureConfiguration(speed: 1, sight: 3)
+        let configuration = CreatureConfiguration(speed: 1, sight: 50)
 
         self.init(room: room, configuration: configuration)
     }

@@ -1,6 +1,6 @@
 import Foundation
 
-class Mushroom : Creature {
+class Mushroom: Creature {
     override func imageName() -> String {
         return "mushroom"
     }

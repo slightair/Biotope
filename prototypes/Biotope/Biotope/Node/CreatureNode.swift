@@ -2,14 +2,16 @@ import SpriteKit
 import RxSwift
 import SwiftGraphics
 
-class CreatureNode : SKSpriteNode {
-    let creature : Creature
+class CreatureNode: SKNode {
+    let creature: Creature
+    var sightNode: SKShapeNode?
+    var spriteNode: SKSpriteNode?
 
     required init(creature: Creature) {
         self.creature = creature
+        super.init()
 
-        let texture = SKTexture(imageNamed: creature.imageName())
-        super.init(texture: texture, color: UIColor.whiteColor(), size: texture.size())
+        setUpNodes()
 
         creature.positionChanged
             >- subscribeNext { position in
@@ -29,6 +31,14 @@ class CreatureNode : SKSpriteNode {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func setUpNodes() {
+        sightNode = SKShapeNode(circleOfRadius: CGFloat(creature.configuration.sight))
+        addChild(sightNode!)
+
+        spriteNode = SKSpriteNode(imageNamed: creature.imageName())
+        addChild(spriteNode!)
     }
 }
 
