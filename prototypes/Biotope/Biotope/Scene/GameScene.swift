@@ -17,6 +17,7 @@ class GameScene: SKScene {
 
     func setUpWorld() {
         world = World()
+        world.construct()
 
         let canvasSize = CGSizeMake(CGFloat(world.width), CGFloat(world.height))
         worldNode = WorldNode(rectOfSize: canvasSize)

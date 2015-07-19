@@ -20,6 +20,13 @@ struct Position: Printable {
                         y: (left.y + right.y) / 2.0)
     }
 
+    func distanceTo(another: Position) -> Double {
+        let distX = another.x - x
+        let distY = another.y - y
+
+        return sqrt(distX * distX + distY * distY)
+    }
+
     var CGPointValue: CGPoint {
         get {
             return CGPointMake(CGFloat(x), CGFloat(y))

@@ -8,6 +8,7 @@ struct Room: Location {
     let type: Type
     let position: Position
     let size: Double
+    let world: World
 
     func randomPosition() -> Position {
         let radius = Double(arc4random_uniform(UInt32(size / 2))) * 0.8

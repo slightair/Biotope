@@ -3,15 +3,21 @@ import Foundation
 class World {
     let width: Double
     let height: Double
-    let rooms: [Room]
-    let bridges: [Bridge]
-    let creatures: [Creature]
+    var rooms: [Room]
+    var bridges: [Bridge]
+    var creatures: [Creature]
 
     init() {
         width = 2048
         height = 2048
 
-        let room = Room(type: .Green, position: Position(x: 0, y: 0), size: 512)
+        rooms = []
+        bridges = []
+        creatures = []
+    }
+
+    func construct() {
+        let room = Room(type: .Green, position: Position(x: 0, y: 0), size: 512, world: self)
 
         rooms = [room]
 
