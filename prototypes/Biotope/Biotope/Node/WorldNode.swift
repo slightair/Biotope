@@ -71,6 +71,9 @@ class WorldNode: SKShapeNode {
             creatureNode.position = creature.position.CGPointValue
             
             creatureLayer.addChild(creatureNode)
+            if let directionNode = creatureNode.directionNode {
+                creatureLayer.addChild(directionNode) // for Debug
+            }
         }
     }
 }

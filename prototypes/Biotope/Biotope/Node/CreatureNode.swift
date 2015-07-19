@@ -10,6 +10,7 @@ class CreatureNode: SKNode {
     // for Debug
     var sightNode: SKShapeNode?
     var positionNode: SKLabelNode?
+    var directionNode: SKShapeNode?
 
     required init(creature: Creature) {
         self.creature = creature
@@ -36,6 +37,11 @@ class CreatureNode: SKNode {
             >- subscribeNext { currentTime in
                 self.creature.position = Position(point: self.position)
                 self.positionNode?.text = "\(creature.position)"
+
+                let path = CGPathCreateMutable()
+                path.move(creature.position.CGPointValue)
+                path.addLine(creature.targetPosition.CGPointValue)
+                self.directionNode?.path = path
             }
     }
 
@@ -44,10 +50,12 @@ class CreatureNode: SKNode {
     }
 
     func setUpNodes() {
-        sightNode = SKShapeNode(circleOfRadius: CGFloat(creature.configuration.sight))
-        sightNode?.fillColor = UIColor.flatLimeColor().colorWithAlphaComponent(0.3)
-        sightNode?.lineWidth = 0
-        addChild(sightNode!)
+        if creature.configuration.sight > 0 {
+            sightNode = SKShapeNode(circleOfRadius: CGFloat(creature.configuration.sight))
+            sightNode?.fillColor = UIColor.flatLimeColor().colorWithAlphaComponent(0.3)
+            sightNode?.lineWidth = 0
+            addChild(sightNode!)
+        }
 
         spriteNode = SKSpriteNode(imageNamed: creature.imageName())
         addChild(spriteNode!)
@@ -57,6 +65,12 @@ class CreatureNode: SKNode {
         positionNode?.fontColor = .flatTealColor()
         positionNode?.position = CGPointMake(0, -24)
         addChild(positionNode!)
+
+        if creature.configuration.speed > 0 {
+            directionNode = SKShapeNode()
+            directionNode?.strokeColor = UIColor.flatOrangeColor().colorWithAlphaComponent(0.75)
+            directionNode?.lineWidth = 3.0
+        }
     }
 }
 
