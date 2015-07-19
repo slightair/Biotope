@@ -5,18 +5,20 @@ class Creature {
     let configuration: CreatureConfiguration
 
     var location: Location
-    var position: Position {
+    var position: Position
+    var targetPosition: Position {
         didSet {
-            sendNext(self.positionChanged, self.position)
+            sendNext(self.targetPositionChanged, self.targetPosition)
         }
     }
     var isMoving = false
 
-    let positionChanged = PublishSubject<Position>()
+    let targetPositionChanged = PublishSubject<Position>()
 
     required init(room: Room, configuration: CreatureConfiguration) {
         self.location = room
         self.position = room.randomPosition()
+        self.targetPosition = self.position
         self.configuration = configuration
     }
 

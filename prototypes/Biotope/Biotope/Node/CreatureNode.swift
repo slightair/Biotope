@@ -1,11 +1,15 @@
 import SpriteKit
 import RxSwift
 import SwiftGraphics
+import ChameleonFramework
 
 class CreatureNode: SKNode {
     let creature: Creature
-    var sightNode: SKShapeNode?
     var spriteNode: SKSpriteNode?
+
+    // for Debug
+    var sightNode: SKShapeNode?
+    var positionNode: SKLabelNode?
 
     required init(creature: Creature) {
         self.creature = creature
@@ -13,7 +17,7 @@ class CreatureNode: SKNode {
 
         setUpNodes()
 
-        creature.positionChanged
+        creature.targetPositionChanged
             >- subscribeNext { position in
                 self.removeAllActions()
 
@@ -27,6 +31,12 @@ class CreatureNode: SKNode {
                 }
                 self.runAction(SKAction.sequence([action, completion]))
             }
+
+        GameScenePaceMaker.defaultPaceMaker.paceSubject
+            >- subscribeNext { currentTime in
+                self.creature.position = Position(point: self.position)
+                self.positionNode?.text = "\(creature.position)"
+            }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -35,10 +45,18 @@ class CreatureNode: SKNode {
 
     func setUpNodes() {
         sightNode = SKShapeNode(circleOfRadius: CGFloat(creature.configuration.sight))
+        sightNode?.fillColor = UIColor.flatLimeColor().colorWithAlphaComponent(0.3)
+        sightNode?.lineWidth = 0
         addChild(sightNode!)
 
         spriteNode = SKSpriteNode(imageNamed: creature.imageName())
         addChild(spriteNode!)
+
+        positionNode = SKLabelNode(fontNamed: "Arial")
+        positionNode?.fontSize = 10
+        positionNode?.fontColor = .flatTealColor()
+        positionNode?.position = CGPointMake(0, -24)
+        addChild(positionNode!)
     }
 }
 

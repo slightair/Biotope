@@ -22,7 +22,7 @@ class Elephant: Creature {
 
                 switch self.location {
                 case let currentRoom as Room:
-                    self.position = currentRoom.randomPosition()
+                    self.targetPosition = currentRoom.randomPosition()
                 default:
                     return
                 }
