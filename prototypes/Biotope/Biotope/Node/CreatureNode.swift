@@ -35,14 +35,12 @@ class CreatureNode: SKNode {
 
         creature.lifeSubject
             >- subscribeCompleted {
-                self.spriteNode?.color = UIColor.blackColor()
-                self.spriteNode?.colorBlendFactor = 0.5
+                self.runDeadAnimation()
             }
 
         GameScenePaceMaker.defaultPaceMaker.paceSubject
             >- subscribeNext { currentTime in
                 self.collisionCheck()
-
                 self.updateDebugInfo()
             }
     }
@@ -73,6 +71,16 @@ class CreatureNode: SKNode {
             directionNode?.strokeColor = UIColor.flatOrangeColor().colorWithAlphaComponent(0.75)
             directionNode?.lineWidth = 3.0
         }
+    }
+
+    func runDeadAnimation() {
+        self.spriteNode?.color = UIColor.blackColor()
+        self.spriteNode?.colorBlendFactor = 0.5
+
+        let reduceAction = SKAction.scaleTo(0.0, duration: 1.0)
+        runAction(SKAction.sequence([reduceAction, SKAction.removeFromParent()]), completion: {
+            self.creature.decompose()
+        })
     }
 
     func collisionCheck() {

@@ -43,8 +43,7 @@ class Elephant: Creature {
     func foundTarget() -> Creature? {
         switch self.location {
         case let currentRoom as Room:
-            let world = currentRoom.world
-            let visibleCreatures = world.creatures
+            let visibleCreatures = Array(world.creatures)
                 .filter { $0 is Mushroom }
                 .filter { !$0.isDead }
                 .map { ($0, self.position.distanceTo($0.position)) }

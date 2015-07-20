@@ -1,12 +1,17 @@
 import Foundation
 import RxSwift
 
-class Creature: Printable {
+func ==(lhs: Creature, rhs: Creature) -> Bool {
+    return lhs.hashValue == rhs.hashValue
+}
+
+class Creature: Printable, Hashable, Equatable {
     static var autoIncrementID = 1
 
     let id: Int
     let configuration: CreatureConfiguration
 
+    let world: World
     var location: Location
     var position: Position
     var targetPosition: Position {
@@ -30,7 +35,14 @@ class Creature: Printable {
         return "\(self.dynamicType)#\(id)"
     }
 
+    var hashValue: Int {
+        get {
+            return description.hashValue
+        }
+    }
+
     required init(room: Room, configuration: CreatureConfiguration) {
+        self.world = room.world
         self.location = room
         self.position = room.randomPosition()
         self.targetPosition = self.position
@@ -58,5 +70,9 @@ class Creature: Printable {
 
     func killedBy(killer: Creature) {
         isDead = true
+    }
+
+    func decompose() {
+        world.removeCreature(self)
     }
 }
