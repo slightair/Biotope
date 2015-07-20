@@ -33,15 +33,17 @@ class CreatureNode: SKNode {
                 self.runAction(SKAction.sequence([action, completion]))
             }
 
+        creature.lifeSubject
+            >- subscribeCompleted {
+                self.spriteNode?.color = UIColor.blackColor()
+                self.spriteNode?.colorBlendFactor = 0.5
+            }
+
         GameScenePaceMaker.defaultPaceMaker.paceSubject
             >- subscribeNext { currentTime in
-                self.creature.position = Position(point: self.position)
-                self.positionNode?.text = "\(creature.position)"
+                self.collisionCheck()
 
-                let path = CGPathCreateMutable()
-                path.move(creature.position.CGPointValue)
-                path.addLine(creature.targetPosition.CGPointValue)
-                self.directionNode?.path = path
+                self.updateDebugInfo()
             }
     }
 
@@ -72,5 +74,29 @@ class CreatureNode: SKNode {
             directionNode?.lineWidth = 3.0
         }
     }
-}
 
+    func collisionCheck() {
+        if !creature.configuration.isActive {
+            return
+        }
+
+        let creatureNodes = parent!.children.filter { $0 is CreatureNode } as! [CreatureNode]
+        let collisionCreatures = creatureNodes.filter { $0 != self }
+                                              .filter { self.spriteNode!.intersectsNode($0.spriteNode!) }
+                                              .map { $0.creature }
+
+        for creature in collisionCreatures {
+            self.creature.collisionTo(creature)
+        }
+    }
+
+    func updateDebugInfo() {
+        creature.position = Position(point: position)
+        positionNode?.text = "\(creature.position)"
+
+        let path = CGPathCreateMutable()
+        path.move(creature.position.CGPointValue)
+        path.addLine(creature.targetPosition.CGPointValue)
+        directionNode?.path = path
+    }
+}

@@ -3,7 +3,7 @@ import RxSwift
 
 class Elephant: Creature {
     convenience init(room: Room) {
-        let configuration = CreatureConfiguration(speed: 1, sight: 50)
+        let configuration = CreatureConfiguration(speed: 1, sight: 50, isActive: true)
 
         self.init(room: room, configuration: configuration)
     }
@@ -34,12 +34,19 @@ class Elephant: Creature {
         }
     }
 
+    override func collisionTo(another: Creature) {
+        if another is Mushroom {
+            another.killedBy(self)
+        }
+    }
+
     func foundTarget() -> Creature? {
         switch self.location {
         case let currentRoom as Room:
             let world = currentRoom.world
             let visibleCreatures = world.creatures
                 .filter { $0 is Mushroom }
+                .filter { !$0.isDead }
                 .map { ($0, self.position.distanceTo($0.position)) }
                 .filter { $0.1 < self.configuration.sight }
                 .sorted { $0.1 < $1.1 }

@@ -15,8 +15,16 @@ class Creature: Printable {
         }
     }
     var isMoving = false
+    var isDead = false {
+        didSet {
+            if isDead {
+                sendCompleted(lifeSubject)
+            }
+        }
+    }
 
     let targetPositionChanged = PublishSubject<Position>()
+    let lifeSubject = PublishSubject<Int>()
 
     var description: String {
         return "\(self.dynamicType)#\(id)"
@@ -31,7 +39,7 @@ class Creature: Printable {
     }
 
     convenience init(room: Room) {
-        let configuration = CreatureConfiguration(speed: 0, sight: 0)
+        let configuration = CreatureConfiguration(speed: 0, sight: 0, isActive: false)
 
         self.init(room: room, configuration: configuration)
     }
@@ -42,5 +50,13 @@ class Creature: Printable {
 
     func run() {
         fatalError("run() has not been implemented")
+    }
+
+    func collisionTo(another: Creature) {
+        fatalError("collisionTo(another: Creature) has not been implemented")
+    }
+
+    func killedBy(killer: Creature) {
+        isDead = true
     }
 }

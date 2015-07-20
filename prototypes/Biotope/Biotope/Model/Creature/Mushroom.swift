@@ -8,4 +8,8 @@ class Mushroom: Creature {
     override func run() {
 
     }
+
+    override func collisionTo(another: Creature) {
+
+    }
 }
