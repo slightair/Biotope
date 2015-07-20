@@ -1,7 +1,10 @@
 import Foundation
 import RxSwift
 
-class Creature {
+class Creature: Printable {
+    static var autoIncrementID = 1
+
+    let id: Int
     let configuration: CreatureConfiguration
 
     var location: Location
@@ -15,11 +18,16 @@ class Creature {
 
     let targetPositionChanged = PublishSubject<Position>()
 
+    var description: String {
+        return "\(self.dynamicType)#\(id)"
+    }
+
     required init(room: Room, configuration: CreatureConfiguration) {
         self.location = room
         self.position = room.randomPosition()
         self.targetPosition = self.position
         self.configuration = configuration
+        self.id = Creature.autoIncrementID++
     }
 
     convenience init(room: Room) {
