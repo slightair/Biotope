@@ -5,6 +5,19 @@ func ==(lhs: Creature, rhs: Creature) -> Bool {
     return lhs.hashValue == rhs.hashValue
 }
 
+func ==(lhs: Creature.Type, rhs: Creature.Type) -> Bool {
+    return NSStringFromClass(lhs).hashValue == NSStringFromClass(rhs).hashValue
+}
+
+func contains(sequence: [Creature.Type], type: Creature.Type) -> Bool {
+    for t in sequence {
+        if t == type {
+            return true
+        }
+    }
+    return false
+}
+
 class Creature: Printable, Hashable, Equatable {
     static var autoIncrementID = 1
 
@@ -41,6 +54,10 @@ class Creature: Printable, Hashable, Equatable {
         }
     }
 
+    class func defaultConfiguration() -> CreatureConfiguration {
+        fatalError("configuration() has not been implemented")
+    }
+
     required init(room: Room, configuration: CreatureConfiguration) {
         self.world = room.world
         self.location = room
@@ -51,9 +68,7 @@ class Creature: Printable, Hashable, Equatable {
     }
 
     convenience init(room: Room) {
-        let configuration = CreatureConfiguration(speed: 0, sight: 0, isActive: false)
-
-        self.init(room: room, configuration: configuration)
+        self.init(room: room, configuration: self.dynamicType.defaultConfiguration())
     }
 
     func imageName() -> String {
@@ -62,10 +77,6 @@ class Creature: Printable, Hashable, Equatable {
 
     func run() {
         fatalError("run() has not been implemented")
-    }
-
-    func collisionTo(another: Creature) {
-        fatalError("collisionTo(another: Creature) has not been implemented")
     }
 
     func killedBy(killer: Creature) {

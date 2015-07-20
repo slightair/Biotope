@@ -84,7 +84,7 @@ class CreatureNode: SKNode {
     }
 
     func collisionCheck() {
-        if !creature.configuration.isActive {
+        if creature is NonActiveCreature {
             return
         }
 
@@ -94,7 +94,7 @@ class CreatureNode: SKNode {
                                               .map { $0.creature }
 
         for creature in collisionCreatures {
-            self.creature.collisionTo(creature)
+            (self.creature as! ActiveCreature).collisionTo(creature)
         }
     }
 
