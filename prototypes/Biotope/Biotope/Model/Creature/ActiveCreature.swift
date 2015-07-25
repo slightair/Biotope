@@ -7,7 +7,9 @@ class ActiveCreature: Creature {
     }
 
     override func run() {
-        GameScenePaceMaker.defaultPaceMaker.paceSubject
+        super.run()
+
+        GameScenePaceMaker.defaultPaceMaker.pace
             >- subscribeNext { currentTime in
                 if let target = self.foundTarget() {
                     self.startHunting(target)
@@ -22,7 +24,8 @@ class ActiveCreature: Creature {
                 if self.location is Room {
                     self.wanderInRoom()
                 }
-        }
+            }
+            >- compositeDisposable.addDisposable
     }
 
     func collisionTo(another: Creature) {
