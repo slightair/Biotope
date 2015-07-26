@@ -16,7 +16,7 @@ class BridgeNode: SKShapeNode {
     }
 
     func bridgeStrokeColor() -> UIColor {
-        switch bridge.startRoom.type {
+        switch bridge.startRoom.configuration.type {
         case .Red:
             return .flatRedColor()
         case .Green:

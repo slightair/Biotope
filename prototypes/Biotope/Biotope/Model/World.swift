@@ -17,7 +17,8 @@ class World {
     }
 
     func construct() {
-        let room = Room(world: self, type: .Green, position: Position(x: 0, y: 0), size: 512)
+        let roomConfiguration = RoomConfiguration(type: .Green, position: Position(x: 0, y: 0), size: 512, initialNutrition:100)
+        let room = Room(world: self, configuration: roomConfiguration)
 
         rooms = [room]
 

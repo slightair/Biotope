@@ -32,7 +32,7 @@ class RoomNode : SKShapeNode {
     }
 
     func roomStrokeColor() -> UIColor {
-        switch room.type {
+        switch room.configuration.type {
         case .Red:
             return .flatRedColor()
         case .Green:
@@ -49,7 +49,7 @@ class RoomNode : SKShapeNode {
     }
 
     func updatePath() {
-        let size = CGFloat(room.size)
+        let size = CGFloat(room.configuration.size)
         self.path = Circle(center: CGPoint(), radius: size / 2).cgpath
 
         self.lineWidth = 5
@@ -61,7 +61,7 @@ class RoomNode : SKShapeNode {
         nutritionNode = SKLabelNode(fontNamed: "Arial")
         nutritionNode?.fontSize = 14
         nutritionNode?.fontColor = .flatTealColor()
-        nutritionNode?.position = CGPointMake(0, -CGFloat(room.size) / 2 + 32)
+        nutritionNode?.position = CGPointMake(0, -CGFloat(room.configuration.size) / 2 + 32)
         nutritionNode?.text = "N:\(room.nutrition)"
         addChild(nutritionNode!)
     }

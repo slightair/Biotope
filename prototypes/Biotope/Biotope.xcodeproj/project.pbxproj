@@ -18,6 +18,7 @@
 		57573D3E1B5B4135007DCDAE /* CreatureConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57573D3D1B5B4135007DCDAE /* CreatureConfiguration.swift */; };
 		57573D401B5CDE54007DCDAE /* ActiveCreature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57573D3F1B5CDE54007DCDAE /* ActiveCreature.swift */; };
 		57573D421B5CDE9C007DCDAE /* NonActiveCreature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57573D411B5CDE9C007DCDAE /* NonActiveCreature.swift */; };
+		579F8F691B6489A200D54486 /* RoomConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579F8F681B6489A200D54486 /* RoomConfiguration.swift */; };
 		57DACE8F1B4789D30006322E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DACE8E1B4789D30006322E /* AppDelegate.swift */; };
 		57DACE911B4789D30006322E /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 57DACE901B4789D30006322E /* GameScene.sks */; };
 		57DACE931B4789D30006322E /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DACE921B4789D30006322E /* GameScene.swift */; };
@@ -58,6 +59,7 @@
 		57573D3D1B5B4135007DCDAE /* CreatureConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreatureConfiguration.swift; path = Biotope/Model/Creature/CreatureConfiguration.swift; sourceTree = SOURCE_ROOT; };
 		57573D3F1B5CDE54007DCDAE /* ActiveCreature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveCreature.swift; sourceTree = "<group>"; };
 		57573D411B5CDE9C007DCDAE /* NonActiveCreature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NonActiveCreature.swift; sourceTree = "<group>"; };
+		579F8F681B6489A200D54486 /* RoomConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomConfiguration.swift; sourceTree = "<group>"; };
 		57DACE8B1B4789D30006322E /* Biotope.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Biotope.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		57DACE8E1B4789D30006322E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		57DACE901B4789D30006322E /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -107,7 +109,7 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		57573D381B5B3708007DCDAE /* Creture */ = {
+		57573D381B5B3708007DCDAE /* Creature */ = {
 			isa = PBXGroup;
 			children = (
 				57DACEB31B47F1F60006322E /* Creature.swift */,
@@ -117,7 +119,6 @@
 				57573D391B5B373E007DCDAE /* Mushroom.swift */,
 				57573D3B1B5B3747007DCDAE /* Elephant.swift */,
 			);
-			name = Creture;
 			path = Creature;
 			sourceTree = "<group>";
 		};
@@ -172,9 +173,10 @@
 		57DACEAB1B47D1080006322E /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				57573D381B5B3708007DCDAE /* Creture */,
+				57573D381B5B3708007DCDAE /* Creature */,
 				57DACEAC1B47D1260006322E /* World.swift */,
 				57DACEAE1B47D13D0006322E /* Room.swift */,
+				579F8F681B6489A200D54486 /* RoomConfiguration.swift */,
 				57456EA51B4AB16600257EB4 /* Bridge.swift */,
 				57456EAB1B5105C200257EB4 /* Location.swift */,
 				5746EED91B526B32003341C7 /* GameScenePaceMaker.swift */,
@@ -395,6 +397,7 @@
 				57573D3E1B5B4135007DCDAE /* CreatureConfiguration.swift in Sources */,
 				57DACEA81B4791E30006322E /* WorldNode.swift in Sources */,
 				57DACE8F1B4789D30006322E /* AppDelegate.swift in Sources */,
+				579F8F691B6489A200D54486 /* RoomConfiguration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
