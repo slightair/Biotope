@@ -20,20 +20,26 @@ class Creature: Printable, Hashable, Equatable {
             if isDead {
                 println("Dead: \(self)")
                 compositeDisposable.dispose()
-                sendCompleted(lifeSubject)
+                sendCompleted(hpChanged)
             }
         }
     }
     var hp: Int {
         didSet {
-            sendNext(lifeSubject, self.hp)
+            sendNext(hpChanged, self.hp)
+        }
+    }
+    var nutrition: Int {
+        didSet {
+            sendNext(nutritionChanged, self.nutrition)
         }
     }
     var agingCounter: Int = 0
 
     let compositeDisposable = CompositeDisposable()
     let targetPositionChanged = PublishSubject<Position>()
-    let lifeSubject = PublishSubject<Int>()
+    let hpChanged = PublishSubject<Int>()
+    let nutritionChanged = PublishSubject<Int>()
 
     var description: String {
         return "\(self.dynamicType)#\(id)"
@@ -56,6 +62,7 @@ class Creature: Printable, Hashable, Equatable {
         self.targetPosition = self.position
         self.configuration = configuration
         self.hp = configuration.initialHP
+        self.nutrition = configuration.initialNutrition
         self.id = Creature.autoIncrementID++
     }
 
@@ -90,13 +97,26 @@ class Creature: Printable, Hashable, Equatable {
     }
 
     func killedBy(killer: Creature) {
+        let lastHP = hp
         hp = 0
         isDead = true
+
+        let lostNutrition = Int(ceil(Double(nutrition) / 2))
+        nutrition -= lostNutrition
+
+        killer.nutrition += lostNutrition
+        killer.hp += lastHP / 2
     }
 
     func decompose() {
         println("Decompose: \(self)")
         world.removeCreature(self)
+
+        if let room = location as? Room {
+            room.addNutrition(nutrition)
+        } else if let bridge = location as? Bridge {
+            bridge.startRoom.addNutrition(nutrition)
+        }
     }
 }
 

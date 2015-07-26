@@ -6,6 +6,7 @@ class Mushroom: NonActiveCreature {
             speed: 0,
             sight: 0,
             initialHP: 10,
+            initialNutrition: 4,
             agingInterval: 10,
             agingPoint: 1
         )

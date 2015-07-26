@@ -1,18 +1,34 @@
 import SpriteKit
+import RxSwift
 import SwiftGraphics
 
 class RoomNode : SKShapeNode {
     let room : Room
+    let compositeDisposable = CompositeDisposable()
+
+    // for Debug
+    var nutritionNode: SKLabelNode?
 
     required init(room: Room) {
         self.room = room
         super.init()
 
         updatePath()
+        setUpNodes()
+
+        room.nutritionChanged
+            >- subscribeNext { nutrition in
+                nutritionNode?.text = "N:\(nutrition)"
+            }
+            >- compositeDisposable.addDisposable
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        compositeDisposable.dispose()
     }
 
     func roomStrokeColor() -> UIColor {
@@ -39,5 +55,14 @@ class RoomNode : SKShapeNode {
         self.lineWidth = 5
         self.strokeColor = roomStrokeColor()
         self.fillColor = roomFillColor()
+    }
+
+    func setUpNodes() {
+        nutritionNode = SKLabelNode(fontNamed: "Arial")
+        nutritionNode?.fontSize = 14
+        nutritionNode?.fontColor = .flatTealColor()
+        nutritionNode?.position = CGPointMake(0, -CGFloat(room.size) / 2 + 32)
+        nutritionNode?.text = "N:\(room.nutrition)"
+        addChild(nutritionNode!)
     }
 }

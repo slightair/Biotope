@@ -11,6 +11,7 @@ class CreatureNode: SKNode {
     // for Debug
     var sightNode: SKShapeNode?
     var hpNode: SKLabelNode?
+    var nutritionNode: SKLabelNode?
     var directionNode: SKShapeNode?
 
     required init(creature: Creature) {
@@ -35,16 +36,22 @@ class CreatureNode: SKNode {
             }
             >- compositeDisposable.addDisposable
 
-        creature.lifeSubject
+        creature.hpChanged
             >- subscribeNext { hp in
                 hpNode?.text = "HP:\(hp)"
             }
             >- compositeDisposable.addDisposable
 
-        creature.lifeSubject
+        creature.hpChanged
             >- subscribeCompleted {
                 self.compositeDisposable.dispose()
                 self.runDeadAnimation()
+            }
+            >- compositeDisposable.addDisposable
+
+        creature.nutritionChanged
+            >- subscribeNext { nutrition in
+                nutritionNode?.text = "N:\(nutrition)"
             }
             >- compositeDisposable.addDisposable
 
@@ -78,6 +85,13 @@ class CreatureNode: SKNode {
         hpNode?.position = CGPointMake(0, -24)
         hpNode?.text = "HP:\(creature.hp)"
         addChild(hpNode!)
+
+        nutritionNode = SKLabelNode(fontNamed: "Arial")
+        nutritionNode?.fontSize = 10
+        nutritionNode?.fontColor = .flatTealColor()
+        nutritionNode?.position = CGPointMake(0, -34)
+        nutritionNode?.text = "N:\(creature.nutrition)"
+        addChild(nutritionNode!)
 
         if creature.configuration.speed > 0 {
             directionNode = SKShapeNode()

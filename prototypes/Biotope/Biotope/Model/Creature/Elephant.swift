@@ -6,6 +6,7 @@ class Elephant: ActiveCreature {
             speed: 10,
             sight: 50,
             initialHP: 12,
+            initialNutrition: 32,
             agingInterval: 10,
             agingPoint: 3
         )
