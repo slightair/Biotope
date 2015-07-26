@@ -29,7 +29,7 @@ class ActiveCreature: Creature {
     }
 
     func collisionTo(another: Creature) {
-        if isTarget(another) {
+        if isTarget(another) && !another.isDead {
             another.killedBy(self)
         }
     }
