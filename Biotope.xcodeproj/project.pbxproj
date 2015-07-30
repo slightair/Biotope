@@ -88,9 +88,10 @@
 		579F8F751B6A74A600D54486 /* Biotope */ = {
 			isa = PBXGroup;
 			children = (
+				579F8F9E1B6A7B8B00D54486 /* Model */,
+				579F8F9C1B6A7B6D00D54486 /* Scene */,
+				579F8F9D1B6A7B7D00D54486 /* Node */,
 				579F8F781B6A74A600D54486 /* AppDelegate.swift */,
-				579F8F7A1B6A74A600D54486 /* GameScene.sks */,
-				579F8F7C1B6A74A600D54486 /* GameScene.swift */,
 				579F8F7E1B6A74A600D54486 /* GameViewController.swift */,
 				579F8F801B6A74A700D54486 /* Main.storyboard */,
 				579F8F831B6A74A700D54486 /* Images.xcassets */,
@@ -123,6 +124,29 @@
 				579F8F911B6A74A700D54486 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		579F8F9C1B6A7B6D00D54486 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				579F8F7A1B6A74A600D54486 /* GameScene.sks */,
+				579F8F7C1B6A74A600D54486 /* GameScene.swift */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
+		579F8F9D1B6A7B7D00D54486 /* Node */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Node;
+			sourceTree = "<group>";
+		};
+		579F8F9E1B6A7B8B00D54486 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		B349E90CFA818A43BF0AA757 /* Frameworks */ = {
