@@ -1,4 +1,5 @@
 import Foundation
+import RxSwift
 
 class World {
     let width: Double
@@ -6,6 +7,8 @@ class World {
     var rooms: Set<Room>
     var bridges: Set<Bridge>
     var creatures: Set<Creature>
+
+    let creatureEmerged = PublishSubject<Creature>()
 
     init() {
         width = 2048
@@ -17,7 +20,15 @@ class World {
     }
 
     func construct() {
-        let roomConfiguration = RoomConfiguration(type: .Green, position: Position(x: 0, y: 0), size: 512, initialNutrition:100)
+        let roomConfiguration = RoomConfiguration(
+            type: .Green,
+            position: Position(x: 0, y: 0),
+            size: 512,
+            initialNutrition:100,
+            emergingStepCountInterval: 10,
+            emergingCreatures: [Mushroom.self],
+            emergingMaxCount: 16
+        )
         let room = Room(world: self, configuration: roomConfiguration)
 
         rooms = [room]
@@ -41,6 +52,11 @@ class World {
         for creature in creatures {
             creature.run()
         }
+    }
+
+    func emergeCreature(creature: Creature) {
+        self.creatures.insert(creature)
+        sendNext(creatureEmerged, creature)
     }
 
     func removeCreature(creature: Creature) {

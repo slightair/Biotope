@@ -1,4 +1,5 @@
 import SpriteKit
+import RxSwift
 import ChameleonFramework
 import SwiftGraphics
 
@@ -7,6 +8,11 @@ class WorldNode: SKShapeNode {
     let roomLayer = SKNode()
     let bridgeLayer = SKNode()
     let creatureLayer = SKNode()
+    let compositeDisposable = CompositeDisposable()
+
+    deinit {
+        compositeDisposable.dispose()
+    }
 
     func setUp(world: World) {
         setUpLayers()
@@ -15,6 +21,12 @@ class WorldNode: SKShapeNode {
         setUpRooms(world)
         setUpBridges(world)
         setUpCreatures(world)
+
+        world.creatureEmerged
+            >- subscribeNext { creature in
+                self.enterNewCreature(creature)
+            }
+            >- compositeDisposable.addDisposable
     }
 
     func setUpLayers() {
@@ -69,11 +81,29 @@ class WorldNode: SKShapeNode {
         for creature in world.creatures {
             let creatureNode = CreatureNode(creature: creature)
             creatureNode.position = creature.position.CGPointValue
-            
             creatureLayer.addChild(creatureNode)
+
+            // for Debug
             if let directionNode = creatureNode.directionNode {
-                creatureLayer.addChild(directionNode) // for Debug
+                creatureLayer.addChild(directionNode)
             }
         }
+    }
+
+    func enterNewCreature(creature: Creature) {
+        let creatureNode = CreatureNode(creature: creature)
+        creatureNode.position = creature.position.CGPointValue
+        creatureNode.setScale(0.1)
+        creatureLayer.addChild(creatureNode)
+
+        // for Debug
+        if let directionNode = creatureNode.directionNode {
+            creatureLayer.addChild(directionNode)
+        }
+
+        let popAction = SKAction.scaleTo(1.0, duration: 1.0)
+        creatureNode.runAction(popAction, completion: {
+            creature.isBorn = true
+        })
     }
 }

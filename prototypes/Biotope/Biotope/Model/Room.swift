@@ -13,7 +13,9 @@ class Room: Location, Printable, Hashable, Equatable {
             sendNext(nutritionChanged, self.nutrition)
         }
     }
+    var emergingStepCount = 0
     let nutritionChanged = PublishSubject<Int>()
+    let compositeDisposable = CompositeDisposable()
 
     var position: Position {
         get {
@@ -37,6 +39,20 @@ class Room: Location, Printable, Hashable, Equatable {
         self.world = world
         self.configuration = configuration
         self.nutrition = configuration.initialNutrition
+
+        GameScenePaceMaker.defaultPaceMaker.pace
+            >- subscribeNext { interval in
+                self.emergingStepCount++
+                if self.emergingStepCount > self.configuration.emergingStepCountInterval {
+                    self.emergeCreatures()
+                    self.emergingStepCount = 0
+                }
+            }
+            >- compositeDisposable.addDisposable
+    }
+
+    deinit {
+        compositeDisposable.dispose()
     }
 
     func randomPosition() -> Position {
@@ -48,5 +64,20 @@ class Room: Location, Printable, Hashable, Equatable {
 
     func addNutrition(nutrition: Int) {
         self.nutrition += nutrition
+    }
+
+    func emergeCreatures() {
+        for i in 0..<configuration.emergingMaxCount {
+            let needle = arc4random_uniform(UInt32(configuration.emergingCreatures.count))
+            let type = configuration.emergingCreatures[Int(needle)]
+            let needNutrition = type.defaultConfiguration().initialNutrition
+
+            let emerge = arc4random_uniform(4) == 0 && needNutrition <= nutrition
+            if emerge {
+                nutrition -= needNutrition
+                let creature = type(room: self, isBorn: false)
+                world.emergeCreature(creature)
+            }
+        }
     }
 }

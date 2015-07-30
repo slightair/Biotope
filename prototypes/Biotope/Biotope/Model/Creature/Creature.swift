@@ -14,6 +14,14 @@ class Creature: Printable, Hashable, Equatable {
             sendNext(self.targetPositionChanged, self.targetPosition)
         }
     }
+    var isBorn = false {
+        didSet {
+            if isBorn {
+                println("Born: \(self)")
+                run()
+            }
+        }
+    }
     var isMoving = false
     var isDead = false {
         didSet {
@@ -55,7 +63,7 @@ class Creature: Printable, Hashable, Equatable {
         fatalError("configuration() has not been implemented")
     }
 
-    required init(room: Room, configuration: CreatureConfiguration) {
+    required init(room: Room, configuration: CreatureConfiguration, isBorn: Bool) {
         self.world = room.world
         self.location = room
         self.position = room.randomPosition()
@@ -63,11 +71,16 @@ class Creature: Printable, Hashable, Equatable {
         self.configuration = configuration
         self.hp = configuration.initialHP
         self.nutrition = configuration.initialNutrition
+        self.isBorn = isBorn
         self.id = Creature.autoIncrementID++
     }
 
-    convenience init(room: Room) {
-        self.init(room: room, configuration: self.dynamicType.defaultConfiguration())
+    required convenience init(room: Room, isBorn: Bool) {
+        self.init(room: room, configuration: self.dynamicType.defaultConfiguration(), isBorn: isBorn)
+    }
+
+    required convenience init(room: Room) {
+        self.init(room: room, isBorn: true)
     }
 
     func imageName() -> String {

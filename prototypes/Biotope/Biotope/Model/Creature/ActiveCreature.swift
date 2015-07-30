@@ -38,6 +38,7 @@ class ActiveCreature: Creature {
         if self.location is Room {
             let visibleCreatures = Array(world.creatures)
                 .filter { self.isTarget($0) }
+                .filter { $0.isBorn }
                 .filter { !$0.isDead }
                 .map { ($0, self.position.distanceTo($0.position)) }
                 .filter { $0.1 < self.configuration.sight }

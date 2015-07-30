@@ -9,4 +9,7 @@ struct RoomConfiguration {
     let position: Position
     let size: Double
     let initialNutrition: Int
+    let emergingStepCountInterval: Int
+    let emergingCreatures: [Creature.Type]
+    let emergingMaxCount: Int
 }
