@@ -6,7 +6,7 @@ class GameScene: SKScene {
     var mapNode: MapNode!
 
     override func didMoveToView(view: SKView) {
-        mapNode = MapNode(fileNamed: "05")
+        mapNode = MapNode(fileNamed: "05x2")
         canvasNode.addChild(mapNode)
 
         addChild(canvasNode)
