@@ -16,6 +16,16 @@
 		579F8F871B6A74A700D54486 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 579F8F851B6A74A700D54486 /* LaunchScreen.xib */; };
 		579F8F931B6A74A700D54486 /* BiotopeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579F8F921B6A74A700D54486 /* BiotopeTests.swift */; };
 		579F8FA01B6A7CD800D54486 /* CanvasNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579F8F9F1B6A7CD800D54486 /* CanvasNode.swift */; };
+		579F8FA91B6C570200D54486 /* 05.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 579F8FA71B6C570200D54486 /* 05.tmx */; };
+		579F8FAA1B6C570200D54486 /* 05_PointyTop_60x52_60x80.png in Resources */ = {isa = PBXBuildFile; fileRef = 579F8FA81B6C570200D54486 /* 05_PointyTop_60x52_60x80.png */; };
+		57CF2EF81B6CA6BB00F79760 /* MapNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF2EF71B6CA6BB00F79760 /* MapNode.swift */; };
+		57CF2EFB1B6CACCE00F79760 /* TMXMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF2EFA1B6CACCE00F79760 /* TMXMap.swift */; };
+		57CF2EFD1B6CAD4A00F79760 /* TMXMapLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF2EFC1B6CAD4900F79760 /* TMXMapLoader.swift */; };
+		57CF2EFF1B6CCD6200F79760 /* TMXTileset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF2EFE1B6CCD6200F79760 /* TMXTileset.swift */; };
+		57CF2F011B6CCD6C00F79760 /* TMXLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF2F001B6CCD6C00F79760 /* TMXLayer.swift */; };
+		57CF2F031B6CCE0900F79760 /* TMXImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF2F021B6CCE0900F79760 /* TMXImage.swift */; };
+		57CF2F051B6DD44200F79760 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 57CF2F041B6DD44200F79760 /* libz.dylib */; };
+		57CF2F081B6DDE1D00F79760 /* NSData+Inflate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF2F071B6DDE1D00F79760 /* NSData+Inflate.swift */; };
 		D4212BE445D70781DA07DE5A /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B053F8553A27EFCDCF9F52D0 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -43,6 +53,17 @@
 		579F8F911B6A74A700D54486 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		579F8F921B6A74A700D54486 /* BiotopeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiotopeTests.swift; sourceTree = "<group>"; };
 		579F8F9F1B6A7CD800D54486 /* CanvasNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasNode.swift; sourceTree = "<group>"; };
+		579F8FA71B6C570200D54486 /* 05.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = 05.tmx; sourceTree = "<group>"; };
+		579F8FA81B6C570200D54486 /* 05_PointyTop_60x52_60x80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 05_PointyTop_60x52_60x80.png; sourceTree = "<group>"; };
+		579F8FAD1B6C684A00D54486 /* Biotope-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Biotope-Bridging-Header.h"; sourceTree = "<group>"; };
+		57CF2EF71B6CA6BB00F79760 /* MapNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapNode.swift; sourceTree = "<group>"; };
+		57CF2EFA1B6CACCE00F79760 /* TMXMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMXMap.swift; sourceTree = "<group>"; };
+		57CF2EFC1B6CAD4900F79760 /* TMXMapLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMXMapLoader.swift; sourceTree = "<group>"; };
+		57CF2EFE1B6CCD6200F79760 /* TMXTileset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMXTileset.swift; sourceTree = "<group>"; };
+		57CF2F001B6CCD6C00F79760 /* TMXLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMXLayer.swift; sourceTree = "<group>"; };
+		57CF2F021B6CCE0900F79760 /* TMXImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMXImage.swift; sourceTree = "<group>"; };
+		57CF2F041B6DD44200F79760 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		57CF2F071B6DDE1D00F79760 /* NSData+Inflate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+Inflate.swift"; sourceTree = "<group>"; };
 		9644FC8026726035C52F75B9 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		B053F8553A27EFCDCF9F52D0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5013D64761D51706F8DE366 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -53,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57CF2F051B6DD44200F79760 /* libz.dylib in Frameworks */,
 				D4212BE445D70781DA07DE5A /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -75,6 +97,7 @@
 				579F8F741B6A74A600D54486 /* Products */,
 				E15E587C39A1BDB89752599E /* Pods */,
 				B349E90CFA818A43BF0AA757 /* Frameworks */,
+				579F8FAD1B6C684A00D54486 /* Biotope-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -90,6 +113,8 @@
 		579F8F751B6A74A600D54486 /* Biotope */ = {
 			isa = PBXGroup;
 			children = (
+				57CF2F061B6DDDE000F79760 /* Extension */,
+				579F8FA51B6C570200D54486 /* Resource */,
 				579F8F9E1B6A7B8B00D54486 /* Model */,
 				579F8F9C1B6A7B6D00D54486 /* Scene */,
 				579F8F9D1B6A7B7D00D54486 /* Node */,
@@ -141,6 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				579F8F9F1B6A7CD800D54486 /* CanvasNode.swift */,
+				57CF2EF71B6CA6BB00F79760 /* MapNode.swift */,
 			);
 			path = Node;
 			sourceTree = "<group>";
@@ -148,13 +174,52 @@
 		579F8F9E1B6A7B8B00D54486 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				57CF2EF91B6CACA200F79760 /* TMX */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		579F8FA51B6C570200D54486 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				579F8FA61B6C570200D54486 /* Map */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		579F8FA61B6C570200D54486 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				579F8FA71B6C570200D54486 /* 05.tmx */,
+				579F8FA81B6C570200D54486 /* 05_PointyTop_60x52_60x80.png */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		57CF2EF91B6CACA200F79760 /* TMX */ = {
+			isa = PBXGroup;
+			children = (
+				57CF2EFA1B6CACCE00F79760 /* TMXMap.swift */,
+				57CF2EFC1B6CAD4900F79760 /* TMXMapLoader.swift */,
+				57CF2EFE1B6CCD6200F79760 /* TMXTileset.swift */,
+				57CF2F001B6CCD6C00F79760 /* TMXLayer.swift */,
+				57CF2F021B6CCE0900F79760 /* TMXImage.swift */,
+			);
+			path = TMX;
+			sourceTree = "<group>";
+		};
+		57CF2F061B6DDDE000F79760 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				57CF2F071B6DDE1D00F79760 /* NSData+Inflate.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		B349E90CFA818A43BF0AA757 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				57CF2F041B6DD44200F79760 /* libz.dylib */,
 				B053F8553A27EFCDCF9F52D0 /* Pods.framework */,
 			);
 			name = Frameworks;
@@ -252,9 +317,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				579F8FA91B6C570200D54486 /* 05.tmx in Resources */,
 				579F8F871B6A74A700D54486 /* LaunchScreen.xib in Resources */,
 				579F8F841B6A74A700D54486 /* Images.xcassets in Resources */,
 				579F8F7B1B6A74A600D54486 /* GameScene.sks in Resources */,
+				579F8FAA1B6C570200D54486 /* 05_PointyTop_60x52_60x80.png in Resources */,
 				579F8F821B6A74A700D54486 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -321,10 +388,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57CF2F081B6DDE1D00F79760 /* NSData+Inflate.swift in Sources */,
+				57CF2F011B6CCD6C00F79760 /* TMXLayer.swift in Sources */,
+				57CF2EFD1B6CAD4A00F79760 /* TMXMapLoader.swift in Sources */,
 				579F8F7D1B6A74A600D54486 /* GameScene.swift in Sources */,
+				57CF2F031B6CCE0900F79760 /* TMXImage.swift in Sources */,
 				579F8FA01B6A7CD800D54486 /* CanvasNode.swift in Sources */,
 				579F8F7F1B6A74A600D54486 /* GameViewController.swift in Sources */,
 				579F8F791B6A74A600D54486 /* AppDelegate.swift in Sources */,
+				57CF2EFB1B6CACCE00F79760 /* TMXMap.swift in Sources */,
+				57CF2EFF1B6CCD6200F79760 /* TMXTileset.swift in Sources */,
+				57CF2EF81B6CA6BB00F79760 /* MapNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -454,10 +528,13 @@
 			baseConfigurationReference = 9644FC8026726035C52F75B9 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Biotope/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Biotope-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -466,10 +543,12 @@
 			baseConfigurationReference = D5013D64761D51706F8DE366 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Biotope/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Biotope-Bridging-Header.h";
 			};
 			name = Release;
 		};

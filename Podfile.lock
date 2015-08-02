@@ -2,6 +2,7 @@ PODS:
   - ChameleonFramework (1.2.1):
     - ChameleonFramework/Default (= 1.2.1)
   - ChameleonFramework/Default (1.2.1)
+  - Ono (1.2.2)
   - RxSwift (1.8.1)
   - SwiftGraphics/Core (0.0.4)
   - SwiftGraphics/iOS (0.0.4):
@@ -9,11 +10,13 @@ PODS:
 
 DEPENDENCIES:
   - ChameleonFramework
+  - Ono
   - RxSwift
   - SwiftGraphics/iOS
 
 SPEC CHECKSUMS:
   ChameleonFramework: 3476f813ac1615aef0a9a958f05520dfca47e09d
+  Ono: 80b1c686777d3f6d5d5ce6fcac8a74afef4ca197
   RxSwift: 7f3af11a6923f772d21a1e2723f7be660c6ee24f
   SwiftGraphics: e001d90c4a81a162a2d788c3c3cc003830942acf
 

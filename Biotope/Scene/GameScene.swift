@@ -3,8 +3,12 @@ import SwiftGraphics
 
 class GameScene: SKScene {
     let canvasNode = CanvasNode.defaultNode()
+    var mapNode: MapNode!
 
     override func didMoveToView(view: SKView) {
+        mapNode = MapNode(fileNamed: "05")
+        canvasNode.addChild(mapNode)
+
         addChild(canvasNode)
     }
     
