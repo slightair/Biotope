@@ -82,10 +82,11 @@ class TMXMapLoader {
 
     private class func parseTileset(element: ONOXMLElement) -> TMXTileset {
         return TMXTileset(
+            firstGID: element.IntAttribute("firstgid"),
             name: element.StringAttribute("name"),
             tileWidth: element.IntAttribute("tilewidth"),
             tileHeight: element.IntAttribute("tileheight"),
-            images: element.childrenWithTag("image").map{ self.parseImage($0 as! ONOXMLElement) }
+            image: self.parseImage(element.firstChildWithTag("image"))
         )
     }
 
