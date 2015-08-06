@@ -1,11 +1,39 @@
 import SpriteKit
 
 class MapNode: SKShapeNode {
-    let renderMap: TMXMap
+    let map: TMXMap
     var tilesetTextures: [Int: SKTexture] = [:]
 
-    required init(fileNamed: String) {
-        renderMap = TMXMapLoader.load(fileNamed)
+    class func mapSize(map: TMXMap) -> CGSize {
+        return CGSize(
+            CGFloat(map.tileWidth * (map.width + 1) - map.tileWidth / 2),
+            CGFloat((map.tileHeight + map.hexSideLength) / 2 * (map.height + 1))
+        )
+    }
+
+    class func mapOffset(map: TMXMap) -> CGPoint {
+        let mapSize = self.mapSize(map)
+        let offsetX = -(mapSize.width - CGFloat(map.tileWidth)) / 2.0
+        let offsetY = (mapSize.height - CGFloat(map.tileHeight)) / 2.0
+
+        return CGPoint(offsetX, offsetY)
+    }
+
+    class func tilePosition(#index: Int, forMap map: TMXMap) -> CGPoint {
+        let x = index % map.width
+        let y = index / map.width
+        return tilePosition(x: x, y: y, forMap: map)
+    }
+
+    class func tilePosition(#x: Int, y: Int, forMap map: TMXMap) -> CGPoint {
+        return CGPoint(
+            CGFloat(map.tileWidth * x + (y % 2 == 0 ? map.tileWidth / 2 : 0)),
+            CGFloat(-(map.tileHeight + map.hexSideLength) / 2 * y)
+        )
+    }
+
+    required init(map: TMXMap) {
+        self.map = map
         super.init()
 
         loadTilesets()
@@ -17,7 +45,7 @@ class MapNode: SKShapeNode {
     }
 
     func loadTilesets() {
-        for tileset in renderMap.tilesets {
+        for tileset in map.tilesets {
             let masterTexture = SKTexture(imageNamed: tileset.image.source)
 
             let tileWidthRatio = CGFloat(tileset.tileWidth) / CGFloat(tileset.image.width)
@@ -39,28 +67,22 @@ class MapNode: SKShapeNode {
     }
 
     func setUpLayers() {
-        let mapSize = CGSize(
-            CGFloat(renderMap.tileWidth * (renderMap.width + 1) - renderMap.tileWidth / 2),
-            CGFloat((renderMap.tileHeight + renderMap.hexSideLength) / 2 * (renderMap.height + 1))
-        )
-
-        self.fillColor = renderMap.backgroundColor
+        let mapSize = MapNode.mapSize(map)
+        let mapOffset = MapNode.mapOffset(map)
+        self.fillColor = map.backgroundColor
         self.path = CGPathCreateWithRect(CGRectMake(-mapSize.width / 2, -mapSize.height / 2, mapSize.width, mapSize.height), nil)
 
-        let mapXOffset = -(mapSize.width - CGFloat(renderMap.tileWidth)) / 2.0
-        let mapYOffset = (mapSize.height - CGFloat(renderMap.tileHeight)) / 2.0
-
-        for layer in renderMap.layers {
+        for layer in map.layers {
             if !layer.visible {
                 continue
             }
 
             let layerNode = SKNode()
-            layerNode.position = CGPoint(mapXOffset, mapYOffset)
+            layerNode.position = mapOffset
 
             var index = 0
-            for var posY = 0; posY < renderMap.height; posY++ {
-                for var posX = 0; posX < renderMap.width; posX++ {
+            for var posY = 0; posY < map.height; posY++ {
+                for var posX = 0; posX < map.width; posX++ {
                     let chipIndex = layer.data[index]
                     index++
 
@@ -70,10 +92,7 @@ class MapNode: SKShapeNode {
 
                     if let texture = tilesetTextures[chipIndex] {
                         let chipNode = SKSpriteNode(texture: texture)
-                        chipNode.position = CGPoint(
-                            CGFloat(renderMap.tileWidth * posX + (posY % 2 == 0 ? renderMap.tileWidth / 2 : 0)),
-                            CGFloat(-(renderMap.tileHeight + renderMap.hexSideLength) / 2 * posY)
-                        )
+                        chipNode.position = MapNode.tilePosition(x: posX, y: posY, forMap: map)
                         chipNode.zPosition = CGFloat(index)
                         layerNode.addChild(chipNode)
                     }

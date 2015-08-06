@@ -2,14 +2,13 @@ import SpriteKit
 import SwiftGraphics
 
 class GameScene: SKScene {
-    let canvasNode = CanvasNode.defaultNode()
-    var mapNode: MapNode!
+    var world: World!
+    var worldNode: WorldNode!
 
     override func didMoveToView(view: SKView) {
-        mapNode = MapNode(fileNamed: "debug")
-        canvasNode.addChild(mapNode)
-
-        addChild(canvasNode)
+        world = World(named: "debug")
+        worldNode = WorldNode(world)
+        addChild(worldNode)
     }
     
     override func update(currentTime: CFTimeInterval) {
@@ -21,6 +20,6 @@ class GameScene: SKScene {
         let location = touch.locationInNode(self)
         let previousLocation = touch.previousLocationInNode(self)
 
-        canvasNode.position += location - previousLocation
+        worldNode.position += location - previousLocation
     }
 }

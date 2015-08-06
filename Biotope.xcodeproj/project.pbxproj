@@ -30,6 +30,10 @@
 		57CF2F0C1B6E621200F79760 /* 05x2.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 57CF2F0A1B6E621200F79760 /* 05x2.tmx */; };
 		57CF2F0F1B6FBC4600F79760 /* chip.png in Resources */ = {isa = PBXBuildFile; fileRef = 57CF2F0D1B6FBC4600F79760 /* chip.png */; };
 		57CF2F101B6FBC4600F79760 /* debug.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 57CF2F0E1B6FBC4600F79760 /* debug.tmx */; };
+		57CF2F121B70E43A00F79760 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF2F111B70E43A00F79760 /* Cell.swift */; };
+		57CF2F141B71A70400F79760 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF2F131B71A70400F79760 /* World.swift */; };
+		57CF2F161B71A75200F79760 /* WorldNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF2F151B71A75200F79760 /* WorldNode.swift */; };
+		57CF2F181B71AC9600F79760 /* CellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF2F171B71AC9600F79760 /* CellNode.swift */; };
 		D4212BE445D70781DA07DE5A /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B053F8553A27EFCDCF9F52D0 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -72,6 +76,10 @@
 		57CF2F0A1B6E621200F79760 /* 05x2.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = 05x2.tmx; sourceTree = "<group>"; };
 		57CF2F0D1B6FBC4600F79760 /* chip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chip.png; sourceTree = "<group>"; };
 		57CF2F0E1B6FBC4600F79760 /* debug.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = debug.tmx; sourceTree = "<group>"; };
+		57CF2F111B70E43A00F79760 /* Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
+		57CF2F131B71A70400F79760 /* World.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
+		57CF2F151B71A75200F79760 /* WorldNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldNode.swift; sourceTree = "<group>"; };
+		57CF2F171B71AC9600F79760 /* CellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellNode.swift; sourceTree = "<group>"; };
 		9644FC8026726035C52F75B9 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		B053F8553A27EFCDCF9F52D0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5013D64761D51706F8DE366 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -175,6 +183,8 @@
 			children = (
 				579F8F9F1B6A7CD800D54486 /* CanvasNode.swift */,
 				57CF2EF71B6CA6BB00F79760 /* MapNode.swift */,
+				57CF2F151B71A75200F79760 /* WorldNode.swift */,
+				57CF2F171B71AC9600F79760 /* CellNode.swift */,
 			);
 			path = Node;
 			sourceTree = "<group>";
@@ -183,6 +193,8 @@
 			isa = PBXGroup;
 			children = (
 				57CF2EF91B6CACA200F79760 /* TMX */,
+				57CF2F111B70E43A00F79760 /* Cell.swift */,
+				57CF2F131B71A70400F79760 /* World.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -405,10 +417,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				57CF2F081B6DDE1D00F79760 /* NSData+Inflate.swift in Sources */,
+				57CF2F141B71A70400F79760 /* World.swift in Sources */,
 				57CF2F011B6CCD6C00F79760 /* TMXLayer.swift in Sources */,
 				57CF2EFD1B6CAD4A00F79760 /* TMXMapLoader.swift in Sources */,
+				57CF2F161B71A75200F79760 /* WorldNode.swift in Sources */,
+				57CF2F181B71AC9600F79760 /* CellNode.swift in Sources */,
 				579F8F7D1B6A74A600D54486 /* GameScene.swift in Sources */,
 				57CF2F031B6CCE0900F79760 /* TMXImage.swift in Sources */,
+				57CF2F121B70E43A00F79760 /* Cell.swift in Sources */,
 				579F8FA01B6A7CD800D54486 /* CanvasNode.swift in Sources */,
 				579F8F7F1B6A74A600D54486 /* GameViewController.swift in Sources */,
 				579F8F791B6A74A600D54486 /* AppDelegate.swift in Sources */,
