@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		574586361B745C470067C65C /* CreatureNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574586351B745C470067C65C /* CreatureNode.swift */; };
 		579F8F791B6A74A600D54486 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579F8F781B6A74A600D54486 /* AppDelegate.swift */; };
 		579F8F7B1B6A74A600D54486 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 579F8F7A1B6A74A600D54486 /* GameScene.sks */; };
 		579F8F7D1B6A74A600D54486 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579F8F7C1B6A74A600D54486 /* GameScene.swift */; };
@@ -34,6 +35,8 @@
 		57CF2F141B71A70400F79760 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF2F131B71A70400F79760 /* World.swift */; };
 		57CF2F161B71A75200F79760 /* WorldNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF2F151B71A75200F79760 /* WorldNode.swift */; };
 		57CF2F181B71AC9600F79760 /* CellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF2F171B71AC9600F79760 /* CellNode.swift */; };
+		57E97ECB1B7305B0000D951C /* Creature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E97ECA1B7305B0000D951C /* Creature.swift */; };
+		57E97ECD1B7305C9000D951C /* GameScenePaceMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E97ECC1B7305C9000D951C /* GameScenePaceMaker.swift */; };
 		D4212BE445D70781DA07DE5A /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B053F8553A27EFCDCF9F52D0 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -48,6 +51,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		574586351B745C470067C65C /* CreatureNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatureNode.swift; sourceTree = "<group>"; };
 		579F8F731B6A74A600D54486 /* Biotope.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Biotope.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		579F8F771B6A74A600D54486 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		579F8F781B6A74A600D54486 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -80,6 +84,8 @@
 		57CF2F131B71A70400F79760 /* World.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
 		57CF2F151B71A75200F79760 /* WorldNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldNode.swift; sourceTree = "<group>"; };
 		57CF2F171B71AC9600F79760 /* CellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellNode.swift; sourceTree = "<group>"; };
+		57E97ECA1B7305B0000D951C /* Creature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Creature.swift; sourceTree = "<group>"; };
+		57E97ECC1B7305C9000D951C /* GameScenePaceMaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScenePaceMaker.swift; sourceTree = "<group>"; };
 		9644FC8026726035C52F75B9 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		B053F8553A27EFCDCF9F52D0 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5013D64761D51706F8DE366 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -185,6 +191,7 @@
 				57CF2EF71B6CA6BB00F79760 /* MapNode.swift */,
 				57CF2F151B71A75200F79760 /* WorldNode.swift */,
 				57CF2F171B71AC9600F79760 /* CellNode.swift */,
+				574586351B745C470067C65C /* CreatureNode.swift */,
 			);
 			path = Node;
 			sourceTree = "<group>";
@@ -192,9 +199,11 @@
 		579F8F9E1B6A7B8B00D54486 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				57E97EC71B73055A000D951C /* Creature */,
 				57CF2EF91B6CACA200F79760 /* TMX */,
 				57CF2F111B70E43A00F79760 /* Cell.swift */,
 				57CF2F131B71A70400F79760 /* World.swift */,
+				57E97ECC1B7305C9000D951C /* GameScenePaceMaker.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -238,6 +247,14 @@
 				57CF2F071B6DDE1D00F79760 /* NSData+Inflate.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		57E97EC71B73055A000D951C /* Creature */ = {
+			isa = PBXGroup;
+			children = (
+				57E97ECA1B7305B0000D951C /* Creature.swift */,
+			);
+			path = Creature;
 			sourceTree = "<group>";
 		};
 		B349E90CFA818A43BF0AA757 /* Frameworks */ = {
@@ -416,10 +433,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57E97ECD1B7305C9000D951C /* GameScenePaceMaker.swift in Sources */,
 				57CF2F081B6DDE1D00F79760 /* NSData+Inflate.swift in Sources */,
 				57CF2F141B71A70400F79760 /* World.swift in Sources */,
 				57CF2F011B6CCD6C00F79760 /* TMXLayer.swift in Sources */,
 				57CF2EFD1B6CAD4A00F79760 /* TMXMapLoader.swift in Sources */,
+				57E97ECB1B7305B0000D951C /* Creature.swift in Sources */,
+				574586361B745C470067C65C /* CreatureNode.swift in Sources */,
 				57CF2F161B71A75200F79760 /* WorldNode.swift in Sources */,
 				57CF2F181B71AC9600F79760 /* CellNode.swift in Sources */,
 				579F8F7D1B6A74A600D54486 /* GameScene.swift in Sources */,

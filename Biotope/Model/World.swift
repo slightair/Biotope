@@ -3,18 +3,20 @@ import Foundation
 class World {
     let map: TMXMap
     var cells: [Cell]!
+    var creatures: [Creature] = []
 
     init(named name: String) {
         self.map = TMXMapLoader.load(name)
 
         setUpCells()
+        setUpCreatures()
     }
 
     func setUpCells() {
         var cells: [Cell] = []
 
         for index in 0..<(self.map.width * self.map.height) {
-            let cell = Cell(index: index)
+            let cell = Cell(index: index, map: self.map)
             cells.append(cell)
         }
 
@@ -61,5 +63,20 @@ class World {
             }
         }
         self.cells = cells
+    }
+
+    func setUpCreatures() {
+        let needle = arc4random_uniform(UInt32(cells.count))
+        let cell = cells[Int(needle)]
+        println(cell.index)
+
+        let creature = Creature(currentCell: cell)
+        creatures.append(creature)
+    }
+
+    func start() {
+        for creature in creatures {
+            creature.start()
+        }
     }
 }

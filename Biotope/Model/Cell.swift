@@ -8,6 +8,7 @@ class Cell {
     }
 
     let index: Int
+    let map: TMXMap
 
     private var rightCell: Cell?
     private var rightTopCell: Cell?
@@ -16,8 +17,9 @@ class Cell {
     private var leftBottomCell: Cell?
     private var rightBottomCell: Cell?
 
-    init(index: Int) {
+    init(index: Int, map: TMXMap) {
         self.index = index
+        self.map = map
     }
 
     subscript(direction: Direction) -> Cell? {

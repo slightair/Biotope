@@ -9,10 +9,12 @@ class GameScene: SKScene {
         world = World(named: "debug")
         worldNode = WorldNode(world)
         addChild(worldNode)
+
+        world.start()
     }
     
     override func update(currentTime: CFTimeInterval) {
-
+        GameScenePaceMaker.defaultPaceMaker.knock(currentTime)
     }
 
     override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {

@@ -1,4 +1,5 @@
 import SpriteKit
+import SwiftGraphics
 
 class MapNode: SKShapeNode {
     let map: TMXMap
@@ -19,17 +20,25 @@ class MapNode: SKShapeNode {
         return CGPoint(offsetX, offsetY)
     }
 
-    class func tilePosition(#index: Int, forMap map: TMXMap) -> CGPoint {
-        let x = index % map.width
-        let y = index / map.width
-        return tilePosition(x: x, y: y, forMap: map)
-    }
-
-    class func tilePosition(#x: Int, y: Int, forMap map: TMXMap) -> CGPoint {
-        return CGPoint(
+    class func tilePosition(#x: Int, y: Int, forMap map: TMXMap, relative: Bool) -> CGPoint {
+        var position = CGPoint(
             CGFloat(map.tileWidth * x + (y % 2 == 0 ? map.tileWidth / 2 : 0)),
             CGFloat(-(map.tileHeight + map.hexSideLength) / 2 * y)
         )
+        if !relative {
+            position += mapOffset(map)
+        }
+        return position
+    }
+
+    class func tilePosition(#index: Int, forMap map: TMXMap, relative: Bool = false) -> CGPoint {
+        let x = index % map.width
+        let y = index / map.width
+        return tilePosition(x: x, y: y, forMap: map, relative: relative)
+    }
+
+    class func tilePosition(#cell: Cell, relative: Bool = false) -> CGPoint {
+        return tilePosition(index: cell.index, forMap: cell.map, relative: relative)
     }
 
     required init(map: TMXMap) {
@@ -92,8 +101,7 @@ class MapNode: SKShapeNode {
 
                     if let texture = tilesetTextures[chipIndex] {
                         let chipNode = SKSpriteNode(texture: texture)
-                        chipNode.position = MapNode.tilePosition(x: posX, y: posY, forMap: map)
-                        chipNode.zPosition = CGFloat(index)
+                        chipNode.position = MapNode.tilePosition(x: posX, y: posY, forMap: map, relative: true)
                         layerNode.addChild(chipNode)
                     }
                 }
