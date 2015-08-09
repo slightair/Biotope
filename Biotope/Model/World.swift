@@ -68,7 +68,6 @@ class World {
     func setUpCreatures() {
         let needle = arc4random_uniform(UInt32(cells.count))
         let cell = cells[Int(needle)]
-        println(cell.index)
 
         let creature = Creature(currentCell: cell)
         creatures.append(creature)

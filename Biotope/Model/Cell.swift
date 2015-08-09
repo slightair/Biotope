@@ -1,6 +1,10 @@
 import Foundation
 
-class Cell {
+func ==(lhs: Cell, rhs: Cell) -> Bool {
+    return lhs.hashValue == rhs.hashValue
+}
+
+class Cell: Hashable {
     enum Direction: Int {
         case Right, RightTop, LeftTop, Left, LeftBottom, RightBottom
 
@@ -9,6 +13,18 @@ class Cell {
 
     let index: Int
     let map: TMXMap
+
+    var x: Int {
+        return index % map.width
+    }
+
+    var y: Int {
+        return index / map.width
+    }
+
+    var hashValue: Int {
+        return index
+    }
 
     private var rightCell: Cell?
     private var rightTopCell: Cell?

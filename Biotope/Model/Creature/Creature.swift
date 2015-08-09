@@ -4,7 +4,6 @@ import RxSwift
 class Creature {
     var currentCell: Cell {
         didSet {
-            println(currentCell.index)
             sendNext(currentCellChanged, currentCell)
         }
     }

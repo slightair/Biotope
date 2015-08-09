@@ -7,7 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		573150EE1B7752AA00F37E81 /* PathNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574586381B74CDB50067C65C /* PathNode.swift */; };
+		573150EF1B7752AD00F37E81 /* PathFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5745863C1B74D27F0067C65C /* PathFinder.swift */; };
+		573150F11B7752BA00F37E81 /* TMXMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF2EFA1B6CACCE00F79760 /* TMXMap.swift */; };
+		573150F21B7752BC00F37E81 /* TMXMapLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF2EFC1B6CAD4900F79760 /* TMXMapLoader.swift */; };
+		573150F31B7752BF00F37E81 /* TMXTileset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF2EFE1B6CCD6200F79760 /* TMXTileset.swift */; };
+		573150F41B7752CC00F37E81 /* TMXLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF2F001B6CCD6C00F79760 /* TMXLayer.swift */; };
+		573150F51B7752D000F37E81 /* TMXImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF2F021B6CCE0900F79760 /* TMXImage.swift */; };
+		573150F61B7752D300F37E81 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF2F111B70E43A00F79760 /* Cell.swift */; };
+		573150F71B7752D600F37E81 /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF2F131B71A70400F79760 /* World.swift */; };
+		573150F81B7752DA00F37E81 /* GameScenePaceMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E97ECC1B7305C9000D951C /* GameScenePaceMaker.swift */; };
+		573150FA1B77531700F37E81 /* Creature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E97ECA1B7305B0000D951C /* Creature.swift */; };
+		573150FC1B77547E00F37E81 /* NSData+Inflate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF2F071B6DDE1D00F79760 /* NSData+Inflate.swift */; };
+		573150FD1B77549C00F37E81 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 57CF2F041B6DD44200F79760 /* libz.dylib */; };
 		574586361B745C470067C65C /* CreatureNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574586351B745C470067C65C /* CreatureNode.swift */; };
+		574586391B74CDB50067C65C /* PathNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574586381B74CDB50067C65C /* PathNode.swift */; };
+		5745863D1B74D27F0067C65C /* PathFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5745863C1B74D27F0067C65C /* PathFinder.swift */; };
 		579F8F791B6A74A600D54486 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579F8F781B6A74A600D54486 /* AppDelegate.swift */; };
 		579F8F7B1B6A74A600D54486 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 579F8F7A1B6A74A600D54486 /* GameScene.sks */; };
 		579F8F7D1B6A74A600D54486 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579F8F7C1B6A74A600D54486 /* GameScene.swift */; };
@@ -52,6 +67,8 @@
 
 /* Begin PBXFileReference section */
 		574586351B745C470067C65C /* CreatureNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatureNode.swift; sourceTree = "<group>"; };
+		574586381B74CDB50067C65C /* PathNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathNode.swift; sourceTree = "<group>"; };
+		5745863C1B74D27F0067C65C /* PathFinder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathFinder.swift; sourceTree = "<group>"; };
 		579F8F731B6A74A600D54486 /* Biotope.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Biotope.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		579F8F771B6A74A600D54486 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		579F8F781B6A74A600D54486 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -105,12 +122,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				573150FD1B77549C00F37E81 /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		574586371B74CD5E0067C65C /* PathFinder */ = {
+			isa = PBXGroup;
+			children = (
+				574586381B74CDB50067C65C /* PathNode.swift */,
+				5745863C1B74D27F0067C65C /* PathFinder.swift */,
+			);
+			path = PathFinder;
+			sourceTree = "<group>";
+		};
 		579F8F6A1B6A74A600D54486 = {
 			isa = PBXGroup;
 			children = (
@@ -199,6 +226,7 @@
 		579F8F9E1B6A7B8B00D54486 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				574586371B74CD5E0067C65C /* PathFinder */,
 				57E97EC71B73055A000D951C /* Creature */,
 				57CF2EF91B6CACA200F79760 /* TMX */,
 				57CF2F111B70E43A00F79760 /* Cell.swift */,
@@ -444,7 +472,9 @@
 				57CF2F181B71AC9600F79760 /* CellNode.swift in Sources */,
 				579F8F7D1B6A74A600D54486 /* GameScene.swift in Sources */,
 				57CF2F031B6CCE0900F79760 /* TMXImage.swift in Sources */,
+				574586391B74CDB50067C65C /* PathNode.swift in Sources */,
 				57CF2F121B70E43A00F79760 /* Cell.swift in Sources */,
+				5745863D1B74D27F0067C65C /* PathFinder.swift in Sources */,
 				579F8FA01B6A7CD800D54486 /* CanvasNode.swift in Sources */,
 				579F8F7F1B6A74A600D54486 /* GameViewController.swift in Sources */,
 				579F8F791B6A74A600D54486 /* AppDelegate.swift in Sources */,
@@ -458,7 +488,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				573150FA1B77531700F37E81 /* Creature.swift in Sources */,
+				573150F21B7752BC00F37E81 /* TMXMapLoader.swift in Sources */,
+				573150EE1B7752AA00F37E81 /* PathNode.swift in Sources */,
+				573150F41B7752CC00F37E81 /* TMXLayer.swift in Sources */,
+				573150F31B7752BF00F37E81 /* TMXTileset.swift in Sources */,
+				573150FC1B77547E00F37E81 /* NSData+Inflate.swift in Sources */,
+				573150F71B7752D600F37E81 /* World.swift in Sources */,
 				579F8F931B6A74A700D54486 /* BiotopeTests.swift in Sources */,
+				573150F81B7752DA00F37E81 /* GameScenePaceMaker.swift in Sources */,
+				573150F61B7752D300F37E81 /* Cell.swift in Sources */,
+				573150F51B7752D000F37E81 /* TMXImage.swift in Sources */,
+				573150F11B7752BA00F37E81 /* TMXMap.swift in Sources */,
+				573150EF1B7752AD00F37E81 /* PathFinder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -619,6 +661,7 @@
 				INFOPLIST_FILE = BiotopeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Biotope-Bridging-Header.h";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Biotope.app/Biotope";
 			};
 			name = Debug;
@@ -634,6 +677,7 @@
 				INFOPLIST_FILE = BiotopeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Biotope-Bridging-Header.h";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Biotope.app/Biotope";
 			};
 			name = Release;

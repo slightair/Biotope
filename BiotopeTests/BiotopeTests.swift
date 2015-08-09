@@ -1,11 +1,3 @@
-//
-//  BiotopeTests.swift
-//  BiotopeTests
-//
-//  Created by slightair on 2015/07/31.
-//  Copyright (c) 2015年 slightair. All rights reserved.
-//
-
 import UIKit
 import XCTest
 
@@ -21,16 +13,18 @@ class BiotopeTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
+    func testPerformancePathFinder() {
+        let world = World(named: "debug")
+        let cellA = world.cells[100]
+        let cellB = world.cells[200]
+
+        let pathFinder = PathFinder(source: cellA, destination: cellB)
+        let result = pathFinder.calculate()
+        XCTAssertEqual(result!.map { $0.index }, [100, 117, 133, 150, 166, 183, 184, 200])
+
         self.measureBlock() {
-            // Put the code you want to measure the time of here.
+            let pathFinder = PathFinder(source: cellA, destination: cellB)
+            pathFinder.calculate()
         }
     }
-    
 }
