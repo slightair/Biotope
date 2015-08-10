@@ -1,7 +1,10 @@
 import Foundation
 import RxSwift
 
-class Creature {
+class Creature: Printable {
+    static var autoIncrementID = 1
+
+    let id: Int
     var currentCell: Cell {
         didSet {
             sendNext(currentCellChanged, currentCell)
@@ -11,8 +14,13 @@ class Creature {
     let compositeDisposable = CompositeDisposable()
     var counter = 0
 
+    var description: String {
+        return "\(self.dynamicType)#\(id)"
+    }
+
     init(currentCell: Cell) {
         self.currentCell = currentCell
+        self.id = Creature.autoIncrementID++
     }
 
     func start() {
