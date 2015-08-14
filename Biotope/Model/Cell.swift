@@ -11,15 +11,15 @@ class Cell: Hashable {
         static let values: [Direction] = [.Right, .RightTop, .LeftTop, .Left, .LeftBottom, .RightBottom]
     }
 
+    let world: World
     let index: Int
-    let map: TMXMap
 
     var x: Int {
-        return index % map.width
+        return index % world.map.width
     }
 
     var y: Int {
-        return index / map.width
+        return index / world.map.width
     }
 
     var hashValue: Int {
@@ -33,9 +33,9 @@ class Cell: Hashable {
     private var leftBottomCell: Cell?
     private var rightBottomCell: Cell?
 
-    init(index: Int, map: TMXMap) {
+    init(world: World, index: Int) {
+        self.world = world
         self.index = index
-        self.map = map
     }
 
     subscript(direction: Direction) -> Cell? {

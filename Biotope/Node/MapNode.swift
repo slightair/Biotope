@@ -38,7 +38,7 @@ class MapNode: SKShapeNode {
     }
 
     class func tilePosition(#cell: Cell, relative: Bool = false) -> CGPoint {
-        return tilePosition(index: cell.index, forMap: cell.map, relative: relative)
+        return tilePosition(index: cell.index, forMap: cell.world.map, relative: relative)
     }
 
     required init(map: TMXMap) {

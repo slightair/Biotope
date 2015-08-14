@@ -36,7 +36,7 @@ class CreatureNode: SKNode {
     func changePosition(animated: Bool = true) {
         let newPosition = MapNode.tilePosition(cell: creature.currentCell)
         if animated {
-            runAction(SKAction.moveTo(newPosition, duration: 0.5))
+            runAction(SKAction.moveTo(newPosition, duration: 0.2))
         } else {
             position = newPosition
         }

@@ -1,4 +1,5 @@
 import SpriteKit
+import RxSwift
 import SwiftGraphics
 
 class WorldNode: SKNode {
@@ -8,6 +9,7 @@ class WorldNode: SKNode {
     let canvasNode = CanvasNode.defaultNode()
     let cellLayer = SKNode()
     let creatureLayer = SKNode()
+    let compositeDisposable = CompositeDisposable()
 
     init(_ world: World) {
         self.world = world
@@ -38,6 +40,7 @@ class WorldNode: SKNode {
         for cell in world.cells {
             let cellNode = CellNode(cell, size: CGFloat(60))
             cellNode.position = MapNode.tilePosition(index: cell.index, forMap: world.map)
+            cellNode.name = "Cell-\(cell.index)"
             cellLayer.addChild(cellNode)
         }
     }
@@ -46,6 +49,35 @@ class WorldNode: SKNode {
         for creature in world.creatures {
             let creatureNode = CreatureNode(creature: creature)
             creatureLayer.addChild(creatureNode)
+
+            creature.targetPathFinderChanged
+                >- subscribeNext { pathFinder in
+                    if pathFinder != nil {
+                        self.updateCellNodesMode(pathFinder!)
+                    }
+                }
+                >- compositeDisposable.addDisposable
         }
+    }
+
+    func updateCellNodesMode(pathFinder: PathFinder) {
+        let cellNodes = cellLayer.children.filter { $0 is CellNode }.map { $0 as! CellNode }
+        for cellNode in cellNodes {
+            if cellNode.mode != .Normal {
+                cellNode.mode = .Normal
+            }
+        }
+
+        if let route = pathFinder.result {
+            for (index, cell) in enumerate(route) {
+                if let targetCellNode = cellNodeAtIndex(cell.index) {
+                    targetCellNode.mode = index == route.count - 1 ? .Target : .Route
+                }
+            }
+        }
+    }
+
+    func cellNodeAtIndex(index: Int) -> CellNode? {
+        return cellLayer.childNodeWithName("Cell-\(index)") as? CellNode
     }
 }

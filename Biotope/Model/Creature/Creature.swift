@@ -11,8 +11,30 @@ class Creature: Printable {
         }
     }
     let currentCellChanged = PublishSubject<Cell>()
+
+    var targetPathFinder: PathFinder? {
+        didSet {
+            sendNext(targetPathFinderChanged, targetPathFinder)
+
+            if targetPathFinder != nil && targetPathFinder!.hasRoute {
+                zip(from(targetPathFinder!.result!), GameScenePaceMaker.defaultPaceMaker.pace) { $0.0 }
+                    >- subscribe { event in
+                        switch event {
+                        case .Next(let cell):
+                            self.currentCell = cell.value
+                        case .Error(let error):
+                            fallthrough
+                        case .Completed():
+                            self.targetPathFinder = nil
+                        }
+                    }
+                    >- compositeDisposable.addDisposable
+            }
+        }
+    }
+    let targetPathFinderChanged = PublishSubject<PathFinder?>()
+
     let compositeDisposable = CompositeDisposable()
-    var counter = 0
 
     var description: String {
         return "\(self.dynamicType)#\(id)"
@@ -20,25 +42,27 @@ class Creature: Printable {
 
     init(currentCell: Cell) {
         self.currentCell = currentCell
+        self.targetPathFinder = nil
         self.id = Creature.autoIncrementID++
     }
 
     func start() {
         GameScenePaceMaker.defaultPaceMaker.pace
             >- subscribeNext { currentTime in
-                self.counter++
-
-                if self.counter % 2 == 0 {
-                    var directionIndex = Int(arc4random_uniform(UInt32(Cell.Direction.values.count)))
-                    var nextCell: Cell?
-                    do {
-                        let direction = Cell.Direction(rawValue: directionIndex % Cell.Direction.values.count)!
-                        nextCell = self.currentCell[direction]
-                        directionIndex++
-                    } while nextCell == nil
-                    self.currentCell = nextCell!
+                if self.targetPathFinder != nil {
+                    return
                 }
+                self.findNewTarget()
             }
             >- compositeDisposable.addDisposable
+    }
+
+    func findNewTarget() {
+        let world = currentCell.world
+        let targetCell = world.randomCell(center: currentCell, distance: 3)
+        let pathFinder = PathFinder(source: currentCell, destination: targetCell)
+        pathFinder.calculate()
+
+        targetPathFinder = pathFinder
     }
 }

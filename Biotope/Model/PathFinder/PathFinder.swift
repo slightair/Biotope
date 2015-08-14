@@ -7,6 +7,9 @@ class PathFinder {
     var openedNodes = Set<PathNode>()
     var result: [Cell]? = nil
     var calculated = false
+    var hasRoute: Bool {
+        return calculated && result != nil
+    }
 
     init(source: Cell, destination: Cell) {
         self.source = source

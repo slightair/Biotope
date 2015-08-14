@@ -16,7 +16,7 @@ class World {
         var cells: [Cell] = []
 
         for index in 0..<(self.map.width * self.map.height) {
-            let cell = Cell(index: index, map: self.map)
+            let cell = Cell(world: self, index: index)
             cells.append(cell)
         }
 
@@ -66,10 +66,7 @@ class World {
     }
 
     func setUpCreatures() {
-        let needle = arc4random_uniform(UInt32(cells.count))
-        let cell = cells[Int(needle)]
-
-        let creature = Creature(currentCell: cell)
+        let creature = Creature(currentCell: randomCell())
         creatures.append(creature)
     }
 
@@ -77,5 +74,34 @@ class World {
         for creature in creatures {
             creature.start()
         }
+    }
+
+    func randomCell() -> Cell {
+        let needle = Int(arc4random_uniform(UInt32(cells.count)))
+        return cells[needle]
+    }
+
+    func randomCell(#center: Cell, distance: UInt) -> Cell {
+        var cells: Set<Cell> = []
+        var newCells: [Cell] = [center]
+
+        for _ in 0..<distance {
+            let prevCells = newCells
+            newCells = []
+
+            for prevCell in prevCells {
+                for direction in Cell.Direction.values {
+                    if let foundCell = prevCell[direction] {
+                        cells.insert(foundCell)
+                        newCells.append(foundCell)
+                    }
+                }
+            }
+        }
+
+        cells.remove(center)
+
+        let needle = Int(arc4random_uniform(UInt32(cells.count)))
+        return Array(cells)[needle]
     }
 }
