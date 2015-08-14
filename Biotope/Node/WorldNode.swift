@@ -7,9 +7,13 @@ class WorldNode: SKNode {
     let world: World
     let mapLayer: MapNode
     let canvasNode = CanvasNode.defaultNode()
-    let cellLayer = SKNode()
     let creatureLayer = SKNode()
     let compositeDisposable = CompositeDisposable()
+
+    // for debug
+    let cellIndexLayer = SKNode()
+    let creatureRouteLayer = SKNode()
+    var creatureRouteNodeList: [Int: SKNode] = [:]
 
     init(_ world: World) {
         self.world = world
@@ -17,15 +21,19 @@ class WorldNode: SKNode {
 
         super.init()
 
-        canvasNode.addChild(mapLayer)
-        canvasNode.addChild(cellLayer)
-        canvasNode.addChild(creatureLayer)
+        let layers = [
+            mapLayer,
+            creatureRouteLayer,
+            cellIndexLayer,
+            creatureLayer,
+        ]
 
-        for (index, node) in enumerate([mapLayer, cellLayer, creatureLayer]) {
+        for (index, node) in enumerate(layers) {
             node.zPosition = CGFloat(index + 10000)
+            canvasNode.addChild(node)
         }
 
-        setUpCellLayer()
+        setUpCellIndexLayer()
         setUpCreatureLayer()
 
         addChild(canvasNode)
@@ -35,13 +43,16 @@ class WorldNode: SKNode {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setUpCellLayer() {
+    func setUpCellIndexLayer() {
         let mapOffset = MapNode.mapOffset(world.map)
         for cell in world.cells {
-            let cellNode = CellNode(cell, size: CGFloat(60))
-            cellNode.position = MapNode.tilePosition(index: cell.index, forMap: world.map)
-            cellNode.name = "Cell-\(cell.index)"
-            cellLayer.addChild(cellNode)
+            let indexNode = SKLabelNode(fontNamed: "Arial")
+            indexNode.position = MapNode.tilePosition(index: cell.index, forMap: world.map)
+            indexNode.text = "\(cell.index)"
+            indexNode.fontSize = 16
+            indexNode.verticalAlignmentMode = .Center
+            indexNode.fontColor = .flatBlueColor()
+            cellIndexLayer.addChild(indexNode)
         }
     }
 
@@ -53,31 +64,31 @@ class WorldNode: SKNode {
             creature.targetPathFinderChanged
                 >- subscribeNext { pathFinder in
                     if pathFinder != nil {
-                        self.updateCellNodesMode(pathFinder!)
+                        self.updateCreatureRouteNode(creatureID: creature.id, pathFinder: pathFinder!)
                     }
                 }
                 >- compositeDisposable.addDisposable
         }
     }
 
-    func updateCellNodesMode(pathFinder: PathFinder) {
-        let cellNodes = cellLayer.children.filter { $0 is CellNode }.map { $0 as! CellNode }
-        for cellNode in cellNodes {
-            if cellNode.mode != .Normal {
-                cellNode.mode = .Normal
-            }
+    func updateCreatureRouteNode(#creatureID: Int, pathFinder: PathFinder) {
+        if let prevRouteNode = creatureRouteNodeList[creatureID] {
+            prevRouteNode.removeFromParent()
         }
 
         if let route = pathFinder.result {
-            for (index, cell) in enumerate(route) {
-                if let targetCellNode = cellNodeAtIndex(cell.index) {
-                    targetCellNode.mode = index == route.count - 1 ? .Target : .Route
-                }
-            }
-        }
-    }
+            let routeNode = SKNode()
 
-    func cellNodeAtIndex(index: Int) -> CellNode? {
-        return cellLayer.childNodeWithName("Cell-\(index)") as? CellNode
+            for (index, cell) in enumerate(route) {
+                let cellNode = CellNode(cell, size: CGFloat(60))
+                cellNode.position = MapNode.tilePosition(index: cell.index, forMap: world.map)
+                cellNode.mode = index == route.count - 1 ? .Target : .Route
+
+                routeNode.addChild(cellNode)
+            }
+
+            creatureRouteNodeList[creatureID] = routeNode
+            creatureRouteLayer.addChild(routeNode)
+        }
     }
 }
