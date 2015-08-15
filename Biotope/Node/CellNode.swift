@@ -30,14 +30,7 @@ class CellNode: SKShapeNode {
         self.size = size
         super.init()
 
-        var shapePath = CGPathCreateMutable()
-        shapePath.move(CGPointMake(size * CGFloat(cos(M_PI_2)), size * CGFloat(sin(M_PI_2))))
-        for i in 0..<6 {
-            let r = 2 * M_PI / 6.0 * Double(i + 1) + M_PI_2
-            let point = CGPointMake(size * CGFloat(cos(r)), size * CGFloat(sin(r)))
-            shapePath.addLine(point)
-        }
-        self.path = shapePath
+        self.path = CGPathCreateMutable().addHex(CGPointZero, size: size)
         self.lineWidth = 2
     }
 

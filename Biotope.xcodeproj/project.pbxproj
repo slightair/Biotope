@@ -24,6 +24,7 @@
 		574586391B74CDB50067C65C /* PathNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574586381B74CDB50067C65C /* PathNode.swift */; };
 		5745863D1B74D27F0067C65C /* PathFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5745863C1B74D27F0067C65C /* PathFinder.swift */; };
 		57464EED1B7EEB970059BEE7 /* HexNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57464EEC1B7EEB970059BEE7 /* HexNode.swift */; };
+		57464EEF1B7EF4F20059BEE7 /* CGPath+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57464EEE1B7EF4F20059BEE7 /* CGPath+Hex.swift */; };
 		579F8F791B6A74A600D54486 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579F8F781B6A74A600D54486 /* AppDelegate.swift */; };
 		579F8F7B1B6A74A600D54486 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 579F8F7A1B6A74A600D54486 /* GameScene.sks */; };
 		579F8F7D1B6A74A600D54486 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579F8F7C1B6A74A600D54486 /* GameScene.swift */; };
@@ -71,6 +72,7 @@
 		574586381B74CDB50067C65C /* PathNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathNode.swift; sourceTree = "<group>"; };
 		5745863C1B74D27F0067C65C /* PathFinder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathFinder.swift; sourceTree = "<group>"; };
 		57464EEC1B7EEB970059BEE7 /* HexNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexNode.swift; sourceTree = "<group>"; };
+		57464EEE1B7EF4F20059BEE7 /* CGPath+Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPath+Hex.swift"; sourceTree = "<group>"; };
 		579F8F731B6A74A600D54486 /* Biotope.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Biotope.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		579F8F771B6A74A600D54486 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		579F8F781B6A74A600D54486 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 			isa = PBXGroup;
 			children = (
 				57CF2F071B6DDE1D00F79760 /* NSData+Inflate.swift */,
+				57464EEE1B7EF4F20059BEE7 /* CGPath+Hex.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -470,6 +473,7 @@
 				57CF2F011B6CCD6C00F79760 /* TMXLayer.swift in Sources */,
 				57CF2EFD1B6CAD4A00F79760 /* TMXMapLoader.swift in Sources */,
 				57E97ECB1B7305B0000D951C /* Creature.swift in Sources */,
+				57464EEF1B7EF4F20059BEE7 /* CGPath+Hex.swift in Sources */,
 				574586361B745C470067C65C /* CreatureNode.swift in Sources */,
 				57CF2F161B71A75200F79760 /* WorldNode.swift in Sources */,
 				57CF2F181B71AC9600F79760 /* CellNode.swift in Sources */,
