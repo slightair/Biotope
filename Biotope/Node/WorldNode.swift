@@ -64,15 +64,15 @@ class WorldNode: SKNode {
             creature.targetPathFinderChanged
                 >- subscribeNext { pathFinder in
                     if pathFinder != nil {
-                        self.updateCreatureRouteNode(creatureID: creature.id, pathFinder: pathFinder!)
+                        self.updateCreatureRouteNode(creature: creature, pathFinder: pathFinder!)
                     }
                 }
                 >- compositeDisposable.addDisposable
         }
     }
 
-    func updateCreatureRouteNode(#creatureID: Int, pathFinder: PathFinder) {
-        if let prevRouteNode = creatureRouteNodeList[creatureID] {
+    func updateCreatureRouteNode(#creature: Creature, pathFinder: PathFinder) {
+        if let prevRouteNode = creatureRouteNodeList[creature.id] {
             prevRouteNode.removeFromParent()
         }
 
@@ -82,12 +82,20 @@ class WorldNode: SKNode {
             for (index, cell) in enumerate(route) {
                 let cellNode = CellNode(cell, size: hexSize)
                 cellNode.position = MapNode.tilePosition(index: cell.index, forMap: world.map)
-                cellNode.mode = index == route.count - 1 ? .Target : .Route
+
+                cellNode.strokeColor = UIColor.darkColorWithName(creature.configuration.debugInfo.colorName)
+
+                let baseFillColor = UIColor.colorWithName(creature.configuration.debugInfo.colorName)
+                if index == route.count - 1 {
+                    cellNode.fillColor = baseFillColor.colorWithAlphaComponent(0.3)
+                } else {
+                    cellNode.fillColor = baseFillColor.colorWithAlphaComponent(0.1)
+                }
 
                 routeNode.addChild(cellNode)
             }
 
-            creatureRouteNodeList[creatureID] = routeNode
+            creatureRouteNodeList[creature.id] = routeNode
             creatureRouteLayer.addChild(routeNode)
         }
     }

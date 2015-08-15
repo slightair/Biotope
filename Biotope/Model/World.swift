@@ -67,7 +67,12 @@ class World {
 
     func setUpCreatures() {
         for _ in 1...5 {
-            let creature = Creature(currentCell: randomCell())
+            let creature = Creature(cell: randomCell(), configuration: CreatureConfiguration.AC01)
+            creatures.append(creature)
+        }
+
+        for _ in 1...5 {
+            let creature = Creature(cell: randomCell(), configuration: CreatureConfiguration.NAC01)
             creatures.append(creature)
         }
     }

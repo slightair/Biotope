@@ -12,6 +12,8 @@ class Creature: Printable {
     }
     let currentCellChanged = PublishSubject<Cell>()
 
+    let configuration: CreatureConfiguration
+
     var targetPathFinder: PathFinder? {
         didSet {
             sendNext(targetPathFinderChanged, targetPathFinder)
@@ -34,27 +36,73 @@ class Creature: Printable {
     }
     let targetPathFinderChanged = PublishSubject<PathFinder?>()
 
+    var isBorn = false {
+        didSet {
+            if isBorn {
+                println("Born: \(self)")
+                start()
+            }
+        }
+    }
+
+    var isDead = false {
+        didSet {
+            if isDead {
+                println("Dead: \(self)")
+                compositeDisposable.dispose()
+                sendCompleted(life)
+            }
+        }
+    }
+
+    var hp: Int {
+        didSet {
+            sendNext(life, self.hp)
+        }
+    }
+    let life = PublishSubject<Int>()
+
+    var nutrition: Int {
+        didSet {
+            sendNext(nutritionChanged, self.nutrition)
+        }
+    }
+    let nutritionChanged = PublishSubject<Int>()
+
+    var agingCounter: Int = 0
+
     let compositeDisposable = CompositeDisposable()
 
     var description: String {
         return "\(self.dynamicType)#\(id)"
     }
 
-    init(currentCell: Cell) {
-        self.currentCell = currentCell
+    init(cell: Cell, configuration: CreatureConfiguration, isBorn: Bool) {
+        self.currentCell = cell
+        self.configuration = configuration
         self.targetPathFinder = nil
+        self.hp = configuration.initialHP
+        self.nutrition = configuration.initialNutrition
+        self.isBorn = isBorn
+
         self.id = Creature.autoIncrementID++
     }
 
+    convenience init(cell: Cell, configuration: CreatureConfiguration) {
+        self.init(cell: cell, configuration: configuration, isBorn: true)
+    }
+
     func start() {
-        GameScenePaceMaker.defaultPaceMaker.pace
-            >- subscribeNext { currentTime in
-                if self.targetPathFinder != nil {
-                    return
+        if configuration.type == .Active {
+            GameScenePaceMaker.defaultPaceMaker.pace
+                >- subscribeNext { currentTime in
+                    if self.targetPathFinder != nil {
+                        return
+                    }
+                    self.findNewTarget()
                 }
-                self.findNewTarget()
-            }
-            >- compositeDisposable.addDisposable
+                >- compositeDisposable.addDisposable
+        }
     }
 
     func findNewTarget() {

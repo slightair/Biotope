@@ -27,8 +27,8 @@ class CreatureNode: SKNode {
 
     func setUpNodes() {
         let shapeNode = SKShapeNode(circleOfRadius: 24)
-        shapeNode.strokeColor = .flatGreenColorDark()
-        shapeNode.fillColor = .flatGreenColor()
+        shapeNode.strokeColor = UIColor.darkColorWithName(creature.configuration.debugInfo.colorName)
+        shapeNode.fillColor = UIColor.colorWithName(creature.configuration.debugInfo.colorName)
         shapeNode.lineWidth = 3
         addChild(shapeNode)
     }
