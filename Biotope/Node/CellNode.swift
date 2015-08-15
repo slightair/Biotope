@@ -16,8 +16,10 @@ class CellNode: SKShapeNode {
             case .Normal:
                 self.fillColor = UIColor.clearColor()
             case .Route:
+                self.strokeColor = UIColor.flatGreenColorDark()
                 self.fillColor = UIColor.flatGreenColor().colorWithAlphaComponent(0.1)
             case .Target:
+                self.strokeColor = UIColor.flatGreenColorDark()
                 self.fillColor = UIColor.flatGreenColor().colorWithAlphaComponent(0.3)
             }
         }
@@ -36,6 +38,7 @@ class CellNode: SKShapeNode {
             shapePath.addLine(point)
         }
         self.path = shapePath
+        self.lineWidth = 2
     }
 
     required init?(coder aDecoder: NSCoder) {

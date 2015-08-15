@@ -3,14 +3,14 @@ import RxSwift
 import SwiftGraphics
 
 class WorldNode: SKNode {
-
     let world: World
     let mapLayer: MapNode
-    let canvasNode = CanvasNode.defaultNode()
     let creatureLayer = SKNode()
     let compositeDisposable = CompositeDisposable()
 
     // for debug
+    let hexSize: CGFloat = 60
+    let hexLayer: HexNode
     let cellIndexLayer = SKNode()
     let creatureRouteLayer = SKNode()
     var creatureRouteNodeList: [Int: SKNode] = [:]
@@ -18,11 +18,13 @@ class WorldNode: SKNode {
     init(_ world: World) {
         self.world = world
         self.mapLayer = MapNode(map: world.map)
+        self.hexLayer = HexNode(world: world, hexSize: hexSize)
 
         super.init()
 
         let layers = [
-            mapLayer,
+//            mapLayer,
+            hexLayer,
             creatureRouteLayer,
             cellIndexLayer,
             creatureLayer,
@@ -30,13 +32,11 @@ class WorldNode: SKNode {
 
         for (index, node) in enumerate(layers) {
             node.zPosition = CGFloat(index + 10000)
-            canvasNode.addChild(node)
+            addChild(node)
         }
 
         setUpCellIndexLayer()
         setUpCreatureLayer()
-
-        addChild(canvasNode)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -80,7 +80,7 @@ class WorldNode: SKNode {
             let routeNode = SKNode()
 
             for (index, cell) in enumerate(route) {
-                let cellNode = CellNode(cell, size: CGFloat(60))
+                let cellNode = CellNode(cell, size: hexSize)
                 cellNode.position = MapNode.tilePosition(index: cell.index, forMap: world.map)
                 cellNode.mode = index == route.count - 1 ? .Target : .Route
 
