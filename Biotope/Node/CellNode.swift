@@ -11,7 +11,7 @@ class CellNode: SKShapeNode {
         self.size = size
         super.init()
 
-        self.path = CGPathCreateMutable().addHex(CGPointZero, size: size)
+        self.path = CGPathCreateMutable().addHex(size: size)
         self.lineWidth = 2
     }
 

@@ -10,11 +10,25 @@ class Creature: Printable, Hashable {
 
     let id: Int
     var currentCell: Cell {
+        willSet {
+            for direction in Cell.Direction.values {
+                if currentCell[direction] == newValue {
+                    currentDirection = direction
+                }
+            }
+        }
         didSet {
             sendNext(currentCellChanged, currentCell)
         }
     }
     let currentCellChanged = PublishSubject<Cell>()
+
+    var currentDirection: Cell.Direction = .RightBottom {
+        didSet {
+            sendNext(currentDirectionChanged, currentDirection)
+        }
+    }
+    let currentDirectionChanged = PublishSubject<Cell.Direction>()
 
     let configuration: CreatureConfiguration
 
@@ -73,14 +87,14 @@ class Creature: Printable, Hashable {
 
     var hp: Int {
         didSet {
-            sendNext(life, self.hp)
+            sendNext(life, hp)
         }
     }
     let life = PublishSubject<Int>()
 
     var nutrition: Int {
         didSet {
-            sendNext(nutritionChanged, self.nutrition)
+            sendNext(nutritionChanged, nutrition)
         }
     }
     let nutritionChanged = PublishSubject<Int>()

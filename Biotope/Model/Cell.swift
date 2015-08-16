@@ -17,7 +17,7 @@ class Cell: Printable, Hashable {
 
     var nutrition = 0 {
         didSet {
-            sendNext(nutritionChanged, self.nutrition)
+            sendNext(nutritionChanged, nutrition)
         }
     }
     let nutritionChanged = PublishSubject<Int>()

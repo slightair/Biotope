@@ -17,11 +17,18 @@ class CreatureNode: SKNode {
 
         setUpNodes()
         changePosition(animated: false)
+        changeDirection()
 
         creature.currentCellChanged
             >- subscribeNext { cell in
                 self.removeAllActions()
                 self.changePosition()
+            }
+            >- compositeDisposable.addDisposable
+
+        creature.currentDirectionChanged
+            >- subscribeNext { direction in
+                self.changeDirection()
             }
             >- compositeDisposable.addDisposable
 
@@ -63,7 +70,7 @@ class CreatureNode: SKNode {
     }
 
     func setUpNodes() {
-        shapeNode = SKShapeNode(circleOfRadius: 24)
+        shapeNode = SKShapeNode(path: CGPathCreateMutable().addArrow(size: 36))
         shapeNode.strokeColor = UIColor.darkColorWithName(creature.configuration.debugInfo.colorName)
         shapeNode.fillColor = UIColor.colorWithName(creature.configuration.debugInfo.colorName)
         shapeNode.lineWidth = 3
@@ -92,6 +99,12 @@ class CreatureNode: SKNode {
         } else {
             position = newPosition
         }
+    }
+
+    func changeDirection() {
+        let angle = CGFloat(2 * M_PI / Double(Cell.Direction.values.count) * Double(creature.currentDirection.rawValue))
+        let rotateAction = SKAction.rotateToAngle(angle, duration: 0)
+        self.shapeNode.runAction(rotateAction)
     }
 
     func runDeadAnimation() {

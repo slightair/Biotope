@@ -21,7 +21,7 @@ class HexNode: SKShapeNode {
         let path = CGPathCreateMutable()
 
         for cell in world.cells {
-            path.addHex(MapNode.tilePosition(cell: cell), size: hexSize)
+            path.addHex(position: MapNode.tilePosition(cell: cell), size: hexSize)
         }
 
         self.path = path
