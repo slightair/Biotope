@@ -35,9 +35,6 @@
 		579F8F841B6A74A700D54486 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 579F8F831B6A74A700D54486 /* Images.xcassets */; };
 		579F8F871B6A74A700D54486 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 579F8F851B6A74A700D54486 /* LaunchScreen.xib */; };
 		579F8F931B6A74A700D54486 /* BiotopeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579F8F921B6A74A700D54486 /* BiotopeTests.swift */; };
-		579F8FA01B6A7CD800D54486 /* CanvasNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579F8F9F1B6A7CD800D54486 /* CanvasNode.swift */; };
-		579F8FA91B6C570200D54486 /* 05.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 579F8FA71B6C570200D54486 /* 05.tmx */; };
-		579F8FAA1B6C570200D54486 /* 05_PointyTop_60x52_60x80.png in Resources */ = {isa = PBXBuildFile; fileRef = 579F8FA81B6C570200D54486 /* 05_PointyTop_60x52_60x80.png */; };
 		57B63E251B7F170300782D09 /* UIColor+Named.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B63E241B7F170300782D09 /* UIColor+Named.swift */; };
 		57CF2EF81B6CA6BB00F79760 /* MapNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF2EF71B6CA6BB00F79760 /* MapNode.swift */; };
 		57CF2EFB1B6CACCE00F79760 /* TMXMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF2EFA1B6CACCE00F79760 /* TMXMap.swift */; };
@@ -47,8 +44,6 @@
 		57CF2F031B6CCE0900F79760 /* TMXImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF2F021B6CCE0900F79760 /* TMXImage.swift */; };
 		57CF2F051B6DD44200F79760 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 57CF2F041B6DD44200F79760 /* libz.dylib */; };
 		57CF2F081B6DDE1D00F79760 /* NSData+Inflate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF2F071B6DDE1D00F79760 /* NSData+Inflate.swift */; };
-		57CF2F0B1B6E621200F79760 /* 05_PointyTop_60x52_60x80_2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 57CF2F091B6E621200F79760 /* 05_PointyTop_60x52_60x80_2x.png */; };
-		57CF2F0C1B6E621200F79760 /* 05x2.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 57CF2F0A1B6E621200F79760 /* 05x2.tmx */; };
 		57CF2F0F1B6FBC4600F79760 /* chip.png in Resources */ = {isa = PBXBuildFile; fileRef = 57CF2F0D1B6FBC4600F79760 /* chip.png */; };
 		57CF2F101B6FBC4600F79760 /* debug.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 57CF2F0E1B6FBC4600F79760 /* debug.tmx */; };
 		57CF2F121B70E43A00F79760 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CF2F111B70E43A00F79760 /* Cell.swift */; };
@@ -89,9 +84,6 @@
 		579F8F8C1B6A74A700D54486 /* BiotopeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BiotopeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		579F8F911B6A74A700D54486 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		579F8F921B6A74A700D54486 /* BiotopeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiotopeTests.swift; sourceTree = "<group>"; };
-		579F8F9F1B6A7CD800D54486 /* CanvasNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasNode.swift; sourceTree = "<group>"; };
-		579F8FA71B6C570200D54486 /* 05.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = 05.tmx; sourceTree = "<group>"; };
-		579F8FA81B6C570200D54486 /* 05_PointyTop_60x52_60x80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 05_PointyTop_60x52_60x80.png; sourceTree = "<group>"; };
 		579F8FAD1B6C684A00D54486 /* Biotope-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Biotope-Bridging-Header.h"; sourceTree = "<group>"; };
 		57B63E241B7F170300782D09 /* UIColor+Named.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Named.swift"; sourceTree = "<group>"; };
 		57CF2EF71B6CA6BB00F79760 /* MapNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapNode.swift; sourceTree = "<group>"; };
@@ -102,8 +94,6 @@
 		57CF2F021B6CCE0900F79760 /* TMXImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMXImage.swift; sourceTree = "<group>"; };
 		57CF2F041B6DD44200F79760 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		57CF2F071B6DDE1D00F79760 /* NSData+Inflate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+Inflate.swift"; sourceTree = "<group>"; };
-		57CF2F091B6E621200F79760 /* 05_PointyTop_60x52_60x80_2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 05_PointyTop_60x52_60x80_2x.png; sourceTree = "<group>"; };
-		57CF2F0A1B6E621200F79760 /* 05x2.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = 05x2.tmx; sourceTree = "<group>"; };
 		57CF2F0D1B6FBC4600F79760 /* chip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chip.png; sourceTree = "<group>"; };
 		57CF2F0E1B6FBC4600F79760 /* debug.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = debug.tmx; sourceTree = "<group>"; };
 		57CF2F111B70E43A00F79760 /* Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
@@ -223,7 +213,6 @@
 		579F8F9D1B6A7B7D00D54486 /* Node */ = {
 			isa = PBXGroup;
 			children = (
-				579F8F9F1B6A7CD800D54486 /* CanvasNode.swift */,
 				57CF2EF71B6CA6BB00F79760 /* MapNode.swift */,
 				57CF2F151B71A75200F79760 /* WorldNode.swift */,
 				57CF2F171B71AC9600F79760 /* CellNode.swift */,
@@ -257,10 +246,6 @@
 		579F8FA61B6C570200D54486 /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				579F8FA71B6C570200D54486 /* 05.tmx */,
-				579F8FA81B6C570200D54486 /* 05_PointyTop_60x52_60x80.png */,
-				57CF2F091B6E621200F79760 /* 05_PointyTop_60x52_60x80_2x.png */,
-				57CF2F0A1B6E621200F79760 /* 05x2.tmx */,
 				57CF2F0D1B6FBC4600F79760 /* chip.png */,
 				57CF2F0E1B6FBC4600F79760 /* debug.tmx */,
 			);
@@ -400,14 +385,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57CF2F0B1B6E621200F79760 /* 05_PointyTop_60x52_60x80_2x.png in Resources */,
-				579F8FA91B6C570200D54486 /* 05.tmx in Resources */,
 				57CF2F0F1B6FBC4600F79760 /* chip.png in Resources */,
 				579F8F871B6A74A700D54486 /* LaunchScreen.xib in Resources */,
 				579F8F841B6A74A700D54486 /* Images.xcassets in Resources */,
 				579F8F7B1B6A74A600D54486 /* GameScene.sks in Resources */,
-				579F8FAA1B6C570200D54486 /* 05_PointyTop_60x52_60x80.png in Resources */,
-				57CF2F0C1B6E621200F79760 /* 05x2.tmx in Resources */,
 				579F8F821B6A74A700D54486 /* Main.storyboard in Resources */,
 				57CF2F101B6FBC4600F79760 /* debug.tmx in Resources */,
 			);
@@ -503,7 +484,6 @@
 				574586391B74CDB50067C65C /* PathNode.swift in Sources */,
 				57CF2F121B70E43A00F79760 /* Cell.swift in Sources */,
 				5745863D1B74D27F0067C65C /* PathFinder.swift in Sources */,
-				579F8FA01B6A7CD800D54486 /* CanvasNode.swift in Sources */,
 				579F8F7F1B6A74A600D54486 /* GameViewController.swift in Sources */,
 				579F8F791B6A74A600D54486 /* AppDelegate.swift in Sources */,
 				57464EED1B7EEB970059BEE7 /* HexNode.swift in Sources */,
