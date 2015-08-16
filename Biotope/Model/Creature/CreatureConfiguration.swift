@@ -11,8 +11,8 @@ struct CreatureConfiguration {
 
     let family: String
     let type: Type
-    let speed: Int
-    let sight: Int
+    let speed: UInt
+    let sight: UInt
     let initialHP: Int
     let initialNutrition: Int
     let agingInterval: Int

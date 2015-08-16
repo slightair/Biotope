@@ -87,8 +87,6 @@ class PathFinder {
     }
 
     func heuristicCost(#source: Cell, destination: Cell) -> Int {
-        let dx = abs(destination.x - source.x)
-        let dy = abs(destination.y - source.y)
-        return max(dx, dy)
+        return source.distance(destination)
     }
 }

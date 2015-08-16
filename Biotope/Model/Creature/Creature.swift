@@ -1,8 +1,12 @@
 import Foundation
 import RxSwift
 
-class Creature: Printable {
+class Creature: Printable, Hashable {
     static var autoIncrementID = 1
+
+    enum WalkStatus {
+        case Idle, Wander, FoundTarget
+    }
 
     let id: Int
     var currentCell: Cell {
@@ -14,12 +18,19 @@ class Creature: Printable {
 
     let configuration: CreatureConfiguration
 
+    var walkStatus: WalkStatus = .Idle
+
+    var targetPathFinderSubscription: Disposable?
     var targetPathFinder: PathFinder? {
         didSet {
             sendNext(targetPathFinderChanged, targetPathFinder)
 
+            if targetPathFinderSubscription != nil {
+                targetPathFinderSubscription?.dispose()
+            }
+
             if targetPathFinder != nil && targetPathFinder!.hasRoute {
-                zip(from(targetPathFinder!.result!), GameScenePaceMaker.defaultPaceMaker.pace) { $0.0 }
+                targetPathFinderSubscription = zip(from(targetPathFinder!.result!), GameScenePaceMaker.defaultPaceMaker.pace) { $0.0 }
                     >- subscribe { event in
                         switch event {
                         case .Next(let cell):
@@ -28,9 +39,9 @@ class Creature: Printable {
                             fallthrough
                         case .Completed():
                             self.targetPathFinder = nil
+                            self.walkStatus = .Idle
                         }
                     }
-                    >- compositeDisposable.addDisposable
             }
         }
     }
@@ -50,6 +61,11 @@ class Creature: Printable {
             if isDead {
                 println("Dead: \(self)")
                 compositeDisposable.dispose()
+
+                if targetPathFinderSubscription != nil {
+                    targetPathFinderSubscription?.dispose()
+                }
+
                 sendCompleted(life)
             }
         }
@@ -77,6 +93,12 @@ class Creature: Printable {
         return "\(self.dynamicType)#\(id)"
     }
 
+    var hashValue: Int {
+        get {
+            return description.hashValue
+        }
+    }
+
     init(cell: Cell, configuration: CreatureConfiguration, isBorn: Bool) {
         self.currentCell = cell
         self.configuration = configuration
@@ -96,21 +118,79 @@ class Creature: Printable {
         if configuration.type == .Active {
             GameScenePaceMaker.defaultPaceMaker.pace
                 >- subscribeNext { currentTime in
-                    if self.targetPathFinder != nil {
+                    if self.walkStatus == .FoundTarget {
                         return
                     }
-                    self.findNewTarget()
+
+                    if let target = self.foundTarget() {
+                        self.startHunting(target)
+                        return
+                    }
+
+                    self.wander()
                 }
                 >- compositeDisposable.addDisposable
         }
     }
 
-    func findNewTarget() {
+    func foundTarget() -> Cell? {
+        let world = currentCell.world
+
+        return world.searchTargetCell(center: currentCell, distance: configuration.sight, targetFamilies: configuration.food)
+    }
+
+    func startHunting(targetCell: Cell) {
+        let pathFinder = PathFinder(source: currentCell, destination: targetCell)
+        pathFinder.calculate()
+
+        targetPathFinder = pathFinder
+        walkStatus = .FoundTarget
+    }
+
+    func wander() {
+        if walkStatus == .Wander {
+            return
+        }
+
         let world = currentCell.world
         let targetCell = world.randomCell(center: currentCell, distance: 3)
         let pathFinder = PathFinder(source: currentCell, destination: targetCell)
         pathFinder.calculate()
 
         targetPathFinder = pathFinder
+        walkStatus = .Wander
     }
+
+    func collisionTo(another: Creature) {
+        if isTarget(another) {
+            another.killedBy(self)
+        }
+    }
+
+    func isTarget(creature: Creature) -> Bool {
+        return contains(configuration.food, creature.configuration.family)
+    }
+
+    func killedBy(killer: Creature) {
+        let lastHP = hp
+        hp = 0
+        isDead = true
+
+//        let lostNutrition = Int(ceil(Double(nutrition) / 2))
+//        nutrition -= lostNutrition
+//
+//        killer.nutrition += lostNutrition
+        killer.hp += lastHP / 2
+    }
+
+    func decompose() {
+        println("Decompose: \(self)")
+        currentCell.world.removeCreature(self)
+
+//        room.addNutrition(nutrition)
+    }
+}
+
+func ==(lhs: Creature, rhs: Creature) -> Bool {
+    return lhs.hashValue == rhs.hashValue
 }

@@ -4,7 +4,7 @@ func ==(lhs: Cell, rhs: Cell) -> Bool {
     return lhs.hashValue == rhs.hashValue
 }
 
-class Cell: Hashable {
+class Cell: Printable, Hashable {
     enum Direction: Int {
         case Right, RightTop, LeftTop, Left, LeftBottom, RightBottom
 
@@ -24,6 +24,10 @@ class Cell: Hashable {
 
     var hashValue: Int {
         return index
+    }
+
+    var description: String {
+        return "\(self.dynamicType)#\(index)"
     }
 
     private var rightCell: Cell?
@@ -71,5 +75,11 @@ class Cell: Hashable {
                 rightBottomCell = cell
             }
         }
+    }
+
+    func distance(another: Cell) -> Int {
+        let dx = abs(another.x - x)
+        let dy = abs(another.y - y)
+        return max(dx, dy)
     }
 }

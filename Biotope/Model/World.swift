@@ -3,7 +3,7 @@ import Foundation
 class World {
     let map: TMXMap
     var cells: [Cell]!
-    var creatures: [Creature] = []
+    var creatures: Set<Creature> = []
 
     init(named name: String) {
         self.map = TMXMapLoader.load(name)
@@ -68,12 +68,12 @@ class World {
     func setUpCreatures() {
         for _ in 1...5 {
             let creature = Creature(cell: randomCell(), configuration: CreatureConfiguration.AC01)
-            creatures.append(creature)
+            creatures.insert(creature)
         }
 
-        for _ in 1...5 {
+        for _ in 1...20 {
             let creature = Creature(cell: randomCell(), configuration: CreatureConfiguration.NAC01)
-            creatures.append(creature)
+            creatures.insert(creature)
         }
     }
 
@@ -89,7 +89,13 @@ class World {
     }
 
     func randomCell(#center: Cell, distance: UInt) -> Cell {
-        var cells: Set<Cell> = []
+        let candidates = areaCells(center: center, distance: distance)
+        let needle = Int(arc4random_uniform(UInt32(candidates.count)))
+        return candidates[needle]
+    }
+
+    func areaCells(#center: Cell, distance: UInt) -> [Cell] {
+        var cells: [Cell] = []
         var newCells: [Cell] = [center]
 
         for _ in 0..<distance {
@@ -99,16 +105,51 @@ class World {
             for prevCell in prevCells {
                 for direction in Cell.Direction.values {
                     if let foundCell = prevCell[direction] {
-                        cells.insert(foundCell)
+                        cells.append(foundCell)
                         newCells.append(foundCell)
                     }
                 }
             }
         }
 
-        cells.remove(center)
+        if let index = find(cells, center) {
+            cells.removeAtIndex(index)
+        }
 
-        let needle = Int(arc4random_uniform(UInt32(cells.count)))
-        return Array(cells)[needle]
+        return cells
+    }
+
+    func searchTargetCell(#center: Cell, distance: UInt, targetFamilies: [String]) -> Cell? {
+        let candidateCells = areaCells(center: center, distance: distance)
+        var candidateCreatures: [Creature] = []
+
+        for creature in creatures {
+            if !contains(candidateCells, creature.currentCell) {
+                continue
+            }
+
+            if creature.isDead {
+                continue
+            }
+
+            if !contains(targetFamilies, creature.configuration.family) {
+                continue
+            }
+
+            candidateCreatures.append(creature)
+        }
+
+        let targetCells = candidateCreatures.map { $0.currentCell }
+                                            .sorted { center.distance($0) < center.distance($1) }
+        return targetCells.first
+    }
+
+//    func emergeCreature(creature: Creature) {
+//        self.creatures.insert(creature)
+//        sendNext(creatureEmerged, creature)
+//    }
+
+    func removeCreature(creature: Creature) {
+        self.creatures.remove(creature)
     }
 }
