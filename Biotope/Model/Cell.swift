@@ -1,4 +1,5 @@
 import Foundation
+import RxSwift
 
 func ==(lhs: Cell, rhs: Cell) -> Bool {
     return lhs.hashValue == rhs.hashValue
@@ -13,6 +14,13 @@ class Cell: Printable, Hashable {
 
     let world: World
     let index: Int
+
+    var nutrition = 0 {
+        didSet {
+            sendNext(nutritionChanged, self.nutrition)
+        }
+    }
+    let nutritionChanged = PublishSubject<Int>()
 
     var x: Int {
         return index % world.map.width
@@ -75,6 +83,10 @@ class Cell: Printable, Hashable {
                 rightBottomCell = cell
             }
         }
+    }
+
+    func addNutrition(nutrition: Int) {
+        self.nutrition += nutrition
     }
 
     func distance(another: Cell) -> Int {

@@ -8,7 +8,8 @@ class CreatureNode: SKNode {
 
     // for Debug
     var shapeNode: SKShapeNode!
-    var hpLabelNode: SKLabelNode!
+    var hpNode: SKLabelNode!
+    var nutritionNode: SKLabelNode!
 
     required init(creature: Creature) {
         self.creature = creature
@@ -35,7 +36,7 @@ class CreatureNode: SKNode {
             >- subscribe { event in
                 switch event {
                 case .Next(let hp):
-                    self.hpLabelNode.text = "HP:\(hp.value)"
+                    self.hpNode.text = "HP:\(hp.value)"
                 case .Error(let error):
                     fallthrough
                 case .Completed:
@@ -43,6 +44,12 @@ class CreatureNode: SKNode {
                     self.runDeadAnimation()
                 }
             }
+
+        creature.nutritionChanged
+            >- subscribeNext { nutrition in
+                self.nutritionNode.text = "N:\(nutrition)"
+            }
+            >- compositeDisposable.addDisposable
 
         GameScenePaceMaker.defaultPaceMaker.pace
             >- subscribeNext { currentTime in
@@ -62,12 +69,20 @@ class CreatureNode: SKNode {
         shapeNode.lineWidth = 3
         addChild(shapeNode)
 
-        hpLabelNode = SKLabelNode(fontNamed: "Arial")
-        hpLabelNode.fontSize = 12
-        hpLabelNode.fontColor = UIColor.flatWhiteColor()
-        hpLabelNode.verticalAlignmentMode = .Center
-        hpLabelNode.text = "HP:\(creature.hp)"
-        addChild(hpLabelNode)
+        hpNode = SKLabelNode(fontNamed: "Arial")
+        hpNode.fontSize = 12
+        hpNode.fontColor = UIColor.flatWhiteColor()
+        hpNode.verticalAlignmentMode = .Center
+        hpNode.text = "HP:\(creature.hp)"
+        addChild(hpNode)
+
+        nutritionNode = SKLabelNode(fontNamed: "Arial")
+        nutritionNode.position = CGPointMake(0, -14)
+        nutritionNode.fontSize = 12
+        nutritionNode.fontColor = UIColor.flatWhiteColor()
+        nutritionNode.verticalAlignmentMode = .Center
+        nutritionNode.text = "N:\(creature.nutrition)"
+        addChild(nutritionNode)
     }
 
     func changePosition(animated: Bool = true) {

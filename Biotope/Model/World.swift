@@ -1,9 +1,16 @@
 import Foundation
+import RxSwift
 
 class World {
+    let EmergingStepCountInterval = 10
+    let EmergingProbability = 0.25
+
     let map: TMXMap
     var cells: [Cell]!
     var creatures: Set<Creature> = []
+    var emergingStepCount = 0
+    let creatureEmerged = PublishSubject<Creature>()
+    let compositeDisposable = CompositeDisposable()
 
     init(named name: String) {
         self.map = TMXMapLoader.load(name)
@@ -12,12 +19,19 @@ class World {
         setUpCreatures()
     }
 
+    deinit {
+        compositeDisposable.dispose()
+    }
+
     func setUpCells() {
         var cells: [Cell] = []
 
         for index in 0..<(self.map.width * self.map.height) {
             let cell = Cell(world: self, index: index)
             cells.append(cell)
+
+            let bonus = arc4random_uniform(5)
+            cell.nutrition += Int(bonus)
         }
 
         var index = 0
@@ -81,6 +95,16 @@ class World {
         for creature in creatures {
             creature.start()
         }
+
+        GameScenePaceMaker.defaultPaceMaker.pace
+            >- subscribeNext { interval in
+                self.emergingStepCount++
+                if self.emergingStepCount > self.EmergingStepCountInterval {
+                    self.emergeCreatures()
+                    self.emergingStepCount = 0
+                }
+            }
+            >- compositeDisposable.addDisposable
     }
 
     func randomCell() -> Cell {
@@ -127,15 +151,15 @@ class World {
             if !contains(candidateCells, creature.currentCell) {
                 continue
             }
-
             if creature.isDead {
                 continue
             }
-
+            if !creature.isBorn {
+                continue
+            }
             if !contains(targetFamilies, creature.configuration.family) {
                 continue
             }
-
             candidateCreatures.append(creature)
         }
 
@@ -144,10 +168,22 @@ class World {
         return targetCells.first
     }
 
-//    func emergeCreature(creature: Creature) {
-//        self.creatures.insert(creature)
-//        sendNext(creatureEmerged, creature)
-//    }
+    func emergeCreatures() {
+        for cell in cells {
+            let newCreatureConfiguration = CreatureConfiguration.NAC01
+            let needNutrition = newCreatureConfiguration.initialNutrition
+            let emerge = Double(arc4random_uniform(1000)) < 1000 * EmergingProbability &&
+                         needNutrition <= cell.nutrition &&
+                         !(Array(creatures).filter { $0.currentCell == cell }.count > 0)
+
+            if emerge {
+                cell.nutrition -= needNutrition
+                let creature = Creature(cell: cell, configuration: newCreatureConfiguration, isBorn: false)
+                creatures.insert(creature)
+                sendNext(creatureEmerged, creature)
+            }
+        }
+    }
 
     func removeCreature(creature: Creature) {
         self.creatures.remove(creature)

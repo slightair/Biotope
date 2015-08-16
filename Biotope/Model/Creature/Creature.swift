@@ -196,18 +196,17 @@ class Creature: Printable, Hashable {
         hp = 0
         isDead = true
 
-//        let lostNutrition = Int(ceil(Double(nutrition) / 2))
-//        nutrition -= lostNutrition
-//
-//        killer.nutrition += lostNutrition
+        let lostNutrition = Int(ceil(Double(nutrition) / 2))
+        nutrition -= lostNutrition
+
+        killer.nutrition += lostNutrition
         killer.hp += lastHP / 2
     }
 
     func decompose() {
         println("Decompose: \(self)")
         currentCell.world.removeCreature(self)
-
-//        room.addNutrition(nutrition)
+        currentCell.addNutrition(nutrition)
     }
 }
 

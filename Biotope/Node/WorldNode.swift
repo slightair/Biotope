@@ -7,11 +7,12 @@ class WorldNode: SKNode {
     let mapLayer: MapNode
     let creatureLayer = SKNode()
     let compositeDisposable = CompositeDisposable()
+    var creatureCompositeDisposableDict: [Int: CompositeDisposable] = [:]
 
     // for debug
     let hexSize: CGFloat = 60
     let hexLayer: HexNode
-    let cellIndexLayer = SKNode()
+    let cellInfoLayer = SKNode()
     let creatureRouteLayer = SKNode()
     var creatureRouteNodeList: [Int: SKNode] = [:]
 
@@ -22,11 +23,31 @@ class WorldNode: SKNode {
 
         super.init()
 
+        setUp()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func setUp() {
+        setUpLayers()
+        setUpCellInfoLayer()
+        setUpCreatureLayer()
+
+        world.creatureEmerged
+            >- subscribeNext { creature in
+                self.enterNewCreature(creature)
+            }
+            >- compositeDisposable.addDisposable
+    }
+
+    func setUpLayers() {
         let layers = [
 //            mapLayer,
             hexLayer,
             creatureRouteLayer,
-            cellIndexLayer,
+            cellInfoLayer,
             creatureLayer,
         ]
 
@@ -34,16 +55,9 @@ class WorldNode: SKNode {
             node.zPosition = CGFloat(index + 10000)
             addChild(node)
         }
-
-        setUpCellIndexLayer()
-        setUpCreatureLayer()
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    func setUpCellIndexLayer() {
+    func setUpCellInfoLayer() {
         let mapOffset = MapNode.mapOffset(world.map)
         for cell in world.cells {
             let indexNode = SKLabelNode(fontNamed: "Arial")
@@ -52,7 +66,21 @@ class WorldNode: SKNode {
             indexNode.fontSize = 16
             indexNode.verticalAlignmentMode = .Center
             indexNode.fontColor = .flatBlueColor()
-            cellIndexLayer.addChild(indexNode)
+            cellInfoLayer.addChild(indexNode)
+
+            let nutritionNode = SKLabelNode(fontNamed: "Arial")
+            nutritionNode.position = MapNode.tilePosition(index: cell.index, forMap: world.map) - CGPointMake(0, 18)
+            nutritionNode.text = "N:\(cell.nutrition)"
+            nutritionNode.fontSize = 16
+            nutritionNode.verticalAlignmentMode = .Center
+            nutritionNode.fontColor = .flatBlueColor()
+            cellInfoLayer.addChild(nutritionNode)
+
+            cell.nutritionChanged
+                >- subscribeNext { nutrition in
+                    nutritionNode.text = "N:\(nutrition)"
+                }
+                >- compositeDisposable.addDisposable
         }
     }
 
@@ -61,21 +89,7 @@ class WorldNode: SKNode {
             let creatureNode = CreatureNode(creature: creature)
             creatureLayer.addChild(creatureNode)
 
-            creature.targetPathFinderChanged
-                >- subscribeNext { pathFinder in
-                    if pathFinder != nil {
-                        self.updateCreatureRouteNode(creature: creature, pathFinder: pathFinder!)
-                    }
-                }
-                >- compositeDisposable.addDisposable
-
-            creature.life
-                >- subscribeCompleted {
-                    if let routeNode = self.creatureRouteNodeList[creature.id] {
-                        routeNode.removeFromParent()
-                    }
-                }
-                >- compositeDisposable.addDisposable
+            setUpCreatureSubscription(creature)
         }
     }
 
@@ -106,5 +120,41 @@ class WorldNode: SKNode {
             creatureRouteNodeList[creature.id] = routeNode
             creatureRouteLayer.addChild(routeNode)
         }
+    }
+
+    func enterNewCreature(creature: Creature) {
+        let creatureNode = CreatureNode(creature: creature)
+        creatureNode.setScale(0.1)
+        creatureLayer.addChild(creatureNode)
+
+        let popAction = SKAction.scaleTo(1.0, duration: 1.0)
+        creatureNode.runAction(popAction, completion: {
+            creature.isBorn = true
+        })
+
+        setUpCreatureSubscription(creature)
+    }
+
+    func setUpCreatureSubscription(creature: Creature) {
+        let creatureCompositeDisposable = CompositeDisposable()
+        creatureCompositeDisposableDict[creature.id] = creatureCompositeDisposable
+
+        creature.targetPathFinderChanged
+            >- subscribeNext { pathFinder in
+                if pathFinder != nil {
+                    self.updateCreatureRouteNode(creature: creature, pathFinder: pathFinder!)
+                }
+            }
+            >- creatureCompositeDisposable.addDisposable
+
+        creature.life
+            >- subscribeCompleted {
+                if let routeNode = self.creatureRouteNodeList[creature.id] {
+                    routeNode.removeFromParent()
+                }
+                creatureCompositeDisposable.dispose()
+                self.creatureCompositeDisposableDict[creature.id] = nil
+            }
+            >- creatureCompositeDisposable.addDisposable
     }
 }
