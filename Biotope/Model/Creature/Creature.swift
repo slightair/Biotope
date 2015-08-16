@@ -131,6 +131,26 @@ class Creature: Printable, Hashable {
                 }
                 >- compositeDisposable.addDisposable
         }
+
+        GameScenePaceMaker.defaultPaceMaker.pace
+            >- subscribeNext { currentTime in
+                self.agingCheck()
+            }
+            >- compositeDisposable.addDisposable
+    }
+
+    func agingCheck() {
+        agingCounter++
+
+        if agingCounter > configuration.agingInterval {
+            agingCounter = 0
+
+            hp -= configuration.agingPoint
+
+            if hp <= 0 {
+                isDead = true
+            }
+        }
     }
 
     func foundTarget() -> Cell? {

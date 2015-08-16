@@ -68,6 +68,14 @@ class WorldNode: SKNode {
                     }
                 }
                 >- compositeDisposable.addDisposable
+
+            creature.life
+                >- subscribeCompleted {
+                    if let routeNode = self.creatureRouteNodeList[creature.id] {
+                        routeNode.removeFromParent()
+                    }
+                }
+                >- compositeDisposable.addDisposable
         }
     }
 
