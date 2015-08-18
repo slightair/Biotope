@@ -143,7 +143,7 @@ class World {
         return cells
     }
 
-    func searchTargetCell(#center: Cell, distance: UInt, targetFamilies: [String]) -> Cell? {
+    func searchTargetCell(#center: Cell, distance: UInt, targetLevel: CreatureConfiguration.TrophicLevel) -> Cell? {
         let candidateCells = areaCells(center: center, distance: distance)
         var candidateCreatures: [Creature] = []
 
@@ -157,7 +157,7 @@ class World {
             if !creature.isBorn {
                 continue
             }
-            if !contains(targetFamilies, creature.configuration.family) {
+            if creature.configuration.trophicLevel != targetLevel {
                 continue
             }
             candidateCreatures.append(creature)

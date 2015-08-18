@@ -129,21 +129,15 @@ class Creature: Printable, Hashable {
     }
 
     func start() {
-        if configuration.type == .Active {
-            GameScenePaceMaker.defaultPaceMaker.pace
-                >- subscribeNext { currentTime in
-                    if self.walkStatus == .FoundTarget {
-                        return
-                    }
-
-                    if let target = self.foundTarget() {
-                        self.startHunting(target)
-                        return
-                    }
-
-                    self.wander()
-                }
-                >- compositeDisposable.addDisposable
+        switch configuration.trophicLevel {
+        case .Producer:
+            setUpProducerAction()
+        case .Consumer1:
+            setUpConsumer1Action()
+        case .Consumer2:
+            setUpConsumer2Action()
+        default:
+            return
         }
 
         GameScenePaceMaker.defaultPaceMaker.pace
@@ -151,6 +145,30 @@ class Creature: Printable, Hashable {
                 self.agingCheck()
             }
             >- compositeDisposable.addDisposable
+    }
+
+    func setUpProducerAction() {
+
+    }
+
+    func setUpConsumer1Action() {
+        GameScenePaceMaker.defaultPaceMaker.pace
+            >- subscribeNext { currentTime in
+                if self.walkStatus == .FoundTarget {
+                    return
+                }
+
+                if let target = self.foundTarget() {
+                    self.startHunting(target)
+                    return
+                }
+
+                self.wander()
+            }
+            >- compositeDisposable.addDisposable
+    }
+
+    func setUpConsumer2Action() {
     }
 
     func agingCheck() {
@@ -170,7 +188,7 @@ class Creature: Printable, Hashable {
     func foundTarget() -> Cell? {
         let world = currentCell.world
 
-        return world.searchTargetCell(center: currentCell, distance: configuration.sight, targetFamilies: configuration.food)
+        return world.searchTargetCell(center: currentCell, distance: configuration.sight, targetLevel: configuration.trophicLevel.targetLevel())
     }
 
     func startHunting(targetCell: Cell) {
@@ -202,7 +220,7 @@ class Creature: Printable, Hashable {
     }
 
     func isTarget(creature: Creature) -> Bool {
-        return contains(configuration.food, creature.configuration.family)
+        return configuration.trophicLevel.targetLevel() == creature.configuration.trophicLevel
     }
 
     func killedBy(killer: Creature) {

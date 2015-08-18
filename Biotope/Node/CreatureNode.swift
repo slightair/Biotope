@@ -121,7 +121,7 @@ class CreatureNode: SKNode {
     }
 
     func collisionCheck() {
-        if creature.configuration.type != .Active {
+        if creature.configuration.trophicLevel == .Producer {
             return
         }
 

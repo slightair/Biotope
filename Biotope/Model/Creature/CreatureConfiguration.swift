@@ -1,51 +1,49 @@
 import Foundation
 
 struct CreatureConfiguration {
-    enum Type {
-        case Active, NonActive
+    enum TrophicLevel: Int {
+        case Nutrition, Producer, Consumer1, Consumer2
+
+        func targetLevel() -> TrophicLevel {
+            return TrophicLevel(rawValue: self.rawValue - 1)!
+        }
     }
 
     struct DebugInfo {
         let colorName: String
     }
 
-    let family: String
-    let type: Type
+    let trophicLevel: TrophicLevel
     let speed: UInt
     let sight: UInt
     let initialHP: Int
     let initialNutrition: Int
     let agingInterval: Int
     let agingPoint: Int
-    let food: [String]
     let debugInfo: DebugInfo
 
     // for debug
     static let AC01 = CreatureConfiguration(
-        family: "AC01",
-        type: .Active,
+        trophicLevel: .Consumer1,
         speed: 3,
         sight: 3,
         initialHP: 50,
         initialNutrition: 10,
         agingInterval: 5,
         agingPoint: 3,
-        food: ["NAC01"],
         debugInfo: DebugInfo(
             colorName: "Watermelon"
         )
     )
 
     static let NAC01 = CreatureConfiguration(
-        family: "NAC01",
-        type: .NonActive,
+        trophicLevel: .Producer,
         speed: 0,
         sight: 0,
         initialHP: 10,
         initialNutrition: 4,
         agingInterval: 10,
         agingPoint: 1,
-        food: [],
         debugInfo: DebugInfo(
             colorName: "Yellow"
         )
