@@ -3,6 +3,8 @@ import RxSwift
 import SwiftGraphics
 
 class WorldNode: SKNode {
+    static let hexSize: CGFloat = 60
+
     let world: World
     let mapLayer: MapNode
     let creatureLayer = SKNode()
@@ -10,7 +12,6 @@ class WorldNode: SKNode {
     var creatureCompositeDisposableDict: [Int: CompositeDisposable] = [:]
 
     // for debug
-    let hexSize: CGFloat = 60
     let hexLayer: HexNode
     let cellInfoLayer = SKNode()
     let creatureRouteLayer = SKNode()
@@ -19,7 +20,7 @@ class WorldNode: SKNode {
     init(_ world: World) {
         self.world = world
         self.mapLayer = MapNode(map: world.map)
-        self.hexLayer = HexNode(world: world, hexSize: hexSize)
+        self.hexLayer = HexNode(world: world, hexSize: WorldNode.hexSize)
 
         super.init()
 
@@ -102,7 +103,7 @@ class WorldNode: SKNode {
             let routeNode = SKNode()
 
             for (index, cell) in enumerate(route) {
-                let cellNode = CellNode(cell, size: hexSize)
+                let cellNode = CellNode(cell, size: WorldNode.hexSize)
                 cellNode.position = MapNode.tilePosition(index: cell.index, forMap: world.map)
 
                 cellNode.strokeColor = UIColor.darkColorWithName(creature.configuration.debugInfo.colorName)

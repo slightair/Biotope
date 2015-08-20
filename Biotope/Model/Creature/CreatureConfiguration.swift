@@ -20,6 +20,8 @@ struct CreatureConfiguration {
     let initialNutrition: Int
     let agingInterval: Int
     let agingPoint: Int
+    let actionInterval: Int
+    let actionPower: Int
     let debugInfo: DebugInfo
 
     // for debug
@@ -31,6 +33,8 @@ struct CreatureConfiguration {
         initialNutrition: 10,
         agingInterval: 5,
         agingPoint: 3,
+        actionInterval: 0,
+        actionPower: 0,
         debugInfo: DebugInfo(
             colorName: "Watermelon"
         )
@@ -44,6 +48,8 @@ struct CreatureConfiguration {
         initialNutrition: 4,
         agingInterval: 10,
         agingPoint: 1,
+        actionInterval: 3,
+        actionPower: 2,
         debugInfo: DebugInfo(
             colorName: "Yellow"
         )

@@ -1,6 +1,7 @@
 import SpriteKit
 import RxSwift
 import ChameleonFramework
+import SwiftGraphics
 
 class CreatureNode: SKNode {
     let creature: Creature
@@ -55,6 +56,12 @@ class CreatureNode: SKNode {
         creature.nutritionChanged
             >- subscribeNext { nutrition in
                 self.nutritionNode.text = "N:\(nutrition)"
+            }
+            >- compositeDisposable.addDisposable
+
+        creature.actionCompleted
+            >- subscribeNext { result in
+                self.runActionCompletedAnimation(result)
             }
             >- compositeDisposable.addDisposable
 
@@ -118,6 +125,43 @@ class CreatureNode: SKNode {
             self.removeFromParent()
             self.creature.decompose()
         })
+    }
+
+    func runActionCompletedAnimation(result: Bool) {
+        switch creature.configuration.trophicLevel {
+        case .Nutrition:
+            fallthrough
+        case .Producer:
+            runProducerActionCompletedAnimation(result)
+        case .Consumer1:
+            runConsumer1ActionCompletedAnimation(result)
+        case .Consumer2:
+            runConsumer2ActionCompletedAnimation(result)
+        }
+    }
+
+    func runProducerActionCompletedAnimation(result: Bool) {
+        if !result {
+            return
+        }
+
+        let circlePath = Circle(center: CGPointZero, radius: WorldNode.hexSize).cgpath
+        let effectNode = SKShapeNode(path: circlePath)
+        effectNode.lineWidth = 3
+        effectNode.strokeColor = UIColor.flatOrangeColor()
+        addChild(effectNode)
+
+        effectNode.runAction(SKAction.scaleTo(0, duration: 0.5), completion: {
+            effectNode.removeFromParent()
+        })
+    }
+
+    func runConsumer1ActionCompletedAnimation(result: Bool) {
+
+    }
+
+    func runConsumer2ActionCompletedAnimation(result: Bool) {
+
     }
 
     func collisionCheck() {

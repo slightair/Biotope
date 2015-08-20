@@ -118,8 +118,8 @@ class World {
         return candidates[needle]
     }
 
-    func areaCells(#center: Cell, distance: UInt) -> [Cell] {
-        var cells: [Cell] = []
+    func areaCells(#center: Cell, distance: UInt, includeCenter: Bool = false) -> [Cell] {
+        var cells: Set<Cell> = []
         var newCells: [Cell] = [center]
 
         for _ in 0..<distance {
@@ -129,18 +129,20 @@ class World {
             for prevCell in prevCells {
                 for direction in Cell.Direction.values {
                     if let foundCell = prevCell[direction] {
-                        cells.append(foundCell)
-                        newCells.append(foundCell)
+                        if foundCell != center {
+                            cells.insert(foundCell)
+                            newCells.append(foundCell)
+                        }
                     }
                 }
             }
         }
 
-        if let index = find(cells, center) {
-            cells.removeAtIndex(index)
+        if includeCenter {
+            cells.insert(center)
         }
 
-        return cells
+        return Array(cells)
     }
 
     func searchTargetCell(#center: Cell, distance: UInt, targetLevel: CreatureConfiguration.TrophicLevel) -> Cell? {

@@ -2,6 +2,9 @@ import Foundation
 import RxSwift
 
 class Creature: Printable, Hashable {
+    static let DrainNutritionRange: UInt = 2
+    static let WanderCandidateRange: UInt = 3
+
     static var autoIncrementID = 1
 
     enum WalkStatus {
@@ -61,6 +64,8 @@ class Creature: Printable, Hashable {
     }
     let targetPathFinderChanged = PublishSubject<PathFinder?>()
 
+    let actionCompleted = PublishSubject<Bool>()
+
     var isBorn = false {
         didSet {
             if isBorn {
@@ -100,6 +105,7 @@ class Creature: Printable, Hashable {
     let nutritionChanged = PublishSubject<Int>()
 
     var agingCounter: Int = 0
+    var actionCounter: Int = 0
 
     let compositeDisposable = CompositeDisposable()
 
@@ -148,7 +154,17 @@ class Creature: Printable, Hashable {
     }
 
     func setUpProducerAction() {
+        GameScenePaceMaker.defaultPaceMaker.pace
+            >- subscribeNext { currentTime in
+                self.actionCounter++
+                if self.actionCounter > self.configuration.actionInterval {
+                    self.actionCounter = 0
 
+                    let result = self.drainNutrition()
+                    sendNext(self.actionCompleted, result)
+                }
+            }
+            >- compositeDisposable.addDisposable
     }
 
     func setUpConsumer1Action() {
@@ -185,6 +201,26 @@ class Creature: Printable, Hashable {
         }
     }
 
+    func drainNutrition() -> Bool {
+        let targetCells = currentCell.world.areaCells(center: currentCell, distance: Creature.DrainNutritionRange, includeCenter: true)
+
+        var drainedNutrition = 0
+        var drainPower = configuration.actionPower
+        for target in targetCells {
+            if target.nutrition > drainPower {
+                target.nutrition -= drainPower
+                drainedNutrition += drainPower
+            } else {
+                let remain = target.nutrition
+                target.nutrition = 0
+                drainedNutrition += remain
+            }
+        }
+        nutrition += drainedNutrition
+
+        return drainedNutrition > 0
+    }
+
     func foundTarget() -> Cell? {
         let world = currentCell.world
 
@@ -205,7 +241,7 @@ class Creature: Printable, Hashable {
         }
 
         let world = currentCell.world
-        let targetCell = world.randomCell(center: currentCell, distance: 3)
+        let targetCell = world.randomCell(center: currentCell, distance: Creature.WanderCandidateRange)
         let pathFinder = PathFinder(source: currentCell, destination: targetCell)
         pathFinder.calculate()
 
