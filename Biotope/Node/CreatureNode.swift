@@ -76,8 +76,21 @@ class CreatureNode: SKNode {
         fatalError("init(coder:) has not been implemented")
     }
 
+    func creatureShapePath() -> CGPath {
+        switch creature.configuration.trophicLevel {
+        case .Nutrition:
+            fallthrough
+        case .Producer:
+            return Circle(center: CGPointZero, radius: 24).cgpath
+        case .Consumer1:
+            fallthrough
+        case .Consumer2:
+            return CGPathCreateMutable().addArrow(size: 36)
+        }
+    }
+
     func setUpNodes() {
-        shapeNode = SKShapeNode(path: CGPathCreateMutable().addArrow(size: 36))
+        shapeNode = SKShapeNode(path: creatureShapePath())
         shapeNode.strokeColor = UIColor.darkColorWithName(creature.configuration.debugInfo.colorName)
         shapeNode.fillColor = UIColor.colorWithName(creature.configuration.debugInfo.colorName)
         shapeNode.lineWidth = 3
