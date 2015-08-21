@@ -59,8 +59,17 @@ class WorldNode: SKNode {
     }
 
     func setUpCellInfoLayer() {
+        func densityColor(nutrition: Int) -> UIColor {
+            return UIColor.flatOrangeColor().colorWithAlphaComponent(CGFloat(nutrition) / 50)
+        }
+
         let mapOffset = MapNode.mapOffset(world.map)
         for cell in world.cells {
+            let densityNode = SKShapeNode(path: CGPathCreateMutable().addHex(size: WorldNode.hexSize - 1))
+            densityNode.position = MapNode.tilePosition(index: cell.index, forMap: world.map)
+            densityNode.fillColor = densityColor(cell.nutrition)
+            cellInfoLayer.addChild(densityNode)
+
             let indexNode = SKLabelNode(fontNamed: "Arial")
             indexNode.position = MapNode.tilePosition(index: cell.index, forMap: world.map)
             indexNode.text = "\(cell.index)"
@@ -80,6 +89,7 @@ class WorldNode: SKNode {
             cell.nutritionChanged
                 >- subscribeNext { nutrition in
                     nutritionNode.text = "N:\(nutrition)"
+                    densityNode.fillColor = densityColor(nutrition)
                 }
                 >- compositeDisposable.addDisposable
         }

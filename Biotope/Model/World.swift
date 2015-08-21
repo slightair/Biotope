@@ -30,7 +30,7 @@ class World {
             let cell = Cell(world: self, index: index)
             cells.append(cell)
 
-            let bonus = arc4random_uniform(5)
+            let bonus = arc4random_uniform(8)
             cell.nutrition += Int(bonus)
         }
 
