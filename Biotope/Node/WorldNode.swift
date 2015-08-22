@@ -11,13 +11,11 @@ class WorldNode: SKNode {
     let compositeDisposable = CompositeDisposable()
 
     // for debug
-    let hexLayer: HexNode
     let cellInfoLayer = SKNode()
 
     init(_ world: World) {
         self.world = world
         self.mapLayer = MapNode(map: world.map)
-        self.hexLayer = HexNode(world: world, hexSize: WorldNode.hexSize)
 
         super.init()
 
@@ -42,8 +40,7 @@ class WorldNode: SKNode {
 
     func setUpLayers() {
         let layers = [
-//            mapLayer,
-            hexLayer,
+            mapLayer,
             cellInfoLayer,
             creatureLayer,
         ]
