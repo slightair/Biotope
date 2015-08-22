@@ -9,13 +9,10 @@ class WorldNode: SKNode {
     let mapLayer: MapNode
     let creatureLayer = SKNode()
     let compositeDisposable = CompositeDisposable()
-    var creatureCompositeDisposableDict: [Int: CompositeDisposable] = [:]
 
     // for debug
     let hexLayer: HexNode
     let cellInfoLayer = SKNode()
-    let creatureRouteLayer = SKNode()
-    var creatureRouteNodeList: [Int: SKNode] = [:]
 
     init(_ world: World) {
         self.world = world
@@ -47,7 +44,6 @@ class WorldNode: SKNode {
         let layers = [
 //            mapLayer,
             hexLayer,
-            creatureRouteLayer,
             cellInfoLayer,
             creatureLayer,
         ]
@@ -59,17 +55,8 @@ class WorldNode: SKNode {
     }
 
     func setUpCellInfoLayer() {
-        func densityColor(nutrition: Int) -> UIColor {
-            return UIColor.flatOrangeColor().colorWithAlphaComponent(CGFloat(nutrition) / 50)
-        }
-
         let mapOffset = MapNode.mapOffset(world.map)
         for cell in world.cells {
-            let densityNode = SKShapeNode(path: CGPathCreateMutable().addHex(size: WorldNode.hexSize - 1))
-            densityNode.position = MapNode.tilePosition(index: cell.index, forMap: world.map)
-            densityNode.fillColor = densityColor(cell.nutrition)
-            cellInfoLayer.addChild(densityNode)
-
             let indexNode = SKLabelNode(fontNamed: "Arial")
             indexNode.position = MapNode.tilePosition(index: cell.index, forMap: world.map)
             indexNode.text = "\(cell.index)"
@@ -89,7 +76,6 @@ class WorldNode: SKNode {
             cell.nutritionChanged
                 >- subscribeNext { nutrition in
                     nutritionNode.text = "N:\(nutrition)"
-                    densityNode.fillColor = densityColor(nutrition)
                 }
                 >- compositeDisposable.addDisposable
         }
@@ -99,37 +85,6 @@ class WorldNode: SKNode {
         for creature in world.creatures {
             let creatureNode = CreatureNode(creature: creature)
             creatureLayer.addChild(creatureNode)
-
-            setUpCreatureSubscription(creature)
-        }
-    }
-
-    func updateCreatureRouteNode(#creature: Creature, pathFinder: PathFinder) {
-        if let prevRouteNode = creatureRouteNodeList[creature.id] {
-            prevRouteNode.removeFromParent()
-        }
-
-        if let route = pathFinder.result {
-            let routeNode = SKNode()
-
-            for (index, cell) in enumerate(route) {
-                let cellNode = CellNode(cell, size: WorldNode.hexSize)
-                cellNode.position = MapNode.tilePosition(index: cell.index, forMap: world.map)
-
-                cellNode.strokeColor = UIColor.darkColorWithName(creature.configuration.debugInfo.colorName)
-
-                let baseFillColor = UIColor.colorWithName(creature.configuration.debugInfo.colorName)
-                if index == route.count - 1 {
-                    cellNode.fillColor = baseFillColor.colorWithAlphaComponent(0.3)
-                } else {
-                    cellNode.fillColor = baseFillColor.colorWithAlphaComponent(0.1)
-                }
-
-                routeNode.addChild(cellNode)
-            }
-
-            creatureRouteNodeList[creature.id] = routeNode
-            creatureRouteLayer.addChild(routeNode)
         }
     }
 
@@ -142,30 +97,5 @@ class WorldNode: SKNode {
         creatureNode.runAction(popAction, completion: {
             creature.isBorn = true
         })
-
-        setUpCreatureSubscription(creature)
-    }
-
-    func setUpCreatureSubscription(creature: Creature) {
-        let creatureCompositeDisposable = CompositeDisposable()
-        creatureCompositeDisposableDict[creature.id] = creatureCompositeDisposable
-
-        creature.targetPathFinderChanged
-            >- subscribeNext { pathFinder in
-                if pathFinder != nil {
-                    self.updateCreatureRouteNode(creature: creature, pathFinder: pathFinder!)
-                }
-            }
-            >- creatureCompositeDisposable.addDisposable
-
-        creature.life
-            >- subscribeCompleted {
-                if let routeNode = self.creatureRouteNodeList[creature.id] {
-                    routeNode.removeFromParent()
-                }
-                creatureCompositeDisposable.dispose()
-                self.creatureCompositeDisposableDict[creature.id] = nil
-            }
-            >- creatureCompositeDisposable.addDisposable
     }
 }
