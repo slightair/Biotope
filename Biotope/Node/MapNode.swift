@@ -4,6 +4,7 @@ import SwiftGraphics
 class MapNode: SKNode {
     let map: TMXMap
     var tilesetTextures: [Int: SKTexture] = [:]
+    var tiles: [Int: SKSpriteNode] = [:]
 
     class func mapSize(map: TMXMap) -> CGSize {
         return CGSize(
@@ -91,17 +92,19 @@ class MapNode: SKNode {
             for var posY = 0; posY < map.height; posY++ {
                 for var posX = 0; posX < map.width; posX++ {
                     let chipIndex = layer.data[index]
-                    index++
 
                     if chipIndex == 0 {
+                        index++
                         continue
                     }
 
                     if let texture = tilesetTextures[chipIndex] {
-                        let chipNode = SKSpriteNode(texture: texture)
-                        chipNode.position = MapNode.tilePosition(x: posX, y: posY, forMap: map, relative: true)
-                        layerNode.addChild(chipNode)
+                        let tile = SKSpriteNode(texture: texture)
+                        tile.position = MapNode.tilePosition(x: posX, y: posY, forMap: map, relative: true)
+                        tiles[index] = tile
+                        layerNode.addChild(tile)
                     }
+                    index++
                 }
             }
             addChild(layerNode)

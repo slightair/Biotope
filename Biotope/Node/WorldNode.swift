@@ -32,6 +32,7 @@ class WorldNode: SKNode {
         if debugMode {
             setUpCellInfoLayer()
         }
+        setUpMapLayer()
         setUpCreatureLayer()
 
         world.creatureEmerged
@@ -48,7 +49,7 @@ class WorldNode: SKNode {
             creatureLayer,
         ]
 
-        if debugMode {
+        if !debugMode {
             layers.removeAtIndex(1) // cellInfoLayer
         }
 
@@ -80,6 +81,27 @@ class WorldNode: SKNode {
             cell.nutritionChanged
                 >- subscribeNext { nutrition in
                     nutritionNode.text = "N:\(nutrition)"
+                }
+                >- compositeDisposable.addDisposable
+        }
+    }
+
+    func setUpMapLayer() {
+        for (index, tile) in mapLayer.tiles {
+            tile.color = UIColor.flatOrangeColor()
+        }
+
+        let tileColorStepMax = 32
+        for cell in world.cells {
+            if let tile = self.mapLayer.tiles[cell.index] {
+                tile.colorBlendFactor = CGFloat(cell.nutrition) / CGFloat(tileColorStepMax)
+            }
+
+            cell.nutritionChanged
+                >- subscribeNext { nutrition in
+                    if let tile = self.mapLayer.tiles[cell.index] {
+                        tile.colorBlendFactor = CGFloat(nutrition) / CGFloat(tileColorStepMax)
+                    }
                 }
                 >- compositeDisposable.addDisposable
         }
