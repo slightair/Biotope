@@ -33,13 +33,6 @@ class CreatureNode: SKNode {
             }
             >- compositeDisposable.addDisposable
 
-        creature.targetPathFinderChanged
-            >- subscribeNext { pathFinder in
-                self.removeAllActions()
-                self.changePosition(animated: false)
-            }
-            >- compositeDisposable.addDisposable
-
         creature.life
             >- subscribe { event in
                 switch event {
