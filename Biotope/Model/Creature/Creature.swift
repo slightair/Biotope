@@ -274,7 +274,17 @@ class Creature: Printable, Hashable {
     func decompose() {
         println("Decompose: \(self)")
         currentCell.world.removeCreature(self)
-        currentCell.addNutrition(nutrition)
+
+        let splashTargets = currentCell.world.areaCells(center: currentCell, distance: 1, includeCenter: true)
+        var distribution = [Int](count: splashTargets.count, repeatedValue: 0)
+        for _ in 0..<nutrition {
+            let destination = Int(arc4random_uniform(UInt32(splashTargets.count)))
+            distribution[destination]++
+        }
+
+        for (index, target) in enumerate(splashTargets) {
+            target.addNutrition(distribution[index])
+        }
     }
 }
 
