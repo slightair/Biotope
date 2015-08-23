@@ -30,7 +30,7 @@ class World {
             let cell = Cell(world: self, index: index)
             cells.append(cell)
 
-            let bonus = arc4random_uniform(8)
+            let bonus = arc4random_uniform(4)
             cell.nutrition += Int(bonus)
         }
 
@@ -80,7 +80,7 @@ class World {
     }
 
     func setUpCreatures() {
-        for _ in 1...5 {
+        for _ in 1...3 {
             let creature = Creature(cell: randomCell(), configuration: CreatureConfiguration.AC01)
             creatures.insert(creature)
         }
@@ -103,6 +103,7 @@ class World {
                     self.emergeCreatures()
                     self.emergingStepCount = 0
                 }
+                self.printDebugInfo()
             }
             >- compositeDisposable.addDisposable
     }
@@ -170,6 +171,27 @@ class World {
         return targetCells.first
     }
 
+    func searchEmptyCellsFrom(cells: [Cell]) -> [Cell] {
+        var checkCells = cells
+        for creature in creatures {
+            if checkCells.count == 0 {
+                break
+            }
+
+            if let index = find(checkCells, creature.currentCell) {
+                checkCells.removeAtIndex(index)
+            }
+        }
+
+        return checkCells
+    }
+
+    func addCreature(#configuration: CreatureConfiguration, cell: Cell) {
+        let creature = Creature(cell: cell, configuration: configuration, isBorn: false)
+        creatures.insert(creature)
+        sendNext(creatureEmerged, creature)
+    }
+
     func emergeCreatures() {
         for cell in cells {
             let newCreatureConfiguration = CreatureConfiguration.NAC01
@@ -180,14 +202,22 @@ class World {
 
             if emerge {
                 cell.nutrition -= needNutrition
-                let creature = Creature(cell: cell, configuration: newCreatureConfiguration, isBorn: false)
-                creatures.insert(creature)
-                sendNext(creatureEmerged, creature)
+                addCreature(configuration: newCreatureConfiguration, cell: cell)
             }
         }
     }
 
     func removeCreature(creature: Creature) {
         self.creatures.remove(creature)
+    }
+
+    func printDebugInfo() {
+        let creaturesArray = Array(creatures)
+        var nutrition = cells.map { $0.nutrition }.reduce(0, combine: +) +
+            creaturesArray.map { $0.nutrition }.reduce(0, combine: +)
+
+        let producerCount = creaturesArray.filter { $0.configuration.trophicLevel == .Producer }.count
+        let consumer1Count = creaturesArray.filter { $0.configuration.trophicLevel == .Consumer1 }.count
+        println("nutrition: \(nutrition), producer: \(producerCount), consumer1: \(consumer1Count)")
     }
 }

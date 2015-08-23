@@ -148,6 +148,7 @@ class Creature: Printable, Hashable {
 
         GameScenePaceMaker.defaultPaceMaker.pace
             >- subscribeNext { currentTime in
+                self.breedCheck()
                 self.agingCheck()
             }
             >- compositeDisposable.addDisposable
@@ -185,6 +186,25 @@ class Creature: Printable, Hashable {
     }
 
     func setUpConsumer2Action() {
+    }
+
+    func breedCheck() {
+        if nutrition < configuration.initialNutrition * 3 {
+            return
+        }
+
+        let world = currentCell.world
+
+        let candidateCells = world.searchEmptyCellsFrom(world.areaCells(center: currentCell, distance: 1))
+        if candidateCells.count == 0 {
+            return
+        }
+
+        let needle = Int(arc4random_uniform(UInt32(candidateCells.count)))
+        let targetCell = candidateCells[needle]
+
+        nutrition -= configuration.initialNutrition
+        world.addCreature(configuration: configuration, cell: targetCell)
     }
 
     func agingCheck() {
