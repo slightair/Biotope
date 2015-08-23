@@ -8,6 +8,9 @@ class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
         world = World(named: "debug")
         worldNode = WorldNode(world)
+        let scale: CGFloat = 0.7
+        worldNode.xScale = scale
+        worldNode.yScale = scale
         addChild(worldNode)
 
         world.start()

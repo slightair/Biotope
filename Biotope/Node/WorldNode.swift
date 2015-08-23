@@ -11,6 +11,7 @@ class WorldNode: SKNode {
     let compositeDisposable = CompositeDisposable()
 
     // for debug
+    let debugMode = false
     let cellInfoLayer = SKNode()
 
     init(_ world: World) {
@@ -28,7 +29,9 @@ class WorldNode: SKNode {
 
     func setUp() {
         setUpLayers()
-        setUpCellInfoLayer()
+        if debugMode {
+            setUpCellInfoLayer()
+        }
         setUpCreatureLayer()
 
         world.creatureEmerged
@@ -39,11 +42,15 @@ class WorldNode: SKNode {
     }
 
     func setUpLayers() {
-        let layers = [
+        var layers = [
             mapLayer,
             cellInfoLayer,
             creatureLayer,
         ]
+
+        if debugMode {
+            layers.removeAtIndex(1) // cellInfoLayer
+        }
 
         for (index, node) in enumerate(layers) {
             node.zPosition = CGFloat(index + 10000)

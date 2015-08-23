@@ -8,6 +8,7 @@ class CreatureNode: SKNode {
     let compositeDisposable = CompositeDisposable()
 
     // for Debug
+    let debugMode = false
     var shapeNode: SKShapeNode!
     var hpNode: SKLabelNode!
     var nutritionNode: SKLabelNode!
@@ -34,21 +35,9 @@ class CreatureNode: SKNode {
             >- compositeDisposable.addDisposable
 
         creature.life
-            >- subscribe { event in
-                switch event {
-                case .Next(let hp):
-                    self.hpNode.text = "HP:\(hp.value)"
-                case .Error(let error):
-                    fallthrough
-                case .Completed:
-                    self.compositeDisposable.dispose()
-                    self.runDeadAnimation()
-                }
-            }
-
-        creature.nutritionChanged
-            >- subscribeNext { nutrition in
-                self.nutritionNode.text = "N:\(nutrition)"
+            >- subscribeCompleted {
+                self.compositeDisposable.dispose()
+                self.runDeadAnimation()
             }
             >- compositeDisposable.addDisposable
 
@@ -63,6 +52,20 @@ class CreatureNode: SKNode {
                 self.collisionCheck()
             }
             >- compositeDisposable.addDisposable
+
+        if debugMode {
+            creature.life
+                >- subscribeNext { hp in
+                    self.hpNode.text = "HP:\(hp)"
+                }
+                >- compositeDisposable.addDisposable
+
+            creature.nutritionChanged
+                >- subscribeNext { nutrition in
+                    self.nutritionNode.text = "N:\(nutrition)"
+                }
+                >- compositeDisposable.addDisposable
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -89,20 +92,22 @@ class CreatureNode: SKNode {
         shapeNode.lineWidth = 3
         addChild(shapeNode)
 
-        hpNode = SKLabelNode(fontNamed: "Arial")
-        hpNode.fontSize = 12
-        hpNode.fontColor = UIColor.flatWhiteColor()
-        hpNode.verticalAlignmentMode = .Center
-        hpNode.text = "HP:\(creature.hp)"
-        addChild(hpNode)
+        if debugMode {
+            hpNode = SKLabelNode(fontNamed: "Arial")
+            hpNode.fontSize = 12
+            hpNode.fontColor = UIColor.flatWhiteColor()
+            hpNode.verticalAlignmentMode = .Center
+            hpNode.text = "HP:\(creature.hp)"
+            addChild(hpNode)
 
-        nutritionNode = SKLabelNode(fontNamed: "Arial")
-        nutritionNode.position = CGPointMake(0, -14)
-        nutritionNode.fontSize = 12
-        nutritionNode.fontColor = UIColor.flatWhiteColor()
-        nutritionNode.verticalAlignmentMode = .Center
-        nutritionNode.text = "N:\(creature.nutrition)"
-        addChild(nutritionNode)
+            nutritionNode = SKLabelNode(fontNamed: "Arial")
+            nutritionNode.position = CGPointMake(0, -14)
+            nutritionNode.fontSize = 12
+            nutritionNode.fontColor = UIColor.flatWhiteColor()
+            nutritionNode.verticalAlignmentMode = .Center
+            nutritionNode.text = "N:\(creature.nutrition)"
+            addChild(nutritionNode)
+        }
     }
 
     func changePosition(animated: Bool = true) {
