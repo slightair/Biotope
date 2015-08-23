@@ -1,7 +1,7 @@
 import SpriteKit
 import SwiftGraphics
 
-class MapNode: SKShapeNode {
+class MapNode: SKNode {
     let map: TMXMap
     var tilesetTextures: [Int: SKTexture] = [:]
 
@@ -78,8 +78,6 @@ class MapNode: SKShapeNode {
     func setUpLayers() {
         let mapSize = MapNode.mapSize(map)
         let mapOffset = MapNode.mapOffset(map)
-        self.fillColor = map.backgroundColor
-        self.path = CGPathCreateWithRect(CGRectMake(-mapSize.width / 2, -mapSize.height / 2, mapSize.width, mapSize.height), nil)
 
         for layer in map.layers {
             if !layer.visible {
