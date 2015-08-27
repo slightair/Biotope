@@ -4,7 +4,7 @@ import RxSwift
 class GameScenePaceMaker {
     static let defaultPaceMaker = GameScenePaceMaker()
 
-    let interval = 0.3
+    let interval = 0.5
     var previousTime: CFTimeInterval = kCFAbsoluteTimeIntervalSince1970
 
     let update = PublishSubject<CFTimeInterval>()

@@ -26,7 +26,7 @@ class Creature: Printable, Hashable {
     }
     let currentCellChanged = PublishSubject<Cell>()
 
-    var currentDirection: Cell.Direction = .RightBottom {
+    var currentDirection: Cell.Direction = .LeftBottom {
         didSet {
             sendNext(currentDirectionChanged, currentDirection)
         }

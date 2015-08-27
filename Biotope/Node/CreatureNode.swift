@@ -5,11 +5,11 @@ import SwiftGraphics
 
 class CreatureNode: SKNode {
     let creature: Creature
+    var spriteNode: SKSpriteNode!
     let compositeDisposable = CompositeDisposable()
 
     // for Debug
     let debugMode = false
-    var shapeNode: SKShapeNode!
     var hpNode: SKLabelNode!
     var nutritionNode: SKLabelNode!
 
@@ -85,12 +85,33 @@ class CreatureNode: SKNode {
         }
     }
 
+    func creatureTextureAtlas() -> CreatureTextureAtlas {
+        var textureName: String
+
+        switch creature.configuration.trophicLevel {
+        case .Nutrition:
+            fallthrough
+        case .Producer:
+            textureName = "flower"
+        case .Consumer1:
+            textureName = "rabbit"
+        case .Consumer2:
+            textureName = "rabbit"
+        }
+
+        return TextureAtlasStore.defaultStore[textureName] as! CreatureTextureAtlas
+    }
+
+    func defaultAnimateAction() -> SKAction {
+        let textures = creatureTextureAtlas().texturesForAnimation(.Wait)
+        let animateAction = SKAction.repeatActionForever(SKAction.animateWithTextures(textures, timePerFrame: CreatureTextureAtlas.AnimationDuration))
+        return animateAction
+    }
+
     func setUpNodes() {
-        shapeNode = SKShapeNode(path: creatureShapePath())
-        shapeNode.strokeColor = UIColor.darkColorWithName(creature.configuration.debugInfo.colorName)
-        shapeNode.fillColor = UIColor.colorWithName(creature.configuration.debugInfo.colorName)
-        shapeNode.lineWidth = 3
-        addChild(shapeNode)
+        spriteNode = SKSpriteNode(texture: creatureTextureAtlas().defaultTexture())
+        spriteNode.runAction(defaultAnimateAction())
+        addChild(spriteNode)
 
         if debugMode {
             hpNode = SKLabelNode(fontNamed: "Arial")
@@ -113,23 +134,26 @@ class CreatureNode: SKNode {
     func changePosition(animated: Bool = true) {
         let newPosition = MapNode.tilePosition(cell: creature.currentCell)
         if animated {
-            runAction(SKAction.moveTo(newPosition, duration: 0.2))
+            runAction(SKAction.moveTo(newPosition, duration: 0.4))
         } else {
             position = newPosition
         }
     }
 
     func changeDirection() {
-        let angle = CGFloat(2 * M_PI / Double(Cell.Direction.values.count) * Double(creature.currentDirection.rawValue))
-        let rotateAction = SKAction.rotateToAngle(angle, duration: 0)
-        self.shapeNode.runAction(rotateAction)
+        switch creature.currentDirection {
+        case .Left, .LeftTop, .LeftBottom:
+            spriteNode.xScale = 1.0
+        case .Right, .RightTop, .RightBottom:
+            spriteNode.xScale = -1.0
+        }
     }
 
     func runDeadAnimation() {
         removeAllActions()
 
-        shapeNode.strokeColor = UIColor.flatGrayColorDark()
-        shapeNode.fillColor = UIColor.flatGrayColor()
+        spriteNode.colorBlendFactor = 0.8
+        spriteNode.color = UIColor.flatGrayColorDark()
 
         let reduceAction = SKAction.scaleTo(0.0, duration: 1.0)
         runAction(reduceAction, completion: {
@@ -187,7 +211,7 @@ class CreatureNode: SKNode {
 
         let collisionCreatures = creatureNodes!.filter { $0 != self }
             .filter { !$0.creature.isDead }
-            .filter { self.shapeNode.intersectsNode($0.shapeNode) }
+            .filter { self.spriteNode.intersectsNode($0.spriteNode) }
             .map { $0.creature }
 
         for creature in collisionCreatures {
