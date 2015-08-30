@@ -29,9 +29,6 @@ class World {
         for index in 0..<(self.map.width * self.map.height) {
             let cell = Cell(world: self, index: index)
             cells.append(cell)
-
-            let bonus = arc4random_uniform(4)
-            cell.nutrition += Int(bonus)
         }
 
         var index = 0
@@ -80,14 +77,12 @@ class World {
     }
 
     func setUpCreatures() {
-        for _ in 1...3 {
-            let creature = Creature(cell: randomCell(), configuration: CreatureConfiguration.AC01)
-            creatures.insert(creature)
-        }
+        let creature = Creature(cell: cells[120], configuration: CreatureConfiguration.AC01)
+        creatures.insert(creature)
 
-        for _ in 1...20 {
-            let creature = Creature(cell: randomCell(), configuration: CreatureConfiguration.NAC01)
-            creatures.insert(creature)
+        for cell in cells {
+            let bonus = arc4random_uniform(5)
+            cell.nutrition += Int(bonus)
         }
     }
 

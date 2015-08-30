@@ -1,6 +1,11 @@
 import Foundation
 
 class PathFinder {
+    enum Point {
+        case Point(Cell)
+        case End
+    }
+
     let source: Cell
     let destination: Cell
     var nodes: [Int: PathNode] = [:]
@@ -10,6 +15,7 @@ class PathFinder {
     var hasRoute: Bool {
         return calculated && result != nil
     }
+    var currentPointIndex = 0
 
     init(source: Cell, destination: Cell) {
         self.source = source
@@ -88,5 +94,16 @@ class PathFinder {
 
     func heuristicCost(#source: Cell, destination: Cell) -> Int {
         return source.distance(destination)
+    }
+
+    func nextPoint() -> Point {
+        currentPointIndex++
+
+        if !hasRoute || currentPointIndex >= result!.count {
+            return .End
+        }
+
+        let point = result![currentPointIndex]
+        return .Point(point)
     }
 }

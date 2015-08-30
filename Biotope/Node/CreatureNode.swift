@@ -4,6 +4,8 @@ import ChameleonFramework
 import SwiftGraphics
 
 class CreatureNode: SKNode {
+    static let AnimateActionKey = "animation"
+
     let creature: Creature
     var spriteNode: SKSpriteNode!
     let compositeDisposable = CompositeDisposable()
@@ -20,11 +22,26 @@ class CreatureNode: SKNode {
         setUpNodes()
         changePosition(animated: false)
         changeDirection()
-
-        creature.currentCellChanged
+            distinctUntilChanged(creature.currentCellChanged)
             >- subscribeNext { cell in
                 self.removeAllActions()
                 self.changePosition()
+            }
+            >- compositeDisposable.addDisposable
+
+        creature.walkStatusChanged
+            >- subscribeNext { walkStatus in
+                var animation: CreatureTextureAtlas.Animation
+                switch walkStatus {
+                case .Idle:
+                    animation = .Wait
+                default:
+                    animation = .Move
+                }
+
+                let textures = self.creatureTextureAtlas().texturesForAnimation(animation)
+                let animateAction = SKAction.repeatActionForever(SKAction.animateWithTextures(textures, timePerFrame: CreatureTextureAtlas.AnimationDuration))
+                self.spriteNode.runAction(animateAction, withKey: CreatureNode.AnimateActionKey)
             }
             >- compositeDisposable.addDisposable
 
@@ -102,16 +119,27 @@ class CreatureNode: SKNode {
         return TextureAtlasStore.defaultStore[textureName] as! CreatureTextureAtlas
     }
 
-    func defaultAnimateAction() -> SKAction {
+    func runDefaultAnimation() {
         let textures = creatureTextureAtlas().texturesForAnimation(.Wait)
         let animateAction = SKAction.repeatActionForever(SKAction.animateWithTextures(textures, timePerFrame: CreatureTextureAtlas.AnimationDuration))
-        return animateAction
+        spriteNode.runAction(animateAction, withKey: CreatureNode.AnimateActionKey)
+    }
+
+    func runAnimation(animation: CreatureTextureAtlas.Animation, timePerFrame: NSTimeInterval = CreatureTextureAtlas.AnimationDuration, waitForDuration: NSTimeInterval = 0.0) {
+        let textures = creatureTextureAtlas().texturesForAnimation(animation)
+        let animateAction = SKAction.animateWithTextures(textures, timePerFrame: timePerFrame)
+        var actionSequence = waitForDuration > 0 ? SKAction.sequence([SKAction.waitForDuration(waitForDuration), animateAction]) : animateAction
+
+        spriteNode.removeActionForKey(CreatureNode.AnimateActionKey)
+        spriteNode.runAction(actionSequence, completion: {
+            self.runDefaultAnimation()
+        })
     }
 
     func setUpNodes() {
         spriteNode = SKSpriteNode(texture: creatureTextureAtlas().defaultTexture())
-        spriteNode.runAction(defaultAnimateAction())
         addChild(spriteNode)
+        runDefaultAnimation()
 
         if debugMode {
             hpNode = SKLabelNode(fontNamed: "Arial")

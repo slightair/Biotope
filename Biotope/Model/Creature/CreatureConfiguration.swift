@@ -18,6 +18,7 @@ struct CreatureConfiguration {
     let sight: UInt
     let initialHP: Int
     let initialNutrition: Int
+    let moveInterval: Int
     let agingInterval: Int
     let agingPoint: Int
     let actionInterval: Int
@@ -31,6 +32,7 @@ struct CreatureConfiguration {
         sight: 3,
         initialHP: 50,
         initialNutrition: 10,
+        moveInterval: 3,
         agingInterval: 5,
         agingPoint: 3,
         actionInterval: 0,
@@ -46,6 +48,7 @@ struct CreatureConfiguration {
         sight: 0,
         initialHP: 10,
         initialNutrition: 4,
+        moveInterval: 0,
         agingInterval: 10,
         agingPoint: 1,
         actionInterval: 3,

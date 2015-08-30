@@ -35,34 +35,14 @@ class Creature: Printable, Hashable {
 
     let configuration: CreatureConfiguration
 
-    var walkStatus: WalkStatus = .Idle
-
-    var targetPathFinderSubscription: Disposable?
-    var targetPathFinder: PathFinder? {
+    var walkStatus: WalkStatus = .Idle {
         didSet {
-            sendNext(targetPathFinderChanged, targetPathFinder)
-
-            if targetPathFinderSubscription != nil {
-                targetPathFinderSubscription?.dispose()
-            }
-
-            if targetPathFinder != nil && targetPathFinder!.hasRoute {
-                targetPathFinderSubscription = zip(from(targetPathFinder!.result!), GameScenePaceMaker.defaultPaceMaker.pace) { $0.0 }
-                    >- subscribe { event in
-                        switch event {
-                        case .Next(let cell):
-                            self.currentCell = cell.value
-                        case .Error(let error):
-                            fallthrough
-                        case .Completed():
-                            self.targetPathFinder = nil
-                            self.walkStatus = .Idle
-                        }
-                    }
-            }
+            sendNext(walkStatusChanged, walkStatus)
         }
     }
-    let targetPathFinderChanged = PublishSubject<PathFinder?>()
+    let walkStatusChanged = PublishSubject<WalkStatus>()
+
+    var targetPathFinder: PathFinder?
 
     let actionCompleted = PublishSubject<Bool>()
 
@@ -80,11 +60,6 @@ class Creature: Printable, Hashable {
             if isDead {
                 println("Dead: \(self)")
                 compositeDisposable.dispose()
-
-                if targetPathFinderSubscription != nil {
-                    targetPathFinderSubscription?.dispose()
-                }
-
                 sendCompleted(life)
             }
         }
@@ -104,8 +79,9 @@ class Creature: Printable, Hashable {
     }
     let nutritionChanged = PublishSubject<Int>()
 
-    var agingCounter: Int = 0
-    var actionCounter: Int = 0
+    var agingIntervalCounter: Int = 0
+    var actionIntervalCounter: Int = 0
+    var moveIntervalCounter: Int = 0
 
     let compositeDisposable = CompositeDisposable()
 
@@ -157,13 +133,14 @@ class Creature: Printable, Hashable {
     func setUpProducerAction() {
         GameScenePaceMaker.defaultPaceMaker.pace
             >- subscribeNext { currentTime in
-                self.actionCounter++
-                if self.actionCounter > self.configuration.actionInterval {
-                    self.actionCounter = 0
-
-                    let result = self.drainNutrition()
-                    sendNext(self.actionCompleted, result)
+                if self.actionIntervalCounter > 0 {
+                    self.actionIntervalCounter--
+                    return
                 }
+                self.actionIntervalCounter = self.configuration.actionInterval
+
+                let result = self.drainNutrition()
+                sendNext(self.actionCompleted, result)
             }
             >- compositeDisposable.addDisposable
     }
@@ -171,6 +148,13 @@ class Creature: Printable, Hashable {
     func setUpConsumer1Action() {
         GameScenePaceMaker.defaultPaceMaker.pace
             >- subscribeNext { currentTime in
+                self.moveToNextPoint()
+
+                if self.moveIntervalCounter > 0 {
+                    self.moveIntervalCounter--
+                    return
+                }
+
                 if self.walkStatus == .FoundTarget {
                     return
                 }
@@ -186,6 +170,19 @@ class Creature: Printable, Hashable {
     }
 
     func setUpConsumer2Action() {
+    }
+
+    func moveToNextPoint() {
+        if let pathFinder = targetPathFinder {
+            switch pathFinder.nextPoint() {
+            case .Point(let cell):
+                currentCell = cell
+            case .End:
+                targetPathFinder = nil
+                walkStatus = .Idle
+                moveIntervalCounter = configuration.moveInterval
+            }
+        }
     }
 
     func breedCheck() {
@@ -208,16 +205,15 @@ class Creature: Printable, Hashable {
     }
 
     func agingCheck() {
-        agingCounter++
+        if agingIntervalCounter > 0 {
+            agingIntervalCounter--
+            return
+        }
+        agingIntervalCounter = configuration.agingInterval
 
-        if agingCounter > configuration.agingInterval {
-            agingCounter = 0
-
-            hp -= configuration.agingPoint
-
-            if hp <= 0 {
-                isDead = true
-            }
+        hp -= configuration.agingPoint
+        if hp <= 0 {
+            isDead = true
         }
     }
 
@@ -253,6 +249,7 @@ class Creature: Printable, Hashable {
 
         targetPathFinder = pathFinder
         walkStatus = .FoundTarget
+        moveToNextPoint()
     }
 
     func wander() {
@@ -267,6 +264,7 @@ class Creature: Printable, Hashable {
 
         targetPathFinder = pathFinder
         walkStatus = .Wander
+        moveToNextPoint()
     }
 
     func collisionTo(another: Creature) {
