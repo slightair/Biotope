@@ -7,7 +7,7 @@ class CreatureTextureAtlas: TextureAtlas {
         static let values: [Animation] = [.Born, .Wait, .Eat, .Move]
     }
 
-    static let AnimationDuration: NSTimeInterval = 0.4
+    static let DefaultTimePerFrame: NSTimeInterval = 0.2
 
     let imageName: String
     let slice: Int
@@ -39,5 +39,9 @@ class CreatureTextureAtlas: TextureAtlas {
         let size = textureSize()
         let rect = CGRectMake(0, 1.0 - size.height, size.width, size.height)
         return SKTexture(rect: rect, inTexture: self.masterTexture)
+    }
+
+    func timePerFrameForDuration(duration: NSTimeInterval) -> NSTimeInterval {
+        return duration / NSTimeInterval(slice)
     }
 }

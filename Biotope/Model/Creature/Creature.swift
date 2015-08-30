@@ -11,6 +11,10 @@ class Creature: Printable, Hashable {
         case Idle, Wander, FoundTarget
     }
 
+    enum Action {
+        case Eat
+    }
+
     let id: Int
     var currentCell: Cell {
         willSet {
@@ -44,7 +48,7 @@ class Creature: Printable, Hashable {
 
     var targetPathFinder: PathFinder?
 
-    let actionCompleted = PublishSubject<Bool>()
+    let actionCompleted = PublishSubject<Action>()
 
     var isBorn = false {
         didSet {
@@ -140,7 +144,9 @@ class Creature: Printable, Hashable {
                 self.actionIntervalCounter = self.configuration.actionInterval
 
                 let result = self.drainNutrition()
-                sendNext(self.actionCompleted, result)
+                if result {
+                    sendNext(self.actionCompleted, .Eat)
+                }
             }
             >- compositeDisposable.addDisposable
     }
@@ -247,9 +253,12 @@ class Creature: Printable, Hashable {
         let pathFinder = PathFinder(source: currentCell, destination: targetCell)
         pathFinder.calculate()
 
+        let prevTargetPathFinder = targetPathFinder
         targetPathFinder = pathFinder
         walkStatus = .FoundTarget
-        moveToNextPoint()
+        if prevTargetPathFinder == nil {
+            moveToNextPoint()
+        }
     }
 
     func wander() {
@@ -270,11 +279,12 @@ class Creature: Printable, Hashable {
     func collisionTo(another: Creature) {
         if isTarget(another) {
             another.killedBy(self)
+            sendNext(actionCompleted, .Eat)
         }
     }
 
     func isTarget(creature: Creature) -> Bool {
-        return configuration.trophicLevel.targetLevel() == creature.configuration.trophicLevel
+        return configuration.trophicLevel.targetLevel() == creature.configuration.trophicLevel && creature.isBorn && !creature.isDead
     }
 
     func killedBy(killer: Creature) {

@@ -5,10 +5,12 @@ import SwiftGraphics
 
 class CreatureNode: SKNode {
     static let AnimateActionKey = "animation"
+    static let MoveDuration = 0.4
 
     let creature: Creature
     var spriteNode: SKSpriteNode!
     let compositeDisposable = CompositeDisposable()
+    var playingActionAnimation = false
 
     // for Debug
     let debugMode = false
@@ -31,17 +33,16 @@ class CreatureNode: SKNode {
 
         creature.walkStatusChanged
             >- subscribeNext { walkStatus in
-                var animation: CreatureTextureAtlas.Animation
                 switch walkStatus {
                 case .Idle:
-                    animation = .Wait
+                    if self.playingActionAnimation {
+                        return
+                    }
+                    self.runAnimation(.Wait, repeat: true)
                 default:
-                    animation = .Move
+                    let timePerFrame = self.creatureTextureAtlas().timePerFrameForDuration(CreatureNode.MoveDuration)
+                    self.runAnimation(.Move, repeat: true, timePerFrame: timePerFrame)
                 }
-
-                let textures = self.creatureTextureAtlas().texturesForAnimation(animation)
-                let animateAction = SKAction.repeatActionForever(SKAction.animateWithTextures(textures, timePerFrame: CreatureTextureAtlas.AnimationDuration))
-                self.spriteNode.runAction(animateAction, withKey: CreatureNode.AnimateActionKey)
             }
             >- compositeDisposable.addDisposable
 
@@ -59,8 +60,8 @@ class CreatureNode: SKNode {
             >- compositeDisposable.addDisposable
 
         creature.actionCompleted
-            >- subscribeNext { result in
-                self.runActionCompletedAnimation(result)
+            >- subscribeNext { action in
+                self.runActionCompletedAnimation(action)
             }
             >- compositeDisposable.addDisposable
 
@@ -89,19 +90,6 @@ class CreatureNode: SKNode {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func creatureShapePath() -> CGPath {
-        switch creature.configuration.trophicLevel {
-        case .Nutrition:
-            fallthrough
-        case .Producer:
-            return Circle(center: CGPointZero, radius: 24).cgpath
-        case .Consumer1:
-            fallthrough
-        case .Consumer2:
-            return CGPathCreateMutable().addArrow(size: 36)
-        }
-    }
-
     func creatureTextureAtlas() -> CreatureTextureAtlas {
         var textureName: String
 
@@ -119,27 +107,25 @@ class CreatureNode: SKNode {
         return TextureAtlasStore.defaultStore[textureName] as! CreatureTextureAtlas
     }
 
-    func runDefaultAnimation() {
-        let textures = creatureTextureAtlas().texturesForAnimation(.Wait)
-        let animateAction = SKAction.repeatActionForever(SKAction.animateWithTextures(textures, timePerFrame: CreatureTextureAtlas.AnimationDuration))
-        spriteNode.runAction(animateAction, withKey: CreatureNode.AnimateActionKey)
-    }
-
-    func runAnimation(animation: CreatureTextureAtlas.Animation, timePerFrame: NSTimeInterval = CreatureTextureAtlas.AnimationDuration, waitForDuration: NSTimeInterval = 0.0) {
+    func runAnimation(animation: CreatureTextureAtlas.Animation, repeat: Bool = false, timePerFrame: NSTimeInterval = CreatureTextureAtlas.DefaultTimePerFrame, completion: ((Void) -> Void)? = nil) {
         let textures = creatureTextureAtlas().texturesForAnimation(animation)
-        let animateAction = SKAction.animateWithTextures(textures, timePerFrame: timePerFrame)
-        var actionSequence = waitForDuration > 0 ? SKAction.sequence([SKAction.waitForDuration(waitForDuration), animateAction]) : animateAction
+        var animateAction = SKAction.animateWithTextures(textures, timePerFrame: timePerFrame)
 
         spriteNode.removeActionForKey(CreatureNode.AnimateActionKey)
-        spriteNode.runAction(actionSequence, completion: {
-            self.runDefaultAnimation()
-        })
+        if repeat {
+            spriteNode.runAction(SKAction.repeatActionForever(animateAction), withKey: CreatureNode.AnimateActionKey)
+        } else {
+            spriteNode.runAction(animateAction, completion: {
+                self.runAnimation(.Wait, repeat: true)
+                completion?()
+            })
+        }
     }
 
     func setUpNodes() {
         spriteNode = SKSpriteNode(texture: creatureTextureAtlas().defaultTexture())
         addChild(spriteNode)
-        runDefaultAnimation()
+        runAnimation(.Wait, repeat: true)
 
         if debugMode {
             hpNode = SKLabelNode(fontNamed: "Arial")
@@ -162,7 +148,7 @@ class CreatureNode: SKNode {
     func changePosition(animated: Bool = true) {
         let newPosition = MapNode.tilePosition(cell: creature.currentCell)
         if animated {
-            runAction(SKAction.moveTo(newPosition, duration: 0.4))
+            runAction(SKAction.moveTo(newPosition, duration: CreatureNode.MoveDuration))
         } else {
             position = newPosition
         }
@@ -190,41 +176,14 @@ class CreatureNode: SKNode {
         })
     }
 
-    func runActionCompletedAnimation(result: Bool) {
-        switch creature.configuration.trophicLevel {
-        case .Nutrition:
-            fallthrough
-        case .Producer:
-            runProducerActionCompletedAnimation(result)
-        case .Consumer1:
-            runConsumer1ActionCompletedAnimation(result)
-        case .Consumer2:
-            runConsumer2ActionCompletedAnimation(result)
+    func runActionCompletedAnimation(action: Creature.Action) {
+        switch action {
+        case .Eat:
+            playingActionAnimation = true
+            runAnimation(.Eat, completion: {
+                self.playingActionAnimation = false
+            })
         }
-    }
-
-    func runProducerActionCompletedAnimation(result: Bool) {
-        if !result {
-            return
-        }
-
-        let circlePath = Circle(center: CGPointZero, radius: WorldNode.hexSize).cgpath
-        let effectNode = SKShapeNode(path: circlePath)
-        effectNode.lineWidth = 3
-        effectNode.strokeColor = UIColor.flatOrangeColor()
-        addChild(effectNode)
-
-        effectNode.runAction(SKAction.scaleTo(0, duration: 0.5), completion: {
-            effectNode.removeFromParent()
-        })
-    }
-
-    func runConsumer1ActionCompletedAnimation(result: Bool) {
-
-    }
-
-    func runConsumer2ActionCompletedAnimation(result: Bool) {
-
     }
 
     func collisionCheck() {

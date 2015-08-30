@@ -116,11 +116,9 @@ class WorldNode: SKNode {
 
     func enterNewCreature(creature: Creature) {
         let creatureNode = CreatureNode(creature: creature)
-        creatureNode.setScale(0.1)
         creatureLayer.addChild(creatureNode)
 
-        let popAction = SKAction.scaleTo(1.0, duration: 1.0)
-        creatureNode.runAction(popAction, completion: {
+        creatureNode.runAnimation(.Born, completion: {
             creature.isBorn = true
         })
     }
