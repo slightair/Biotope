@@ -93,7 +93,7 @@ class WorldNode: SKNode {
 
         let tileColorStepMax = 32
         for cell in world.cells {
-            if let tile = self.mapLayer.tiles[cell.index] {
+            if let tile = mapLayer.tiles[cell.index] {
                 tile.colorBlendFactor = CGFloat(cell.nutrition) / CGFloat(tileColorStepMax)
             }
 
@@ -121,5 +121,10 @@ class WorldNode: SKNode {
         creatureNode.runAnimation(.Born, completion: {
             creature.isBorn = true
         })
+    }
+
+    func tileAtPoint(point: CGPoint) -> SKSpriteNode? {
+        // note: tile node is overlapped on border of theirs
+        return mapLayer.nodesAtPoint(point).filter { $0 is SKSpriteNode }.first as? SKSpriteNode
     }
 }

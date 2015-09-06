@@ -8,9 +8,6 @@ class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
         world = World(named: "debug")
         worldNode = WorldNode(world)
-        let scale: CGFloat = 0.7
-        worldNode.xScale = scale
-        worldNode.yScale = scale
         addChild(worldNode)
 
         world.start()
@@ -26,5 +23,18 @@ class GameScene: SKScene {
         let previousLocation = touch.previousLocationInNode(self)
 
         worldNode.position += location - previousLocation
+    }
+
+    // debug
+    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+        let touch = touches.first as! UITouch
+        var location = touch.locationInNode(worldNode)
+        location.x -= size.width / 2
+        location.y -= size.height / 2
+
+        if let tile = worldNode.tileAtPoint(location) {
+            tile.colorBlendFactor = 0.5
+            tile.color = UIColor.blueColor()
+        }
     }
 }
