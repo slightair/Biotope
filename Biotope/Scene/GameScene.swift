@@ -28,9 +28,7 @@ class GameScene: SKScene {
     // debug
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         let touch = touches.first as! UITouch
-        var location = touch.locationInNode(worldNode)
-        location.x -= size.width / 2
-        location.y -= size.height / 2
+        let location = touch.locationInNode(worldNode)
 
         if let tile = worldNode.tileAtPoint(location) {
             tile.colorBlendFactor = 0.5
