@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="hexagonal" renderorder="right-down" width="16" height="16" tilewidth="104" tileheight="180" hexsidelength="0" staggeraxis="y" staggerindex="odd" backgroundcolor="#00ffff" nextobjectid="1">
- <tileset firstgid="1" name="chip" tilewidth="120" tileheight="144">
-  <image source="chip.png" width="120" height="144"/>
+<map version="1.0" orientation="hexagonal" renderorder="right-down" width="16" height="16" tilewidth="72" tileheight="85" hexsidelength="40" staggeraxis="y" staggerindex="odd" backgroundcolor="#00ffff" nextobjectid="1">
+ <tileset firstgid="1" name="chip" tilewidth="74" tileheight="85">
+  <image source="chip.png" width="74" height="85"/>
  </tileset>
  <layer name="tiles" width="16" height="16">
   <data encoding="base64" compression="zlib">
