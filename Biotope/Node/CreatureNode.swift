@@ -91,20 +91,7 @@ class CreatureNode: SKNode {
     }
 
     func creatureTextureAtlas() -> CreatureTextureAtlas {
-        var textureName: String
-
-        switch creature.configuration.trophicLevel {
-        case .Nutrition:
-            fallthrough
-        case .Producer:
-            textureName = "flower"
-        case .Consumer1:
-            textureName = "rabbit"
-        case .Consumer2:
-            textureName = "rabbit"
-        }
-
-        return TextureAtlasStore.defaultStore[textureName] as! CreatureTextureAtlas
+        return TextureAtlasStore.defaultStore[creature.configuration.textureName] as! CreatureTextureAtlas
     }
 
     func runAnimation(animation: CreatureTextureAtlas.Animation, repeat: Bool = false, timePerFrame: NSTimeInterval = CreatureTextureAtlas.DefaultTimePerFrame, completion: ((Void) -> Void)? = nil) {

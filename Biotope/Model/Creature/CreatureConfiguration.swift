@@ -1,18 +1,29 @@
 import Foundation
+import Himotoki
 
-struct CreatureConfiguration {
+struct CreatureConfiguration: Decodable {
     enum TrophicLevel: Int {
-        case Nutrition, Producer, Consumer1, Consumer2
+        case Nutrition = 0
+        case Producer = 100
+        case Consumer1 = 200
+        case Consumer2 = 300
 
         func targetLevel() -> TrophicLevel {
-            return TrophicLevel(rawValue: self.rawValue - 1)!
+            switch self {
+            case Nutrition:
+                fallthrough
+            case Producer:
+                return Nutrition;
+            case Consumer1:
+                return Producer
+            case .Consumer2:
+                return Consumer1
+            }
         }
     }
 
-    struct DebugInfo {
-        let colorName: String
-    }
-
+    let id: UInt
+    let name: String
     let trophicLevel: TrophicLevel
     let speed: UInt
     let sight: UInt
@@ -23,38 +34,29 @@ struct CreatureConfiguration {
     let agingPoint: Int
     let actionInterval: Int
     let actionPower: Int
-    let debugInfo: DebugInfo
+    let textureName: String
 
-    // for debug
-    static let AC01 = CreatureConfiguration(
-        trophicLevel: .Consumer1,
-        speed: 3,
-        sight: 3,
-        initialHP: 50,
-        initialNutrition: 10,
-        moveInterval: 3,
-        agingInterval: 5,
-        agingPoint: 3,
-        actionInterval: 0,
-        actionPower: 0,
-        debugInfo: DebugInfo(
-            colorName: "Watermelon"
-        )
-    )
+    static func decode(e: Extractor) -> CreatureConfiguration? {
+        let create = { CreatureConfiguration($0) }
 
-    static let NAC01 = CreatureConfiguration(
-        trophicLevel: .Producer,
-        speed: 0,
-        sight: 0,
-        initialHP: 10,
-        initialNutrition: 4,
-        moveInterval: 0,
-        agingInterval: 10,
-        agingPoint: 1,
-        actionInterval: 3,
-        actionPower: 2,
-        debugInfo: DebugInfo(
-            colorName: "Yellow"
+        return build(create)(
+            e <| "id",
+            e <| "name",
+            TrophicLevel(rawValue: (e <| "trophicLevel")!),
+            e <| "speed",
+            e <| "sight",
+            e <| "initialHP",
+            e <| "initialNutrition",
+            e <| "moveInterval",
+            e <| "agingInterval",
+            e <| "agingPoint",
+            e <| "actionInterval",
+            e <| "actionPower",
+            e <| "textureName"
         )
-    )
+    }
+
+    // for Debug
+    static let AC01: CreatureConfiguration! = CreatureConfigurationStore.defaultStore[10000]
+    static let NAC01: CreatureConfiguration! = CreatureConfigurationStore.defaultStore[10001]
 }

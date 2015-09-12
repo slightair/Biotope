@@ -8,4 +8,4 @@ pod 'SwiftGraphics/iOS'
 pod 'Ono'
 pod 'Fabric'
 pod 'Crashlytics'
-
+pod 'Himotoki'
