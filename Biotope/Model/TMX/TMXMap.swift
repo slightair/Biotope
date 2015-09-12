@@ -17,6 +17,7 @@ struct TMXMap {
     let tileHeight: Int
     let hexSideLength: Int
     let backgroundColor: SKColor
+    let properties: [String: String]
     let tilesets: [TMXTileset]
     let layers: [TMXLayer]
 }

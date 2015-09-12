@@ -77,12 +77,16 @@ class World {
     }
 
     func setUpCreatures() {
-        let creature = Creature(cell: cells[120], configuration: CreatureConfiguration.AC01)
-        creatures.insert(creature)
+        let creaturesTileset = map.creaturesTileset()!
+        let creaturesLayer = map.creaturesLayer()!
 
-        for cell in cells {
-            let bonus = arc4random_uniform(5)
-            cell.nutrition += Int(bonus)
+        for (cellIndex, tileID) in enumerate(creaturesLayer.data) {
+            if tileID != 0 {
+                if let creatureConfiguration = creaturesTileset.creatureConfigurationForTileID(tileID) {
+                    let creature = Creature(cell: cells[cellIndex], configuration: creatureConfiguration)
+                    creatures.insert(creature)
+                }
+            }
         }
     }
 
@@ -188,8 +192,14 @@ class World {
     }
 
     func emergeCreatures() {
+        let emergingCreatureID = map.properties["emergingCreatureID"]?.toInt()
+        if emergingCreatureID < 0 {
+            return
+        }
+
+        let newCreatureConfiguration = CreatureConfigurationStore.defaultStore[emergingCreatureID!]
+
         for cell in cells {
-            let newCreatureConfiguration = CreatureConfiguration.NAC01
             let needNutrition = newCreatureConfiguration.initialNutrition
             let emerge = Double(arc4random_uniform(1000)) < 1000 * EmergingProbability &&
                          needNutrition <= cell.nutrition &&

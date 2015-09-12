@@ -3,6 +3,7 @@ import XCTest
 
 class WorldTests: XCTestCase {
     var subject: World!
+    let creatureConfiguration = CreatureConfigurationStore.defaultStore[0]
 
     override func setUp() {
         super.setUp()
@@ -26,9 +27,9 @@ class WorldTests: XCTestCase {
             subject.cells[117],
         ]
 
-        let creatureA = Creature(cell: subject.cells[84], configuration: CreatureConfiguration.NAC01)
-        let creatureB = Creature(cell: subject.cells[100], configuration: CreatureConfiguration.NAC01)
-        let creatureC = Creature(cell: subject.cells[117], configuration: CreatureConfiguration.NAC01)
+        let creatureA = Creature(cell: subject.cells[84], configuration: creatureConfiguration)
+        let creatureB = Creature(cell: subject.cells[100], configuration: creatureConfiguration)
+        let creatureC = Creature(cell: subject.cells[117], configuration: creatureConfiguration)
 
         subject.creatures.insert(creatureA)
         subject.creatures.insert(creatureB)

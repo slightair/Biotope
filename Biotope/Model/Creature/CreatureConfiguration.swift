@@ -22,7 +22,6 @@ struct CreatureConfiguration: Decodable {
         }
     }
 
-    let id: UInt
     let name: String
     let trophicLevel: TrophicLevel
     let speed: UInt
@@ -40,7 +39,6 @@ struct CreatureConfiguration: Decodable {
         let create = { CreatureConfiguration($0) }
 
         return build(create)(
-            e <| "id",
             e <| "name",
             TrophicLevel(rawValue: (e <| "trophicLevel")!),
             e <| "speed",
@@ -55,8 +53,4 @@ struct CreatureConfiguration: Decodable {
             e <| "textureName"
         )
     }
-
-    // for Debug
-    static let AC01: CreatureConfiguration! = CreatureConfigurationStore.defaultStore[10000]
-    static let NAC01: CreatureConfiguration! = CreatureConfigurationStore.defaultStore[10001]
 }

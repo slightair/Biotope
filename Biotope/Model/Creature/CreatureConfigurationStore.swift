@@ -4,7 +4,7 @@ import Himotoki
 class CreatureConfigurationStore {
     static let defaultStore = CreatureConfigurationStore()
 
-    var configurationDictionary: [UInt: CreatureConfiguration] = [:]
+    var configurationDictionary: [Int: CreatureConfiguration] = [:]
 
     func load() {
         let filePath = NSBundle.mainBundle().pathForResource("creatures", ofType: "json")
@@ -28,14 +28,14 @@ class CreatureConfigurationStore {
     func parseCreatureConfigurations(object: [String: AnyObject]) {
         if let creaturesInfo = object["creatures"] as? [AnyObject] {
             if let creatureConfigurations: [CreatureConfiguration] = decodeArray(creaturesInfo) {
-                for configuration in creatureConfigurations {
-                    configurationDictionary[configuration.id] = configuration
+                for (index, configuration) in enumerate(creatureConfigurations) {
+                    configurationDictionary[index] = configuration
                 }
             }
         }
     }
 
-    subscript(id: UInt) -> CreatureConfiguration {
+    subscript(id: Int) -> CreatureConfiguration {
         if (configurationDictionary.count == 0) {
             load()
         }

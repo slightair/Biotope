@@ -64,6 +64,7 @@ class TMXMapLoader {
             tileHeight: element.IntAttribute("tileheight"),
             hexSideLength: element.IntAttribute("hexsidelength"),
             backgroundColor: colorWithHexString(element.StringAttribute("backgroundcolor")),
+            properties: self.parseProperties(element.childrenWithTag("properties").first as? ONOXMLElement),
             tilesets: element.childrenWithTag("tileset").map{ self.parseTileset($0 as! ONOXMLElement) },
             layers: element.childrenWithTag("layer").map{ self.parseLayer($0 as! ONOXMLElement) }
         )
@@ -78,6 +79,20 @@ class TMXMapLoader {
                      green: CGFloat(Double(green) / 255.0),
                       blue: CGFloat(Double(blue) / 255.0),
                      alpha: 1.0)
+    }
+
+    private class func parseProperties(element: ONOXMLElement?) -> [String: String] {
+        if element == nil {
+            return [:]
+        }
+
+        return element!.childrenWithTag("property").reduce([:]) { (var dict, e) in
+            let key = e.StringAttribute("name")
+            let value = e.StringAttribute("value")
+            dict[key] = value
+
+            return dict
+        }
     }
 
     private class func parseTileset(element: ONOXMLElement) -> TMXTileset {

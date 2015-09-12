@@ -33,6 +33,10 @@
 		57584E1F1B9C2ED500E010B8 /* creatures.json in Resources */ = {isa = PBXBuildFile; fileRef = 57584E1E1B9C2ED500E010B8 /* creatures.json */; };
 		57584E211BA066AB00E010B8 /* CreatureConfigurationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57584E201BA066AB00E010B8 /* CreatureConfigurationStore.swift */; };
 		57584E221BA3FBBF00E010B8 /* CreatureConfigurationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57584E201BA066AB00E010B8 /* CreatureConfigurationStore.swift */; };
+		57584E261BA4496D00E010B8 /* TMXMap+Biotope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57584E251BA4496D00E010B8 /* TMXMap+Biotope.swift */; };
+		57584E281BA44A7900E010B8 /* TMXTileset+Biotope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57584E271BA44A7900E010B8 /* TMXTileset+Biotope.swift */; };
+		57584E291BA4504B00E010B8 /* TMXMap+Biotope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57584E251BA4496D00E010B8 /* TMXMap+Biotope.swift */; };
+		57584E2A1BA4504E00E010B8 /* TMXTileset+Biotope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57584E271BA44A7900E010B8 /* TMXTileset+Biotope.swift */; };
 		579F8F791B6A74A600D54486 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579F8F781B6A74A600D54486 /* AppDelegate.swift */; };
 		579F8F7B1B6A74A600D54486 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 579F8F7A1B6A74A600D54486 /* GameScene.sks */; };
 		579F8F7D1B6A74A600D54486 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579F8F7C1B6A74A600D54486 /* GameScene.swift */; };
@@ -84,6 +88,8 @@
 		57584E1C1B8CB8FB00E010B8 /* TextureAtlas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextureAtlas.swift; sourceTree = "<group>"; };
 		57584E1E1B9C2ED500E010B8 /* creatures.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = creatures.json; sourceTree = "<group>"; };
 		57584E201BA066AB00E010B8 /* CreatureConfigurationStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatureConfigurationStore.swift; sourceTree = "<group>"; };
+		57584E251BA4496D00E010B8 /* TMXMap+Biotope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TMXMap+Biotope.swift"; sourceTree = "<group>"; };
+		57584E271BA44A7900E010B8 /* TMXTileset+Biotope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TMXTileset+Biotope.swift"; sourceTree = "<group>"; };
 		579F8F731B6A74A600D54486 /* Biotope.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Biotope.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		579F8F771B6A74A600D54486 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		579F8F781B6A74A600D54486 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -296,6 +302,8 @@
 				57CF2F071B6DDE1D00F79760 /* NSData+Inflate.swift */,
 				57464EEE1B7EF4F20059BEE7 /* CGPath+Shape.swift */,
 				57B63E241B7F170300782D09 /* UIColor+Named.swift */,
+				57584E251BA4496D00E010B8 /* TMXMap+Biotope.swift */,
+				57584E271BA44A7900E010B8 /* TMXTileset+Biotope.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -524,6 +532,8 @@
 				57464EF11B7EF9970059BEE7 /* CreatureConfiguration.swift in Sources */,
 				57584E191B8B690600E010B8 /* CreatureTextureAtlas.swift in Sources */,
 				57CF2EF81B6CA6BB00F79760 /* MapNode.swift in Sources */,
+				57584E281BA44A7900E010B8 /* TMXTileset+Biotope.swift in Sources */,
+				57584E261BA4496D00E010B8 /* TMXMap+Biotope.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -533,6 +543,7 @@
 			files = (
 				573150FA1B77531700F37E81 /* Creature.swift in Sources */,
 				573150F21B7752BC00F37E81 /* TMXMapLoader.swift in Sources */,
+				57584E291BA4504B00E010B8 /* TMXMap+Biotope.swift in Sources */,
 				573150EE1B7752AA00F37E81 /* PathNode.swift in Sources */,
 				57464EF41B7F138B0059BEE7 /* CreatureConfiguration.swift in Sources */,
 				573150F41B7752CC00F37E81 /* TMXLayer.swift in Sources */,
@@ -541,6 +552,7 @@
 				573150FC1B77547E00F37E81 /* NSData+Inflate.swift in Sources */,
 				573150F71B7752D600F37E81 /* World.swift in Sources */,
 				579F8F931B6A74A700D54486 /* PathFinderTests.swift in Sources */,
+				57584E2A1BA4504E00E010B8 /* TMXTileset+Biotope.swift in Sources */,
 				573150F81B7752DA00F37E81 /* GameScenePaceMaker.swift in Sources */,
 				573150F61B7752D300F37E81 /* Cell.swift in Sources */,
 				573150F51B7752D000F37E81 /* TMXImage.swift in Sources */,

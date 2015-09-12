@@ -1,22 +1,6 @@
 {
   "creatures": [
     {
-      "id": 10000,
-      "name": "AC01",
-      "trophicLevel": 200,
-      "speed": 3,
-      "sight": 3,
-      "initialHP": 50,
-      "initialNutrition": 10,
-      "moveInterval": 3,
-      "agingInterval": 5,
-      "agingPoint": 3,
-      "actionInterval": 0,
-      "actionPower": 0,
-      "textureName": "rabbit"
-    },
-    {
-      "id": 10001,
       "name": "NAC01",
       "trophicLevel": 100,
       "speed": 0,
@@ -29,6 +13,20 @@
       "actionInterval": 3,
       "actionPower": 2,
       "textureName": "flower"
+    },
+    {
+      "name": "AC01",
+      "trophicLevel": 200,
+      "speed": 3,
+      "sight": 3,
+      "initialHP": 50,
+      "initialNutrition": 10,
+      "moveInterval": 3,
+      "agingInterval": 5,
+      "agingPoint": 3,
+      "actionInterval": 0,
+      "actionPower": 0,
+      "textureName": "rabbit"
     }
   ]
 }
