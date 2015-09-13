@@ -35,6 +35,8 @@
 		57584E281BA44A7900E010B8 /* TMXTileset+Biotope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57584E271BA44A7900E010B8 /* TMXTileset+Biotope.swift */; };
 		57584E2A1BA4504E00E010B8 /* TMXTileset+Biotope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57584E271BA44A7900E010B8 /* TMXTileset+Biotope.swift */; };
 		5790C5931BA50D46009D932B /* test.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 5790C5921BA50D46009D932B /* test.tmx */; };
+		5790C5951BA52ACC009D932B /* CreatureCountNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5790C5941BA52ACC009D932B /* CreatureCountNode.swift */; };
+		5790C5991BA55A51009D932B /* PressStart2P.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5790C5981BA55A51009D932B /* PressStart2P.ttf */; };
 		579F8F791B6A74A600D54486 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579F8F781B6A74A600D54486 /* AppDelegate.swift */; };
 		579F8F7B1B6A74A600D54486 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 579F8F7A1B6A74A600D54486 /* GameScene.sks */; };
 		579F8F7D1B6A74A600D54486 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579F8F7C1B6A74A600D54486 /* GameScene.swift */; };
@@ -87,6 +89,8 @@
 		57584E201BA066AB00E010B8 /* CreatureConfigurationStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatureConfigurationStore.swift; sourceTree = "<group>"; };
 		57584E271BA44A7900E010B8 /* TMXTileset+Biotope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TMXTileset+Biotope.swift"; sourceTree = "<group>"; };
 		5790C5921BA50D46009D932B /* test.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = test.tmx; sourceTree = "<group>"; };
+		5790C5941BA52ACC009D932B /* CreatureCountNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatureCountNode.swift; sourceTree = "<group>"; };
+		5790C5981BA55A51009D932B /* PressStart2P.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = PressStart2P.ttf; path = Font/pressstart2p/PressStart2P.ttf; sourceTree = "<group>"; };
 		579F8F731B6A74A600D54486 /* Biotope.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Biotope.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		579F8F771B6A74A600D54486 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		579F8F781B6A74A600D54486 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -245,6 +249,7 @@
 				57CF2F151B71A75200F79760 /* WorldNode.swift */,
 				57CF2F171B71AC9600F79760 /* CellNode.swift */,
 				574586351B745C470067C65C /* CreatureNode.swift */,
+				5790C5941BA52ACC009D932B /* CreatureCountNode.swift */,
 			);
 			path = Node;
 			sourceTree = "<group>";
@@ -265,6 +270,7 @@
 		579F8FA51B6C570200D54486 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				5790C5981BA55A51009D932B /* PressStart2P.ttf */,
 				57584E1E1B9C2ED500E010B8 /* creatures.json */,
 				579F8FA61B6C570200D54486 /* Map */,
 			);
@@ -416,6 +422,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5790C5991BA55A51009D932B /* PressStart2P.ttf in Resources */,
 				57CF2F0F1B6FBC4600F79760 /* chip.png in Resources */,
 				579F8F871B6A74A700D54486 /* LaunchScreen.xib in Resources */,
 				579F8F841B6A74A700D54486 /* Images.xcassets in Resources */,
@@ -514,6 +521,7 @@
 				57CF2F161B71A75200F79760 /* WorldNode.swift in Sources */,
 				57CF2F181B71AC9600F79760 /* CellNode.swift in Sources */,
 				57584E1D1B8CB8FB00E010B8 /* TextureAtlas.swift in Sources */,
+				5790C5951BA52ACC009D932B /* CreatureCountNode.swift in Sources */,
 				579F8F7D1B6A74A600D54486 /* GameScene.swift in Sources */,
 				57CF2F031B6CCE0900F79760 /* TMXImage.swift in Sources */,
 				574586391B74CDB50067C65C /* PathNode.swift in Sources */,

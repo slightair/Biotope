@@ -12,6 +12,22 @@ class World {
     let creatureEmerged = PublishSubject<Creature>()
     let compositeDisposable = CompositeDisposable()
 
+    var nutritionCount: Int {
+        return Array(cells.values).map { $0.nutrition }.reduce(0, combine: +)
+    }
+
+    var producerCount: Int {
+        return Array(creatures).filter { $0.configuration.trophicLevel == CreatureConfiguration.TrophicLevel.Producer }.count
+    }
+
+    var consumer1Count: Int {
+        return Array(creatures).filter { $0.configuration.trophicLevel == .Consumer1 }.count
+    }
+
+    var consumer2Count: Int {
+        return Array(creatures).filter { $0.configuration.trophicLevel == .Consumer2 }.count
+    }
+
     init(named name: String) {
         self.map = TMXMapLoader.load(name)
 
@@ -112,7 +128,6 @@ class World {
                     self.emergeCreatures()
                     self.emergingStepCount = 0
                 }
-                self.printDebugInfo()
             }
             >- compositeDisposable.addDisposable
     }
@@ -219,15 +234,5 @@ class World {
 
     func removeCreature(creature: Creature) {
         self.creatures.remove(creature)
-    }
-
-    func printDebugInfo() {
-        let creaturesArray = Array(creatures)
-        var nutrition = Array(cells.values).map { $0.nutrition }.reduce(0, combine: +) +
-            creaturesArray.map { $0.nutrition }.reduce(0, combine: +)
-
-        let producerCount = creaturesArray.filter { $0.configuration.trophicLevel == .Producer }.count
-        let consumer1Count = creaturesArray.filter { $0.configuration.trophicLevel == .Consumer1 }.count
-        println("nutrition: \(nutrition), producer: \(producerCount), consumer1: \(consumer1Count)")
     }
 }

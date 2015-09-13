@@ -9,6 +9,7 @@ class TextureAtlasStore {
         let creatures = [
             "flower",
             "rabbit",
+            "dragon",
         ]
         for creatureName in creatures {
             let textureAtlas = CreatureTextureAtlas(named: creatureName, slice: 4)

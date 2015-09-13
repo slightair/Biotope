@@ -25,6 +25,10 @@ class WorldNode: SKNode {
         fatalError("init(coder:) has not been implemented")
     }
 
+    deinit {
+        compositeDisposable.dispose()
+    }
+
     func setUp() {
         setUpLayers()
         if debugMode {

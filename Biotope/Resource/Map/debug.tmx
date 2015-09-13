@@ -8,7 +8,7 @@
  </tileset>
  <tileset firstgid="2" name="creatures" tilewidth="48" tileheight="48">
   <tileoffset x="14" y="-18"/>
-  <image source="creatures.png" width="96" height="48"/>
+  <image source="creatures.png" width="144" height="48"/>
  </tileset>
  <layer name="tiles" width="16" height="16">
   <data encoding="base64" compression="zlib">
