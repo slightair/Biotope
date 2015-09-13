@@ -8,7 +8,7 @@ class WorldTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        subject = World(named: "debug")
+        subject = World(named: "test")
         subject.creatures.removeAll()
     }
 
@@ -18,18 +18,18 @@ class WorldTests: XCTestCase {
         //   116 - 117
 
         let searchCells = [
-            subject.cells[84],
-            subject.cells[85],
-            subject.cells[99],
-            subject.cells[100],
-            subject.cells[101],
-            subject.cells[116],
-            subject.cells[117],
+            subject.cells[84]!,
+            subject.cells[85]!,
+            subject.cells[99]!,
+            subject.cells[100]!,
+            subject.cells[101]!,
+            subject.cells[116]!,
+            subject.cells[117]!,
         ]
 
-        let creatureA = Creature(cell: subject.cells[84], configuration: creatureConfiguration)
-        let creatureB = Creature(cell: subject.cells[100], configuration: creatureConfiguration)
-        let creatureC = Creature(cell: subject.cells[117], configuration: creatureConfiguration)
+        let creatureA = Creature(cell: subject.cells[84]!, configuration: creatureConfiguration)
+        let creatureB = Creature(cell: subject.cells[100]!, configuration: creatureConfiguration)
+        let creatureC = Creature(cell: subject.cells[117]!, configuration: creatureConfiguration)
 
         subject.creatures.insert(creatureA)
         subject.creatures.insert(creatureB)
@@ -37,10 +37,10 @@ class WorldTests: XCTestCase {
 
         let result = subject.searchEmptyCellsFrom(searchCells)
         let expected = [
-            subject.cells[85],
-            subject.cells[99],
-            subject.cells[101],
-            subject.cells[116],
+            subject.cells[85]!,
+            subject.cells[99]!,
+            subject.cells[101]!,
+            subject.cells[116]!,
         ]
 
         XCTAssertEqual(result, expected)

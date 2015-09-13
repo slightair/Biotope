@@ -6,7 +6,7 @@ class World {
     let EmergingProbability = 0.25
 
     let map: TMXMap
-    var cells: [Cell]!
+    var cells: [Int: Cell]!
     var creatures: Set<Creature> = []
     var emergingStepCount = 0
     let creatureEmerged = PublishSubject<Creature>()
@@ -24,11 +24,14 @@ class World {
     }
 
     func setUpCells() {
-        var cells: [Cell] = []
+        var cells: [Int: Cell] = [:]
 
+        let tilesLayer = self.map.layerForName("tiles")
         for index in 0..<(self.map.width * self.map.height) {
-            let cell = Cell(world: self, index: index)
-            cells.append(cell)
+            if tilesLayer![index] > 0 {
+                let cell = Cell(world: self, index: index)
+                cells[index] = cell
+            }
         }
 
         var index = 0
@@ -36,38 +39,43 @@ class World {
             for x in 0..<self.map.width {
                 let cell = cells[index]
 
+                if cell == nil {
+                    index++
+                    continue
+                }
+
                 if 0 < x && x < self.map.width {
-                    cell[.Left] = cells[index - 1]
+                    cell![.Left] = cells[index - 1]
                 }
                 if 0 <= x && x < self.map.width - 1 {
-                    cell[.Right] = cells[index + 1]
+                    cell![.Right] = cells[index + 1]
                 }
 
                 if y % 2 == 0 {
                     if 0 <= x && x < self.map.width && 0 < y && y < self.map.height - 1 {
-                        cell[.LeftTop] = cells[index - self.map.width]
+                        cell![.LeftTop] = cells[index - self.map.width]
                     }
                     if 0 <= x && x < self.map.width - 1 && 0 < y && y < self.map.height - 1 {
-                        cell[.RightTop] = cells[index - self.map.width + 1]
+                        cell![.RightTop] = cells[index - self.map.width + 1]
                     }
                     if 0 <= x && x < self.map.width && 0 <= y && y < self.map.height - 1 {
-                        cell[.LeftBottom] = cells[index + self.map.width]
+                        cell![.LeftBottom] = cells[index + self.map.width]
                     }
                     if 0 <= x && x < self.map.width - 1 && 0 <= y && y < self.map.height - 1 {
-                        cell[.RightBottom] = cells[index + self.map.width + 1]
+                        cell![.RightBottom] = cells[index + self.map.width + 1]
                     }
                 } else {
                     if 0 <= x && x < self.map.width && 0 < y && y < self.map.height {
-                        cell[.RightTop] = cells[index - self.map.width]
+                        cell![.RightTop] = cells[index - self.map.width]
                     }
                     if 0 < x && x < self.map.width && 0 < y && y < self.map.height {
-                        cell[.LeftTop] = cells[index - self.map.width - 1]
+                        cell![.LeftTop] = cells[index - self.map.width - 1]
                     }
                     if 0 < x && x < self.map.width && 0 < y && y < self.map.height - 1 {
-                        cell[.LeftBottom] = cells[index + self.map.width - 1]
+                        cell![.LeftBottom] = cells[index + self.map.width - 1]
                     }
                     if 0 <= x && x < self.map.width && 0 < y && y < self.map.height - 1 {
-                        cell[.RightBottom] = cells[index + self.map.width]
+                        cell![.RightBottom] = cells[index + self.map.width]
                     }
                 }
                 index++
@@ -77,14 +85,16 @@ class World {
     }
 
     func setUpCreatures() {
-        let creaturesTileset = map.creaturesTileset()!
-        let creaturesLayer = map.creaturesLayer()!
+        let creaturesTileset = map.tilesetForName("creatures")!
+        let creaturesLayer = map.layerForName("creatures")!
 
         for (cellIndex, tileID) in enumerate(creaturesLayer.data) {
-            if tileID != 0 {
-                if let creatureConfiguration = creaturesTileset.creatureConfigurationForTileID(tileID) {
-                    let creature = Creature(cell: cells[cellIndex], configuration: creatureConfiguration)
-                    creatures.insert(creature)
+            if let cell = cells[cellIndex] {
+                if tileID != 0 {
+                    if let creatureConfiguration = creaturesTileset.creatureConfigurationForTileID(tileID) {
+                        let creature = Creature(cell: cell, configuration: creatureConfiguration)
+                        creatures.insert(creature)
+                    }
                 }
             }
         }
@@ -105,11 +115,6 @@ class World {
                 self.printDebugInfo()
             }
             >- compositeDisposable.addDisposable
-    }
-
-    func randomCell() -> Cell {
-        let needle = Int(arc4random_uniform(UInt32(cells.count)))
-        return cells[needle]
     }
 
     func randomCell(#center: Cell, distance: UInt) -> Cell {
@@ -199,7 +204,7 @@ class World {
 
         let newCreatureConfiguration = CreatureConfigurationStore.defaultStore[emergingCreatureID!]
 
-        for cell in cells {
+        for (index, cell) in cells {
             let needNutrition = newCreatureConfiguration.initialNutrition
             let emerge = Double(arc4random_uniform(1000)) < 1000 * EmergingProbability &&
                          needNutrition <= cell.nutrition &&
@@ -218,7 +223,7 @@ class World {
 
     func printDebugInfo() {
         let creaturesArray = Array(creatures)
-        var nutrition = cells.map { $0.nutrition }.reduce(0, combine: +) +
+        var nutrition = Array(cells.values).map { $0.nutrition }.reduce(0, combine: +) +
             creaturesArray.map { $0.nutrition }.reduce(0, combine: +)
 
         let producerCount = creaturesArray.filter { $0.configuration.trophicLevel == .Producer }.count

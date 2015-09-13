@@ -3,8 +3,6 @@ import RxSwift
 import SwiftGraphics
 
 class WorldNode: SKNode {
-    static let hexSize: CGFloat = 60
-
     let world: World
     let mapLayer: MapNode
     let creatureLayer = SKNode()
@@ -60,8 +58,10 @@ class WorldNode: SKNode {
     }
 
     func setUpCellInfoLayer() {
-        let mapOffset = MapNode.mapOffset(world.map)
-        for cell in world.cells {
+        let radius: CGFloat = 40 * 0.6
+        let radian = 2 * M_PI / 6.0
+
+        for (index, cell) in world.cells {
             let indexNode = SKLabelNode(fontNamed: "Arial")
             indexNode.position = MapNode.tilePosition(index: cell.index, forMap: world.map)
             indexNode.text = "\(cell.index)"
@@ -69,6 +69,21 @@ class WorldNode: SKNode {
             indexNode.verticalAlignmentMode = .Center
             indexNode.fontColor = .flatBlueColor()
             cellInfoLayer.addChild(indexNode)
+
+            for direction in Cell.Direction.values {
+                let r = radian * Double(direction.rawValue)
+                let position = CGPointMake(radius * CGFloat(cos(r)), radius * CGFloat(sin(r)))
+
+                if let destinationCell = cell[direction] {
+                    let directionNode = SKLabelNode(fontNamed: "Arial")
+                    directionNode.text = "\(destinationCell.index)"
+                    directionNode.fontSize = 12
+                    directionNode.verticalAlignmentMode = .Center
+                    directionNode.fontColor = .flatGreenColor()
+                    directionNode.position = indexNode.position + position
+                    cellInfoLayer.addChild(directionNode)
+                }
+            }
 
             let nutritionNode = SKLabelNode(fontNamed: "Arial")
             nutritionNode.position = MapNode.tilePosition(index: cell.index, forMap: world.map) - CGPointMake(0, 18)
@@ -92,7 +107,7 @@ class WorldNode: SKNode {
         }
 
         let tileColorStepMax = 32
-        for cell in world.cells {
+        for (index, cell) in world.cells {
             if let tile = mapLayer.tiles[cell.index] {
                 tile.colorBlendFactor = CGFloat(cell.nutrition) / CGFloat(tileColorStepMax)
             }

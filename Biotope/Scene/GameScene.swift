@@ -24,15 +24,4 @@ class GameScene: SKScene {
 
         worldNode.position += location - previousLocation
     }
-
-    // debug
-    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
-        let touch = touches.first as! UITouch
-        let location = touch.locationInNode(worldNode)
-
-        if let tile = worldNode.tileAtPoint(location) {
-            tile.colorBlendFactor = 0.5
-            tile.color = UIColor.blueColor()
-        }
-    }
 }

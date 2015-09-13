@@ -20,4 +20,12 @@ struct TMXMap {
     let properties: [String: String]
     let tilesets: [TMXTileset]
     let layers: [TMXLayer]
+
+    func tilesetForName(name: String) -> TMXTileset? {
+        return tilesets.filter { $0.name == name }.first
+    }
+
+    func layerForName(name: String) -> TMXLayer? {
+        return layers.filter { $0.name == name }.first
+    }
 }

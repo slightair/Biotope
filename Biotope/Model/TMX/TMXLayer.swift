@@ -6,4 +6,8 @@ struct TMXLayer {
     let height: Int
     let visible: Bool
     let data: [Int]
+
+    subscript(index: Int) -> Int {
+        return data[index]
+    }
 }

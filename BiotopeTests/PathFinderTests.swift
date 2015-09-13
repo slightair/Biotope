@@ -4,9 +4,9 @@ import XCTest
 class PathFinderTests: XCTestCase {
 
     func testPerformancePathFinder() {
-        let world = World(named: "debug")
-        let cellA = world.cells[100]
-        let cellB = world.cells[200]
+        let world = World(named: "test")
+        let cellA = world.cells[100]!
+        let cellB = world.cells[200]!
 
         let pathFinder = PathFinder(source: cellA, destination: cellB)
         let result = pathFinder.calculate()

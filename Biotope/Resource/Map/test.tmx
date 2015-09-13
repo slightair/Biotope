@@ -12,7 +12,7 @@
  </tileset>
  <layer name="tiles" width="16" height="16">
   <data encoding="base64" compression="zlib">
-   eJylk0kOACAIA8v/P+1dS5dIQuKBKa3GATB4a0yzuYQHPK80W175SnK6O1A6qT7LtGVx+7dz+oZJroa/S+1p8qDgEv+bBsvyy9/e2Fy6X/2RpA9XUwCj
+   eJxjZGBgYBzFo3gUj0gMAAYeAQE=
   </data>
  </layer>
  <layer name="creatures" width="16" height="16" visible="0">
