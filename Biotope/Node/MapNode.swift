@@ -7,7 +7,7 @@ class MapNode: SKNode {
     var tiles: [Int: SKSpriteNode] = [:]
 
     class func mapSize(map: TMXMap) -> CGSize {
-        return CGSize(
+        return CGSizeMake(
             CGFloat(map.tileWidth * (map.width + 1) - map.tileWidth / 2),
             CGFloat((map.tileHeight + map.hexSideLength) / 2 * (map.height + 1))
         )
@@ -18,11 +18,11 @@ class MapNode: SKNode {
         let offsetX = -(mapSize.width - CGFloat(map.tileWidth)) / 2.0
         let offsetY = (mapSize.height - CGFloat(map.tileHeight)) / 2.0
 
-        return CGPoint(offsetX, offsetY)
+        return CGPointMake(offsetX, offsetY)
     }
 
-    class func tilePosition(#x: Int, y: Int, forMap map: TMXMap, relative: Bool) -> CGPoint {
-        var position = CGPoint(
+    class func tilePosition(x x: Int, y: Int, forMap map: TMXMap, relative: Bool) -> CGPoint {
+        var position = CGPointMake(
             CGFloat(map.tileWidth * x + (y % 2 == 0 ? map.tileWidth / 2 : 0)),
             CGFloat(-(map.tileHeight + map.hexSideLength) / 2 * y)
         )
@@ -32,13 +32,13 @@ class MapNode: SKNode {
         return position
     }
 
-    class func tilePosition(#index: Int, forMap map: TMXMap, relative: Bool = false) -> CGPoint {
+    class func tilePosition(index index: Int, forMap map: TMXMap, relative: Bool = false) -> CGPoint {
         let x = index % map.width
         let y = index / map.width
         return tilePosition(x: x, y: y, forMap: map, relative: relative)
     }
 
-    class func tilePosition(#cell: Cell, relative: Bool = false) -> CGPoint {
+    class func tilePosition(cell cell: Cell, relative: Bool = false) -> CGPoint {
         return tilePosition(index: cell.index, forMap: cell.world.map, relative: relative)
     }
 

@@ -1,12 +1,12 @@
 import SwiftGraphics
 
 extension CGMutablePath {
-    func addHex(#size: CGFloat) -> CGMutablePath {
+    func addHex(size size: CGFloat) -> CGMutablePath {
         addHex(position: CGPointZero, size: size)
         return self
     }
 
-    func addHex(#position: CGPoint, size: CGFloat) -> CGMutablePath {
+    func addHex(position position: CGPoint, size: CGFloat) -> CGMutablePath {
         move(CGPointMake(size * CGFloat(cos(M_PI_2)), size * CGFloat(sin(M_PI_2))) + position)
         for i in 0..<6 {
             let r = 2 * M_PI / 6.0 * Double(i + 1) + M_PI_2
@@ -15,12 +15,12 @@ extension CGMutablePath {
         return self
     }
 
-    func addArrow(#size: CGFloat) -> CGMutablePath {
+    func addArrow(size size: CGFloat) -> CGMutablePath {
         addArrow(position: CGPointZero, size: size)
         return self
     }
 
-    func addArrow(#position: CGPoint, size: CGFloat) -> CGMutablePath {
+    func addArrow(position position: CGPoint, size: CGFloat) -> CGMutablePath {
         move(CGPointMake(size, 0) + position)
 
         let theta = M_PI_4

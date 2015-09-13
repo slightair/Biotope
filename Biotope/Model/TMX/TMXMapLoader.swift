@@ -21,8 +21,8 @@ extension ONOXMLElement {
 
 extension String {
     subscript(integerRange: Range<Int>) -> String {
-        let start = advance(self.startIndex, integerRange.startIndex)
-        let end = advance(self.startIndex, integerRange.endIndex)
+        let start = self.startIndex.advancedBy(integerRange.startIndex)
+        let end = self.startIndex.advancedBy(integerRange.endIndex)
         return self.substringWithRange(start..<end)
     }
 

@@ -38,10 +38,10 @@ class CreatureNode: SKNode {
                     if self.playingActionAnimation {
                         return
                     }
-                    self.runAnimation(.Wait, repeat: true)
+                    self.runAnimation(.Wait, repeatForever: true)
                 default:
                     let timePerFrame = self.creatureTextureAtlas().timePerFrameForDuration(CreatureNode.MoveDuration)
-                    self.runAnimation(.Move, repeat: true, timePerFrame: timePerFrame)
+                    self.runAnimation(.Move, repeatForever: true, timePerFrame: timePerFrame)
                 }
             }
             >- compositeDisposable.addDisposable
@@ -94,16 +94,16 @@ class CreatureNode: SKNode {
         return TextureAtlasStore.defaultStore[creature.configuration.textureName] as! CreatureTextureAtlas
     }
 
-    func runAnimation(animation: CreatureTextureAtlas.Animation, repeat: Bool = false, timePerFrame: NSTimeInterval = CreatureTextureAtlas.DefaultTimePerFrame, completion: ((Void) -> Void)? = nil) {
+    func runAnimation(animation: CreatureTextureAtlas.Animation, repeatForever: Bool = false, timePerFrame: NSTimeInterval = CreatureTextureAtlas.DefaultTimePerFrame, completion: ((Void) -> Void)? = nil) {
         let textures = creatureTextureAtlas().texturesForAnimation(animation)
-        var animateAction = SKAction.animateWithTextures(textures, timePerFrame: timePerFrame)
+        let animateAction = SKAction.animateWithTextures(textures, timePerFrame: timePerFrame)
 
         spriteNode.removeActionForKey(CreatureNode.AnimateActionKey)
-        if repeat {
+        if repeatForever {
             spriteNode.runAction(SKAction.repeatActionForever(animateAction), withKey: CreatureNode.AnimateActionKey)
         } else {
             spriteNode.runAction(animateAction, completion: {
-                self.runAnimation(.Wait, repeat: true)
+                self.runAnimation(.Wait, repeatForever: true)
                 completion?()
             })
         }
@@ -112,7 +112,7 @@ class CreatureNode: SKNode {
     func setUpNodes() {
         spriteNode = SKSpriteNode(texture: creatureTextureAtlas().defaultTexture())
         addChild(spriteNode)
-        runAnimation(.Wait, repeat: true)
+        runAnimation(.Wait, repeatForever: true)
 
         if debugMode {
             hpNode = SKLabelNode(fontNamed: "Arial")
@@ -132,7 +132,7 @@ class CreatureNode: SKNode {
         }
     }
 
-    func changePosition(animated: Bool = true) {
+    func changePosition(animated animated: Bool = true) {
         let newPosition = MapNode.tilePosition(cell: creature.currentCell)
         if animated {
             runAction(SKAction.moveTo(newPosition, duration: CreatureNode.MoveDuration))

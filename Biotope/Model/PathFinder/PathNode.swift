@@ -41,6 +41,6 @@ class PathNode: Hashable {
             cells.append(nextParent!.cell)
             nextParent = nextParent!.parent
         }
-        return reverse(cells)
+        return Array(cells.reverse())
     }
 }

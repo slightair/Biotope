@@ -55,7 +55,7 @@ class WorldNode: SKNode {
             layers.removeAtIndex(1) // cellInfoLayer
         }
 
-        for (index, node) in enumerate(layers) {
+        for (index, node) in layers.enumerate() {
             node.zPosition = CGFloat(index + 10000)
             addChild(node)
         }

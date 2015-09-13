@@ -1,7 +1,7 @@
 import Foundation
 import RxSwift
 
-class Creature: Printable, Hashable {
+class Creature: CustomStringConvertible, Hashable {
     static let DrainNutritionRange: UInt = 2
     static let WanderCandidateRange: UInt = 3
 
@@ -53,7 +53,7 @@ class Creature: Printable, Hashable {
     var isBorn = false {
         didSet {
             if isBorn {
-                println("Born: \(self)")
+                print("Born: \(self)")
                 start()
             }
         }
@@ -62,7 +62,7 @@ class Creature: Printable, Hashable {
     var isDead = false {
         didSet {
             if isDead {
-                println("Dead: \(self)")
+                print("Dead: \(self)")
                 compositeDisposable.dispose()
                 sendCompleted(life)
             }
@@ -227,7 +227,7 @@ class Creature: Printable, Hashable {
         let targetCells = currentCell.world.areaCells(center: currentCell, distance: Creature.DrainNutritionRange, includeCenter: true)
 
         var drainedNutrition = 0
-        var drainPower = configuration.actionPower
+        let drainPower = configuration.actionPower
         for target in targetCells {
             if target.nutrition > drainPower {
                 target.nutrition -= drainPower
@@ -300,7 +300,7 @@ class Creature: Printable, Hashable {
     }
 
     func decompose() {
-        println("Decompose: \(self)")
+        print("Decompose: \(self)")
         currentCell.world.removeCreature(self)
 
         let splashTargets = currentCell.world.areaCells(center: currentCell, distance: 1, includeCenter: true)
@@ -310,7 +310,7 @@ class Creature: Printable, Hashable {
             distribution[destination]++
         }
 
-        for (index, target) in enumerate(splashTargets) {
+        for (index, target) in splashTargets.enumerate() {
             target.addNutrition(distribution[index])
         }
     }

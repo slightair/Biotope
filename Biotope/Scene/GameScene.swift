@@ -24,7 +24,7 @@ class GameScene: SKScene {
         GameScenePaceMaker.defaultPaceMaker.knock(currentTime)
     }
 
-    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         let touch = touches.first as! UITouch
         let location = touch.locationInNode(self)
         let previousLocation = touch.previousLocationInNode(self)

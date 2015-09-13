@@ -44,7 +44,7 @@ class PathFinder {
         return result;
     }
 
-    func createNode(#current: Cell, cost: Int, parent: PathNode? = nil) -> PathNode {
+    func createNode(current current: Cell, cost: Int, parent: PathNode? = nil) -> PathNode {
         return PathNode(
             cell: current,
             cost: cost,
@@ -92,7 +92,7 @@ class PathFinder {
         return criteria
     }
 
-    func heuristicCost(#source: Cell, destination: Cell) -> Int {
+    func heuristicCost(source source: Cell, destination: Cell) -> Int {
         return source.distance(destination)
     }
 
