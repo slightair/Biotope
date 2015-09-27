@@ -96,13 +96,13 @@ class CreatureCountNode: SKNode {
         backgroundNode.addChild(consumer2CountLabel);
         xOffset += 68
 
-        GameScenePaceMaker.defaultPaceMaker.pace
-            >- subscribeNext { interval in
+        compositeDisposable.addDisposable(
+            GameScenePaceMaker.defaultPaceMaker.pace.subscribeNext { interval in
                 nutritionLabel.text = String(format: "N:%04d", self.world.nutritionCount)
                 producerCountLabel.text = String(format: "%03d", self.world.producerCount)
                 consumer1CountLabel.text = String(format: "%03d", self.world.consumer1Count)
                 consumer2CountLabel.text = String(format: "%03d", self.world.consumer2Count)
             }
-            >- compositeDisposable.addDisposable
+        )
     }
 }

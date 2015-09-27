@@ -25,7 +25,7 @@ class GameScene: SKScene {
     }
 
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        let touch = touches.first as! UITouch
+        let touch = touches.first!
         let location = touch.locationInNode(self)
         let previousLocation = touch.previousLocationInNode(self)
 

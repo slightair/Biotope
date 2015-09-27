@@ -37,11 +37,11 @@ class WorldNode: SKNode {
         setUpMapLayer()
         setUpCreatureLayer()
 
-        world.creatureEmerged
-            >- subscribeNext { creature in
+        compositeDisposable.addDisposable(
+            world.creatureEmerged.subscribeNext { creature in
                 self.enterNewCreature(creature)
             }
-            >- compositeDisposable.addDisposable
+        )
     }
 
     func setUpLayers() {
@@ -65,7 +65,7 @@ class WorldNode: SKNode {
         let radius: CGFloat = 40 * 0.6
         let radian = 2 * M_PI / 6.0
 
-        for (index, cell) in world.cells {
+        for (_, cell) in world.cells {
             let indexNode = SKLabelNode(fontNamed: "Arial")
             indexNode.position = MapNode.tilePosition(index: cell.index, forMap: world.map)
             indexNode.text = "\(cell.index)"
@@ -97,32 +97,32 @@ class WorldNode: SKNode {
             nutritionNode.fontColor = .flatBlueColor()
             cellInfoLayer.addChild(nutritionNode)
 
-            cell.nutritionChanged
-                >- subscribeNext { nutrition in
+            compositeDisposable.addDisposable(
+                cell.nutritionChanged.subscribeNext { nutrition in
                     nutritionNode.text = "N:\(nutrition)"
                 }
-                >- compositeDisposable.addDisposable
+            )
         }
     }
 
     func setUpMapLayer() {
-        for (index, tile) in mapLayer.tiles {
+        for (_, tile) in mapLayer.tiles {
             tile.color = UIColor.flatOrangeColor()
         }
 
         let tileColorStepMax = 32
-        for (index, cell) in world.cells {
+        for (_, cell) in world.cells {
             if let tile = mapLayer.tiles[cell.index] {
                 tile.colorBlendFactor = CGFloat(cell.nutrition) / CGFloat(tileColorStepMax)
             }
 
-            cell.nutritionChanged
-                >- subscribeNext { nutrition in
+            compositeDisposable.addDisposable(
+                cell.nutritionChanged.subscribeNext { nutrition in
                     if let tile = self.mapLayer.tiles[cell.index] {
                         tile.colorBlendFactor = CGFloat(nutrition) / CGFloat(tileColorStepMax)
                     }
                 }
-                >- compositeDisposable.addDisposable
+            )
         }
     }
 

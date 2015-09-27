@@ -25,14 +25,14 @@ class Creature: CustomStringConvertible, Hashable {
             }
         }
         didSet {
-            sendNext(currentCellChanged, currentCell)
+            currentCellChanged.on(.Next(currentCell))
         }
     }
     let currentCellChanged = PublishSubject<Cell>()
 
     var currentDirection: Cell.Direction = .LeftBottom {
         didSet {
-            sendNext(currentDirectionChanged, currentDirection)
+            currentDirectionChanged.on(.Next(currentDirection))
         }
     }
     let currentDirectionChanged = PublishSubject<Cell.Direction>()
@@ -41,7 +41,7 @@ class Creature: CustomStringConvertible, Hashable {
 
     var walkStatus: WalkStatus = .Idle {
         didSet {
-            sendNext(walkStatusChanged, walkStatus)
+            walkStatusChanged.on(.Next(walkStatus))
         }
     }
     let walkStatusChanged = PublishSubject<WalkStatus>()
@@ -64,21 +64,21 @@ class Creature: CustomStringConvertible, Hashable {
             if isDead {
                 print("Dead: \(self)")
                 compositeDisposable.dispose()
-                sendCompleted(life)
+                life.on(.Completed)
             }
         }
     }
 
     var hp: Int {
         didSet {
-            sendNext(life, hp)
+            life.on(.Next(hp))
         }
     }
     let life = PublishSubject<Int>()
 
     var nutrition: Int {
         didSet {
-            sendNext(nutritionChanged, nutrition)
+            nutritionChanged.on(.Next(nutrition))
         }
     }
     let nutritionChanged = PublishSubject<Int>()
@@ -126,17 +126,17 @@ class Creature: CustomStringConvertible, Hashable {
             return
         }
 
-        GameScenePaceMaker.defaultPaceMaker.pace
-            >- subscribeNext { currentTime in
+        compositeDisposable.addDisposable(
+            GameScenePaceMaker.defaultPaceMaker.pace.subscribeNext { currentTime in
                 self.breedCheck()
                 self.agingCheck()
             }
-            >- compositeDisposable.addDisposable
+        )
     }
 
     func setUpProducerAction() {
-        GameScenePaceMaker.defaultPaceMaker.pace
-            >- subscribeNext { currentTime in
+        compositeDisposable.addDisposable(
+            GameScenePaceMaker.defaultPaceMaker.pace.subscribeNext { currentTime in
                 if self.actionIntervalCounter > 0 {
                     self.actionIntervalCounter--
                     return
@@ -145,15 +145,15 @@ class Creature: CustomStringConvertible, Hashable {
 
                 let result = self.drainNutrition()
                 if result {
-                    sendNext(self.actionCompleted, .Eat)
+                    self.actionCompleted.on(.Next(.Eat))
                 }
             }
-            >- compositeDisposable.addDisposable
+        )
     }
 
     func setUpConsumer1Action() {
-        GameScenePaceMaker.defaultPaceMaker.pace
-            >- subscribeNext { currentTime in
+        compositeDisposable.addDisposable(
+            GameScenePaceMaker.defaultPaceMaker.pace.subscribeNext { currentTime in
                 self.moveToNextPoint()
 
                 if self.moveIntervalCounter > 0 {
@@ -172,7 +172,7 @@ class Creature: CustomStringConvertible, Hashable {
 
                 self.wander()
             }
-            >- compositeDisposable.addDisposable
+        )
     }
 
     func setUpConsumer2Action() {
@@ -279,7 +279,7 @@ class Creature: CustomStringConvertible, Hashable {
     func collisionTo(another: Creature) {
         if isTarget(another) {
             another.killedBy(self)
-            sendNext(actionCompleted, .Eat)
+            actionCompleted.on(.Next(.Eat))
         }
     }
 

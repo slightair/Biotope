@@ -121,15 +121,15 @@ class World {
             creature.start()
         }
 
-        GameScenePaceMaker.defaultPaceMaker.pace
-            >- subscribeNext { interval in
+        compositeDisposable.addDisposable(
+            GameScenePaceMaker.defaultPaceMaker.pace.subscribeNext { interval in
                 self.emergingStepCount++
                 if self.emergingStepCount > self.EmergingStepCountInterval {
                     self.emergeCreatures()
                     self.emergingStepCount = 0
                 }
             }
-            >- compositeDisposable.addDisposable
+        )
     }
 
     func randomCell(center center: Cell, distance: UInt) -> Cell {
@@ -208,18 +208,18 @@ class World {
     func addCreature(configuration configuration: CreatureConfiguration, cell: Cell) {
         let creature = Creature(cell: cell, configuration: configuration, isBorn: false)
         creatures.insert(creature)
-        sendNext(creatureEmerged, creature)
+        creatureEmerged.on(.Next(creature))
     }
 
     func emergeCreatures() {
-        let emergingCreatureID = Int(map.properties["emergingCreatureID"]?)
+        let emergingCreatureID = Int(map.properties["emergingCreatureID"]!)
         if emergingCreatureID < 0 {
             return
         }
 
         let newCreatureConfiguration = CreatureConfigurationStore.defaultStore[emergingCreatureID!]
 
-        for (index, cell) in cells {
+        for (_, cell) in cells {
             let needNutrition = newCreatureConfiguration.initialNutrition
             let emerge = Double(arc4random_uniform(1000)) < 1000 * EmergingProbability &&
                          needNutrition <= cell.nutrition &&

@@ -13,25 +13,27 @@ class CreatureConfigurationStore {
         }
 
         let data = NSData(contentsOfFile: filePath!)
-        var error: NSError?
-        let JSONObject = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions(rawValue: 0)) as? [String: AnyObject]
-        if error != nil {
-            fatalError(error!.localizedDescription)
-        }
-        if JSONObject == nil {
-            fatalError("invalid configuration file")
-        }
 
-        parseCreatureConfigurations(JSONObject!)
+        do {
+            let JSONObject = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions(rawValue: 0)) as? [String: AnyObject]
+            if JSONObject == nil {
+                fatalError("invalid configuration file")
+            }
+            parseCreatureConfigurations(JSONObject!)
+        } catch let error {
+            fatalError("error: \(error)")
+        }
     }
 
     func parseCreatureConfigurations(object: [String: AnyObject]) {
-        if let creaturesInfo = object["creatures"] as? [AnyObject] {
-            if let creatureConfigurations: [CreatureConfiguration] = decodeArray(creaturesInfo) {
+        do {
+            if let creatureConfigurations: [CreatureConfiguration] = try decodeArray(object["creatures"]!) {
                 for (index, configuration) in creatureConfigurations.enumerate() {
                     configurationDictionary[index] = configuration
                 }
             }
+        } catch let error {
+            fatalError("error: \(error)")
         }
     }
 

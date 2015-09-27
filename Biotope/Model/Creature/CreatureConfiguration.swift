@@ -35,12 +35,10 @@ struct CreatureConfiguration: Decodable {
     let actionPower: Int
     let textureName: String
 
-    static func decode(e: Extractor) -> CreatureConfiguration? {
-        let create = { CreatureConfiguration($0) }
-
-        return build(create)(
+    static func decode(e: Extractor) throws -> CreatureConfiguration {
+        return try build(CreatureConfiguration.init)(
             e <| "name",
-            TrophicLevel(rawValue: (e <| "trophicLevel")!),
+            TrophicLevel(rawValue: (e <| "trophicLevel"))!,
             e <| "speed",
             e <| "sight",
             e <| "initialHP",

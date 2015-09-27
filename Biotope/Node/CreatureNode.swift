@@ -24,15 +24,15 @@ class CreatureNode: SKNode {
         setUpNodes()
         changePosition(animated: false)
         changeDirection()
-            distinctUntilChanged(creature.currentCellChanged)
-            >- subscribeNext { cell in
+        compositeDisposable.addDisposable(
+            creature.currentCellChanged.distinctUntilChanged().subscribeNext { cell in
                 self.removeAllActions()
                 self.changePosition()
             }
-            >- compositeDisposable.addDisposable
+        )
 
-        creature.walkStatusChanged
-            >- subscribeNext { walkStatus in
+        compositeDisposable.addDisposable(
+            creature.walkStatusChanged.subscribeNext { walkStatus in
                 switch walkStatus {
                 case .Idle:
                     if self.playingActionAnimation {
@@ -44,45 +44,45 @@ class CreatureNode: SKNode {
                     self.runAnimation(.Move, repeatForever: true, timePerFrame: timePerFrame)
                 }
             }
-            >- compositeDisposable.addDisposable
+        )
 
-        creature.currentDirectionChanged
-            >- subscribeNext { direction in
+        compositeDisposable.addDisposable(
+            creature.currentDirectionChanged.subscribeNext { direction in
                 self.changeDirection()
             }
-            >- compositeDisposable.addDisposable
+        )
 
-        creature.life
-            >- subscribeCompleted {
+        compositeDisposable.addDisposable(
+            creature.life.subscribeCompleted {
                 self.compositeDisposable.dispose()
                 self.runDeadAnimation()
             }
-            >- compositeDisposable.addDisposable
+        )
 
-        creature.actionCompleted
-            >- subscribeNext { action in
+        compositeDisposable.addDisposable(
+            creature.actionCompleted.subscribeNext { action in
                 self.runActionCompletedAnimation(action)
             }
-            >- compositeDisposable.addDisposable
+        )
 
-        GameScenePaceMaker.defaultPaceMaker.pace
-            >- subscribeNext { currentTime in
+        compositeDisposable.addDisposable(
+            GameScenePaceMaker.defaultPaceMaker.pace.subscribeNext { currentTime in
                 self.collisionCheck()
             }
-            >- compositeDisposable.addDisposable
+        )
 
         if debugMode {
-            creature.life
-                >- subscribeNext { hp in
+            compositeDisposable.addDisposable(
+                creature.life.subscribeNext { hp in
                     self.hpNode.text = "HP:\(hp)"
                 }
-                >- compositeDisposable.addDisposable
+            )
 
-            creature.nutritionChanged
-                >- subscribeNext { nutrition in
+            compositeDisposable.addDisposable(
+                creature.nutritionChanged.subscribeNext { nutrition in
                     self.nutritionNode.text = "N:\(nutrition)"
                 }
-                >- compositeDisposable.addDisposable
+            )
         }
     }
 

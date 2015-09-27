@@ -34,6 +34,10 @@
 		57584E221BA3FBBF00E010B8 /* CreatureConfigurationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57584E201BA066AB00E010B8 /* CreatureConfigurationStore.swift */; };
 		57584E281BA44A7900E010B8 /* TMXTileset+Biotope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57584E271BA44A7900E010B8 /* TMXTileset+Biotope.swift */; };
 		57584E2A1BA4504E00E010B8 /* TMXTileset+Biotope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57584E271BA44A7900E010B8 /* TMXTileset+Biotope.swift */; };
+		577542D91BB7A46F0000E1DC /* SwiftGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 577542D81BB7A46F0000E1DC /* SwiftGraphics.framework */; };
+		577542DD1BB7A5270000E1DC /* SwiftGraphics.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = 577542DC1BB7A5270000E1DC /* SwiftGraphics.framework.dSYM */; };
+		577542E31BB7A7430000E1DC /* SwiftUtilities.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = 577542E21BB7A7430000E1DC /* SwiftUtilities.framework.dSYM */; };
+		577542E61BB7A7B10000E1DC /* SwiftUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 577542E51BB7A7B10000E1DC /* SwiftUtilities.framework */; };
 		5790C5931BA50D46009D932B /* test.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 5790C5921BA50D46009D932B /* test.tmx */; };
 		5790C5951BA52ACC009D932B /* CreatureCountNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5790C5941BA52ACC009D932B /* CreatureCountNode.swift */; };
 		5790C5991BA55A51009D932B /* PressStart2P.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5790C5981BA55A51009D932B /* PressStart2P.ttf */; };
@@ -76,6 +80,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		577542DB1BB7A4E30000E1DC /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+				577542E31BB7A7430000E1DC /* SwiftUtilities.framework.dSYM in CopyFiles */,
+				577542DD1BB7A5270000E1DC /* SwiftGraphics.framework.dSYM in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		574586351B745C470067C65C /* CreatureNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatureNode.swift; sourceTree = "<group>"; };
 		574586381B74CDB50067C65C /* PathNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathNode.swift; sourceTree = "<group>"; };
@@ -88,6 +106,10 @@
 		57584E1E1B9C2ED500E010B8 /* creatures.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = creatures.json; sourceTree = "<group>"; };
 		57584E201BA066AB00E010B8 /* CreatureConfigurationStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatureConfigurationStore.swift; sourceTree = "<group>"; };
 		57584E271BA44A7900E010B8 /* TMXTileset+Biotope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TMXTileset+Biotope.swift"; sourceTree = "<group>"; };
+		577542D81BB7A46F0000E1DC /* SwiftGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftGraphics.framework; path = Carthage/Build/iOS/SwiftGraphics.framework; sourceTree = "<group>"; };
+		577542DC1BB7A5270000E1DC /* SwiftGraphics.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = SwiftGraphics.framework.dSYM; path = Carthage/Build/iOS/SwiftGraphics.framework.dSYM; sourceTree = "<group>"; };
+		577542E21BB7A7430000E1DC /* SwiftUtilities.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = SwiftUtilities.framework.dSYM; path = Carthage/Build/iOS/SwiftUtilities.framework.dSYM; sourceTree = "<group>"; };
+		577542E51BB7A7B10000E1DC /* SwiftUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUtilities.framework; path = Carthage/Build/iOS/SwiftUtilities.framework; sourceTree = "<group>"; };
 		5790C5921BA50D46009D932B /* test.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = test.tmx; sourceTree = "<group>"; };
 		5790C5941BA52ACC009D932B /* CreatureCountNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatureCountNode.swift; sourceTree = "<group>"; };
 		5790C5981BA55A51009D932B /* PressStart2P.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = PressStart2P.ttf; path = Font/pressstart2p/PressStart2P.ttf; sourceTree = "<group>"; };
@@ -132,6 +154,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				577542E61BB7A7B10000E1DC /* SwiftUtilities.framework in Frameworks */,
+				577542D91BB7A46F0000E1DC /* SwiftGraphics.framework in Frameworks */,
 				57CF2F051B6DD44200F79760 /* libz.dylib in Frameworks */,
 				D4212BE445D70781DA07DE5A /* Pods.framework in Frameworks */,
 			);
@@ -165,6 +189,15 @@
 				57584E1C1B8CB8FB00E010B8 /* TextureAtlas.swift */,
 			);
 			path = Texture;
+			sourceTree = "<group>";
+		};
+		577542E41BB7A7490000E1DC /* dSYM */ = {
+			isa = PBXGroup;
+			children = (
+				577542E21BB7A7430000E1DC /* SwiftUtilities.framework.dSYM */,
+				577542DC1BB7A5270000E1DC /* SwiftGraphics.framework.dSYM */,
+			);
+			name = dSYM;
 			sourceTree = "<group>";
 		};
 		579F8F6A1B6A74A600D54486 = {
@@ -323,6 +356,9 @@
 		B349E90CFA818A43BF0AA757 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				577542E41BB7A7490000E1DC /* dSYM */,
+				577542D81BB7A46F0000E1DC /* SwiftGraphics.framework */,
+				577542E51BB7A7B10000E1DC /* SwiftUtilities.framework */,
 				57CF2F041B6DD44200F79760 /* libz.dylib */,
 				B053F8553A27EFCDCF9F52D0 /* Pods.framework */,
 			);
@@ -352,6 +388,8 @@
 				E33985EC93D63CD0A53F65A8 /* Embed Pods Frameworks */,
 				8927E0C8C55061CB891AD339 /* Copy Pods Resources */,
 				57464EF31B7F09F50059BEE7 /* ShellScript */,
+				577542DA1BB7A4950000E1DC /* ShellScript */,
+				577542DB1BB7A4E30000E1DC /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -458,6 +496,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/Fabric.framework/run\" 3e02916b8e1b97e94a690f124c0b15cf0f08c245 f7e96cf97146fc2676105b6382ef0b5bb5c80e9b764be2ed9db07106017bf70b";
+		};
+		577542DA1BB7A4950000E1DC /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/SwiftGraphics.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SwiftUtilities.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
 		6D15A2B5B6DE16330E553902 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -686,8 +739,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Biotope/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "cc.clv.ios.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -702,8 +759,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Biotope/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "cc.clv.ios.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -715,10 +776,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -736,10 +794,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = BiotopeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "cc.clv.ios.$(PRODUCT_NAME:rfc1034identifier)";

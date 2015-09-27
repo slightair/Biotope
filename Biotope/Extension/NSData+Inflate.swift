@@ -28,7 +28,7 @@ extension NSData {
             return nil
         }
 
-        var data = NSMutableData(length: self.length * 2)!
+        let data = NSMutableData(length: self.length * 2)!
         var status: Int32
         repeat {
             if Int(stream.total_out) >= data.length {

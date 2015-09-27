@@ -77,7 +77,6 @@ class MapNode: SKNode {
     }
 
     func setUpLayers() {
-        let mapSize = MapNode.mapSize(map)
         let mapOffset = MapNode.mapOffset(map)
 
         for layer in map.layers {

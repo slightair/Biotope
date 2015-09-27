@@ -17,7 +17,7 @@ class Cell: CustomStringConvertible, Hashable {
 
     var nutrition = 0 {
         didSet {
-            sendNext(nutritionChanged, nutrition)
+            nutritionChanged.on(.Next(nutrition))
         }
     }
     let nutritionChanged = PublishSubject<Int>()
