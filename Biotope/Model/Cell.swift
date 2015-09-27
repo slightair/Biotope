@@ -5,7 +5,7 @@ func ==(lhs: Cell, rhs: Cell) -> Bool {
     return lhs.hashValue == rhs.hashValue
 }
 
-class Cell: Printable, Hashable {
+class Cell: CustomStringConvertible, Hashable {
     enum Direction: Int {
         case Right, RightTop, LeftTop, Left, LeftBottom, RightBottom
 
@@ -17,7 +17,7 @@ class Cell: Printable, Hashable {
 
     var nutrition = 0 {
         didSet {
-            sendNext(nutritionChanged, nutrition)
+            nutritionChanged.on(.Next(nutrition))
         }
     }
     let nutritionChanged = PublishSubject<Int>()

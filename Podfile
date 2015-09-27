@@ -2,9 +2,8 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'RxSwift'
+pod 'RxSwift', '2.0.0-alpha.3'
 pod 'ChameleonFramework'
-pod 'SwiftGraphics/iOS'
 pod 'Ono'
 pod 'Fabric'
 pod 'Crashlytics'

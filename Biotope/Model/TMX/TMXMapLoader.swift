@@ -7,12 +7,12 @@ extension ONOXMLElement {
     }
 
     func IntAttribute(attr: String) -> Int {
-        return (self[attr] as! String).toInt()!
+        return Int(self[attr] as! String)!
     }
 
     func BoolAttribute(attr: String, defaultValue: Bool) -> Bool {
         if let value = self[attr] as? String {
-            return value.toInt() == 1
+            return Int(value) == 1
         } else {
             return defaultValue
         }
@@ -21,8 +21,8 @@ extension ONOXMLElement {
 
 extension String {
     subscript(integerRange: Range<Int>) -> String {
-        let start = advance(self.startIndex, integerRange.startIndex)
-        let end = advance(self.startIndex, integerRange.endIndex)
+        let start = self.startIndex.advancedBy(integerRange.startIndex)
+        let end = self.startIndex.advancedBy(integerRange.endIndex)
         return self.substringWithRange(start..<end)
     }
 
@@ -39,12 +39,13 @@ class TMXMapLoader {
         }
 
         let data = NSData(contentsOfFile: filePath!)
-        var error: NSError?
-        let document = ONOXMLDocument(data: data, error: &error)
-        if error != nil {
-            fatalError(error!.localizedDescription)
+        do {
+            let document = try ONOXMLDocument(data: data)
+
+            return parseTMXDocument(document)
+        } catch let error {
+            fatalError("error: \(error)")
         }
-        return parseTMXDocument(document)
     }
 
     private class func parseTMXDocument(document: ONOXMLDocument) -> TMXMap {
@@ -112,7 +113,7 @@ class TMXMapLoader {
         }
 
         let dataString = dataElement.stringValue().stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-        let base64DecodedData = NSData(base64EncodedString: dataString, options: NSDataBase64DecodingOptions(0))
+        let base64DecodedData = NSData(base64EncodedString: dataString, options: NSDataBase64DecodingOptions(rawValue: 0))
         let inflatedData = base64DecodedData!.inflatedData()!
         var data: [Int] = []
 

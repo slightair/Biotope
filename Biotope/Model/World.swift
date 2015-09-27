@@ -104,7 +104,7 @@ class World {
         let creaturesTileset = map.tilesetForName("creatures")!
         let creaturesLayer = map.layerForName("creatures")!
 
-        for (cellIndex, tileID) in enumerate(creaturesLayer.data) {
+        for (cellIndex, tileID) in creaturesLayer.data.enumerate() {
             if let cell = cells[cellIndex] {
                 if tileID != 0 {
                     if let creatureConfiguration = creaturesTileset.creatureConfigurationForTileID(tileID) {
@@ -121,24 +121,24 @@ class World {
             creature.start()
         }
 
-        GameScenePaceMaker.defaultPaceMaker.pace
-            >- subscribeNext { interval in
+        compositeDisposable.addDisposable(
+            GameScenePaceMaker.defaultPaceMaker.pace.subscribeNext { interval in
                 self.emergingStepCount++
                 if self.emergingStepCount > self.EmergingStepCountInterval {
                     self.emergeCreatures()
                     self.emergingStepCount = 0
                 }
             }
-            >- compositeDisposable.addDisposable
+        )
     }
 
-    func randomCell(#center: Cell, distance: UInt) -> Cell {
+    func randomCell(center center: Cell, distance: UInt) -> Cell {
         let candidates = areaCells(center: center, distance: distance)
         let needle = Int(arc4random_uniform(UInt32(candidates.count)))
         return candidates[needle]
     }
 
-    func areaCells(#center: Cell, distance: UInt, includeCenter: Bool = false) -> [Cell] {
+    func areaCells(center center: Cell, distance: UInt, includeCenter: Bool = false) -> [Cell] {
         var cells: Set<Cell> = []
         var newCells: [Cell] = [center]
 
@@ -165,12 +165,12 @@ class World {
         return Array(cells)
     }
 
-    func searchTargetCell(#center: Cell, distance: UInt, targetLevel: CreatureConfiguration.TrophicLevel) -> Cell? {
+    func searchTargetCell(center center: Cell, distance: UInt, targetLevel: CreatureConfiguration.TrophicLevel) -> Cell? {
         let candidateCells = areaCells(center: center, distance: distance)
         var candidateCreatures: [Creature] = []
 
         for creature in creatures {
-            if !contains(candidateCells, creature.currentCell) {
+            if !candidateCells.contains(creature.currentCell) {
                 continue
             }
             if creature.isDead {
@@ -186,7 +186,7 @@ class World {
         }
 
         let targetCells = candidateCreatures.map { $0.currentCell }
-                                            .sorted { center.distance($0) < center.distance($1) }
+                                            .sort { center.distance($0) < center.distance($1) }
         return targetCells.first
     }
 
@@ -197,7 +197,7 @@ class World {
                 break
             }
 
-            if let index = find(checkCells, creature.currentCell) {
+            if let index = checkCells.indexOf(creature.currentCell) {
                 checkCells.removeAtIndex(index)
             }
         }
@@ -205,21 +205,21 @@ class World {
         return checkCells
     }
 
-    func addCreature(#configuration: CreatureConfiguration, cell: Cell) {
+    func addCreature(configuration configuration: CreatureConfiguration, cell: Cell) {
         let creature = Creature(cell: cell, configuration: configuration, isBorn: false)
         creatures.insert(creature)
-        sendNext(creatureEmerged, creature)
+        creatureEmerged.on(.Next(creature))
     }
 
     func emergeCreatures() {
-        let emergingCreatureID = map.properties["emergingCreatureID"]?.toInt()
+        let emergingCreatureID = Int(map.properties["emergingCreatureID"]!)
         if emergingCreatureID < 0 {
             return
         }
 
         let newCreatureConfiguration = CreatureConfigurationStore.defaultStore[emergingCreatureID!]
 
-        for (index, cell) in cells {
+        for (_, cell) in cells {
             let needNutrition = newCreatureConfiguration.initialNutrition
             let emerge = Double(arc4random_uniform(1000)) < 1000 * EmergingProbability &&
                          needNutrition <= cell.nutrition &&

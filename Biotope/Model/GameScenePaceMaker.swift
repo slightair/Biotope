@@ -11,7 +11,7 @@ class GameScenePaceMaker {
     let pace = PublishSubject<CFTimeInterval>()
 
     func knock(currentTime: CFTimeInterval) {
-        sendNext(update, currentTime)
+        update.on(.Next(currentTime))
 
         let firstKnock = (previousTime == kCFAbsoluteTimeIntervalSince1970)
         if firstKnock {
@@ -22,7 +22,7 @@ class GameScenePaceMaker {
         while currentTime > previousTime + interval {
             previousTime += interval
 
-            sendNext(pace, previousTime)
+            pace.on(.Next(previousTime))
         }
     }
 }

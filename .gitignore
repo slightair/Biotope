@@ -25,7 +25,6 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-
 ### https://raw.github.com/github/gitignore/2bf7d8a77a73f7ef7089db449feafada0549af10/Global/xcode.gitignore
 
 build/
@@ -44,3 +43,5 @@ DerivedData
 *.xcuserstate
 
 Pods
+Carthage/Checkouts
+Carthage/Build

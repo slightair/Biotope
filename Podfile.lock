@@ -6,12 +6,9 @@ PODS:
   - Fabric (1.2.8):
     - Fabric/Base (= 1.2.8)
   - Fabric/Base (1.2.8)
-  - Himotoki (0.6.1)
+  - Himotoki (1.0.0)
   - Ono (1.2.2)
-  - RxSwift (1.8.1)
-  - SwiftGraphics/Core (0.0.4)
-  - SwiftGraphics/iOS (0.0.4):
-    - SwiftGraphics/Core
+  - RxSwift (2.0.0-alpha.3)
 
 DEPENDENCIES:
   - ChameleonFramework
@@ -19,16 +16,14 @@ DEPENDENCIES:
   - Fabric
   - Himotoki
   - Ono
-  - RxSwift
-  - SwiftGraphics/iOS
+  - RxSwift (= 2.0.0-alpha.3)
 
 SPEC CHECKSUMS:
   ChameleonFramework: 3476f813ac1615aef0a9a958f05520dfca47e09d
   Crashlytics: 93e2f86363d53c002c6366a9d87e41f2eaee87c3
   Fabric: a9eabe53915e9f1db55a84dd2838737928675878
-  Himotoki: 0dfc5e233297550cb34ae15374d12cfb51649599
+  Himotoki: 248b55af276aef1af1a326e918aed30bc5ee25dd
   Ono: 80b1c686777d3f6d5d5ce6fcac8a74afef4ca197
-  RxSwift: 69d88c8525f2c8c5b92ae503d776357b6b7c2bea
-  SwiftGraphics: e001d90c4a81a162a2d788c3c3cc003830942acf
+  RxSwift: c66f7956b2e5fb397a62bf4a3ec6072749a816a7
 
 COCOAPODS: 0.38.2

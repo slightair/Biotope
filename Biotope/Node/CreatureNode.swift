@@ -24,65 +24,65 @@ class CreatureNode: SKNode {
         setUpNodes()
         changePosition(animated: false)
         changeDirection()
-            distinctUntilChanged(creature.currentCellChanged)
-            >- subscribeNext { cell in
+        compositeDisposable.addDisposable(
+            creature.currentCellChanged.distinctUntilChanged().subscribeNext { cell in
                 self.removeAllActions()
                 self.changePosition()
             }
-            >- compositeDisposable.addDisposable
+        )
 
-        creature.walkStatusChanged
-            >- subscribeNext { walkStatus in
+        compositeDisposable.addDisposable(
+            creature.walkStatusChanged.subscribeNext { walkStatus in
                 switch walkStatus {
                 case .Idle:
                     if self.playingActionAnimation {
                         return
                     }
-                    self.runAnimation(.Wait, repeat: true)
+                    self.runAnimation(.Wait, repeatForever: true)
                 default:
                     let timePerFrame = self.creatureTextureAtlas().timePerFrameForDuration(CreatureNode.MoveDuration)
-                    self.runAnimation(.Move, repeat: true, timePerFrame: timePerFrame)
+                    self.runAnimation(.Move, repeatForever: true, timePerFrame: timePerFrame)
                 }
             }
-            >- compositeDisposable.addDisposable
+        )
 
-        creature.currentDirectionChanged
-            >- subscribeNext { direction in
+        compositeDisposable.addDisposable(
+            creature.currentDirectionChanged.subscribeNext { direction in
                 self.changeDirection()
             }
-            >- compositeDisposable.addDisposable
+        )
 
-        creature.life
-            >- subscribeCompleted {
+        compositeDisposable.addDisposable(
+            creature.life.subscribeCompleted {
                 self.compositeDisposable.dispose()
                 self.runDeadAnimation()
             }
-            >- compositeDisposable.addDisposable
+        )
 
-        creature.actionCompleted
-            >- subscribeNext { action in
+        compositeDisposable.addDisposable(
+            creature.actionCompleted.subscribeNext { action in
                 self.runActionCompletedAnimation(action)
             }
-            >- compositeDisposable.addDisposable
+        )
 
-        GameScenePaceMaker.defaultPaceMaker.pace
-            >- subscribeNext { currentTime in
+        compositeDisposable.addDisposable(
+            GameScenePaceMaker.defaultPaceMaker.pace.subscribeNext { currentTime in
                 self.collisionCheck()
             }
-            >- compositeDisposable.addDisposable
+        )
 
         if debugMode {
-            creature.life
-                >- subscribeNext { hp in
+            compositeDisposable.addDisposable(
+                creature.life.subscribeNext { hp in
                     self.hpNode.text = "HP:\(hp)"
                 }
-                >- compositeDisposable.addDisposable
+            )
 
-            creature.nutritionChanged
-                >- subscribeNext { nutrition in
+            compositeDisposable.addDisposable(
+                creature.nutritionChanged.subscribeNext { nutrition in
                     self.nutritionNode.text = "N:\(nutrition)"
                 }
-                >- compositeDisposable.addDisposable
+            )
         }
     }
 
@@ -94,16 +94,16 @@ class CreatureNode: SKNode {
         return TextureAtlasStore.defaultStore[creature.configuration.textureName] as! CreatureTextureAtlas
     }
 
-    func runAnimation(animation: CreatureTextureAtlas.Animation, repeat: Bool = false, timePerFrame: NSTimeInterval = CreatureTextureAtlas.DefaultTimePerFrame, completion: ((Void) -> Void)? = nil) {
+    func runAnimation(animation: CreatureTextureAtlas.Animation, repeatForever: Bool = false, timePerFrame: NSTimeInterval = CreatureTextureAtlas.DefaultTimePerFrame, completion: ((Void) -> Void)? = nil) {
         let textures = creatureTextureAtlas().texturesForAnimation(animation)
-        var animateAction = SKAction.animateWithTextures(textures, timePerFrame: timePerFrame)
+        let animateAction = SKAction.animateWithTextures(textures, timePerFrame: timePerFrame)
 
         spriteNode.removeActionForKey(CreatureNode.AnimateActionKey)
-        if repeat {
+        if repeatForever {
             spriteNode.runAction(SKAction.repeatActionForever(animateAction), withKey: CreatureNode.AnimateActionKey)
         } else {
             spriteNode.runAction(animateAction, completion: {
-                self.runAnimation(.Wait, repeat: true)
+                self.runAnimation(.Wait, repeatForever: true)
                 completion?()
             })
         }
@@ -112,7 +112,7 @@ class CreatureNode: SKNode {
     func setUpNodes() {
         spriteNode = SKSpriteNode(texture: creatureTextureAtlas().defaultTexture())
         addChild(spriteNode)
-        runAnimation(.Wait, repeat: true)
+        runAnimation(.Wait, repeatForever: true)
 
         if debugMode {
             hpNode = SKLabelNode(fontNamed: "Arial")
@@ -132,7 +132,7 @@ class CreatureNode: SKNode {
         }
     }
 
-    func changePosition(animated: Bool = true) {
+    func changePosition(animated animated: Bool = true) {
         let newPosition = MapNode.tilePosition(cell: creature.currentCell)
         if animated {
             runAction(SKAction.moveTo(newPosition, duration: CreatureNode.MoveDuration))

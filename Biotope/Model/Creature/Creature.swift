@@ -1,7 +1,7 @@
 import Foundation
 import RxSwift
 
-class Creature: Printable, Hashable {
+class Creature: CustomStringConvertible, Hashable {
     static let DrainNutritionRange: UInt = 2
     static let WanderCandidateRange: UInt = 3
 
@@ -25,14 +25,14 @@ class Creature: Printable, Hashable {
             }
         }
         didSet {
-            sendNext(currentCellChanged, currentCell)
+            currentCellChanged.on(.Next(currentCell))
         }
     }
     let currentCellChanged = PublishSubject<Cell>()
 
     var currentDirection: Cell.Direction = .LeftBottom {
         didSet {
-            sendNext(currentDirectionChanged, currentDirection)
+            currentDirectionChanged.on(.Next(currentDirection))
         }
     }
     let currentDirectionChanged = PublishSubject<Cell.Direction>()
@@ -41,7 +41,7 @@ class Creature: Printable, Hashable {
 
     var walkStatus: WalkStatus = .Idle {
         didSet {
-            sendNext(walkStatusChanged, walkStatus)
+            walkStatusChanged.on(.Next(walkStatus))
         }
     }
     let walkStatusChanged = PublishSubject<WalkStatus>()
@@ -53,7 +53,7 @@ class Creature: Printable, Hashable {
     var isBorn = false {
         didSet {
             if isBorn {
-                println("Born: \(self)")
+                print("Born: \(self)")
                 start()
             }
         }
@@ -62,23 +62,23 @@ class Creature: Printable, Hashable {
     var isDead = false {
         didSet {
             if isDead {
-                println("Dead: \(self)")
+                print("Dead: \(self)")
                 compositeDisposable.dispose()
-                sendCompleted(life)
+                life.on(.Completed)
             }
         }
     }
 
     var hp: Int {
         didSet {
-            sendNext(life, hp)
+            life.on(.Next(hp))
         }
     }
     let life = PublishSubject<Int>()
 
     var nutrition: Int {
         didSet {
-            sendNext(nutritionChanged, nutrition)
+            nutritionChanged.on(.Next(nutrition))
         }
     }
     let nutritionChanged = PublishSubject<Int>()
@@ -126,17 +126,17 @@ class Creature: Printable, Hashable {
             return
         }
 
-        GameScenePaceMaker.defaultPaceMaker.pace
-            >- subscribeNext { currentTime in
+        compositeDisposable.addDisposable(
+            GameScenePaceMaker.defaultPaceMaker.pace.subscribeNext { currentTime in
                 self.breedCheck()
                 self.agingCheck()
             }
-            >- compositeDisposable.addDisposable
+        )
     }
 
     func setUpProducerAction() {
-        GameScenePaceMaker.defaultPaceMaker.pace
-            >- subscribeNext { currentTime in
+        compositeDisposable.addDisposable(
+            GameScenePaceMaker.defaultPaceMaker.pace.subscribeNext { currentTime in
                 if self.actionIntervalCounter > 0 {
                     self.actionIntervalCounter--
                     return
@@ -145,15 +145,15 @@ class Creature: Printable, Hashable {
 
                 let result = self.drainNutrition()
                 if result {
-                    sendNext(self.actionCompleted, .Eat)
+                    self.actionCompleted.on(.Next(.Eat))
                 }
             }
-            >- compositeDisposable.addDisposable
+        )
     }
 
     func setUpConsumer1Action() {
-        GameScenePaceMaker.defaultPaceMaker.pace
-            >- subscribeNext { currentTime in
+        compositeDisposable.addDisposable(
+            GameScenePaceMaker.defaultPaceMaker.pace.subscribeNext { currentTime in
                 self.moveToNextPoint()
 
                 if self.moveIntervalCounter > 0 {
@@ -172,7 +172,7 @@ class Creature: Printable, Hashable {
 
                 self.wander()
             }
-            >- compositeDisposable.addDisposable
+        )
     }
 
     func setUpConsumer2Action() {
@@ -227,7 +227,7 @@ class Creature: Printable, Hashable {
         let targetCells = currentCell.world.areaCells(center: currentCell, distance: Creature.DrainNutritionRange, includeCenter: true)
 
         var drainedNutrition = 0
-        var drainPower = configuration.actionPower
+        let drainPower = configuration.actionPower
         for target in targetCells {
             if target.nutrition > drainPower {
                 target.nutrition -= drainPower
@@ -279,7 +279,7 @@ class Creature: Printable, Hashable {
     func collisionTo(another: Creature) {
         if isTarget(another) {
             another.killedBy(self)
-            sendNext(actionCompleted, .Eat)
+            actionCompleted.on(.Next(.Eat))
         }
     }
 
@@ -300,7 +300,7 @@ class Creature: Printable, Hashable {
     }
 
     func decompose() {
-        println("Decompose: \(self)")
+        print("Decompose: \(self)")
         currentCell.world.removeCreature(self)
 
         let splashTargets = currentCell.world.areaCells(center: currentCell, distance: 1, includeCenter: true)
@@ -310,7 +310,7 @@ class Creature: Printable, Hashable {
             distribution[destination]++
         }
 
-        for (index, target) in enumerate(splashTargets) {
+        for (index, target) in splashTargets.enumerate() {
             target.addNutrition(distribution[index])
         }
     }
